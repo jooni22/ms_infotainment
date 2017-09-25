@@ -1,0 +1,951 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>NCWC - Cab Infotainment System (Entune)</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    
+    <link rel="icon" sizes="128x128" href="images/toyota_icon_128.png">
+    <link rel="icon" sizes="192x192" href="images/toyota_icon_192.png">
+    
+    <link rel="stylesheet" href="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/infotainment_default.css">
+    
+	<script src="scripts/jquery-1.9.1.min.js"></script>
+    <script src="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.js"></script>     
+    <script src="scripts/moment.min.js"></script>  
+    <script src="scripts/moment-duration-format.js"></script>     
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+	<div id="TOUCH_COVER" style="background:#000; position:absolute; top:0; left:0; right:0; bottom:0;">
+    
+	<div id="pageContainer_home" data-role="page" class="BG-BLACK">
+		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	Home
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div id="AB_pageContainer_home_APPS" style="position:absolute; right:10px; top:3px; width:110px; height:54px; text-align:center; color:#FFF;" class="button button_LINK" data-bid="1001" data-anchorlink="#pageContainer_apps">
+                        <img src="images/261.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;" >
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div role="main" class="ui-content">
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                	<div class="entune_grouping_NP" style="height:140px; display:flex; justify-content:center; min-height:202px;">
+                        <div id="AUDIO_playlist_container" style="align-self:center;">
+                            <div class="AUDIO_playlist_group AUDIO_playlist_MP3" style="display:none;">
+                                <div class="ui-grid-a">
+                                    <div id="AUDIO_MAIN_MP3LINK" class="ui-block-a just_LINK mp3_album_LINK" data-anchorlink="#pageContainer_MP3_play" data-albumtitle="">
+                                        <img id="AUDIO_playlist_MP3_FolderArtURL" src="" style="width:160px;">
+                                    </div>
+                                    <div class="ui-block-b">
+                                        <div style="margin-bottom:8px;">
+                                            <div class="AUDIO_title" style="font-size:0.5em; width:200px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; color:rgba(255,255,255,0.5); text-shadow:none;"></div>
+                                            <div class="AUDIO_subtitle" style="font-size:0.7em; width:200px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"></div>
+                                        </div>
+                                        <div id="AUDIO_playlist_controls_MAIN" style="display:-webkit-flex; display:flex; flex-direction:row;">
+                                            <div style="flex:1;" class="CURRENTLY_PLAYING_TIME">0:00</div>
+                                            <div style="flex:5;" class="CURRENTLY_PLAYING_METER_outer">
+                                                <div class="CURRENTLY_PLAYING_METER_inner"></div>
+                                            </div>
+                                            <div style="flex:1;" class="CURRENTLY_PLAYING_DURATION">0:00</div>
+                                        </div>		
+                                        <!-- button bar -->
+                                        <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; margin-top:10px;">
+                                            <div id="AB_pageContainer_home_MP3_TBACK" class="button buttonDisabled buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_mp3_back" style="flex-grow:1; text-align:center;" data-type="back" data-bid="1002">
+                                                <img src="images/track_fwd.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg); margin-top:12px;">
+                                            </div>
+                                            <div id="AB_pageContainer_home_MP3_PAUSE" class="button buttonDisabled buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_mp3_playPause_toggle" style="flex-grow:1; text-align:center;" data-showing="play" data-bid="1003">
+                                                <img src="images/play.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; margin-top:12px;" >
+                                            </div>
+                                            <div id="AB_pageContainer_home_MP3_TFWD" class="button buttonDisabled buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_mp3_fwd" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1004">
+                                                <img src="images/track_fwd.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; margin-top:12px;">
+                                            </div>
+                                            <div id="AB_pageContainer_home_MP3_VOLTOG" class="button buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_VOLUME_modal_toggle" style="flex-grow:1; text-align:center;" data-bid="1005">
+                                                <img src="images/speaker_mid.png" style="filter:invert(100%); -webkit-filter:invert(1); height:28px; margin-top:8px;" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="AUDIO_playlist_group AUDIO_playlist_radio" style="display:none;">
+								<div style="width:400px; height:202px;">
+                                    <div class="just_LINK" data-anchorlink="#pageContainer_radio_play" style="text-align:center; width:400px;">
+                                        <div class="AUDIO_title" style="width:400px; height:150px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; text-shadow:none; margin-top:3px;"></div>
+                                        <!-- <div class="AUDIO_subtitle" style="width:400px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"></div> -->
+                                    </div>	
+                                    <!-- button bar -->
+                                    <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; margin-left:3px; margin-right:3px;">
+                                        <div id="AB_pageContainer_home_FM_TBACK" class="button buttonDisabled buttonThin buttonThinPadding" style="flex-grow:1; text-align:center;" data-type="back" data-bid="1006">
+                                            <img src="images/track_fwd.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg); margin-top:12px;">
+                                        </div>
+                                        <div id="AB_pageContainer_home_FM_PAUSE" class="button buttonDisabled buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_mp3_playPause_toggle" style="flex-grow:1; text-align:center;" data-showing="play" data-bid="1007">
+                                            <img src="images/play.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; margin-top:12px;" >
+                                        </div>
+                                        <div id="AB_pageContainer_home_FM_TFWD" class="button buttonDisabled buttonThin buttonThinPadding" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1008">
+                                            <img src="images/track_fwd.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; margin-top:12px;">
+                                        </div>
+                                        <div id="AB_pageContainer_home_FM_VOLTOG" class="button buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_VOLUME_modal_toggle" style="flex-grow:1; text-align:center;" data-bid="1009">
+                                            <img src="images/speaker_mid.png" style="filter:invert(100%); -webkit-filter:invert(1); height:28px; margin-top:8px;" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="AB_pageContainer_home_NOAUDIO" class="AUDIO_playlist_group AUDIO_OFF just_LINK" data-anchorlink="#pageContainer_select_audio_src" style="padding:30px;">
+                            	<div style="text-align:center; font-size:1.3em;">Audio Off</div>
+                            	<div style="margin-top:0.7em; font-size:0.9em;">Touch here to go to source screen.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="entune_grouping" style="height:136px; display:flex; justify-content:center;">
+                    	<div style="position:absolute; left:130px;">
+                            <div style="position:absolute;">
+                            	<div id="compass_outerContainer" style="transform:perspective(160px); perspective:160px;">
+                                	<div id="compass_horizCircle_container" style="width:120px; height:120px; transform-style:preserve-3d; transform:rotateX(90deg);">
+                                  		<div id="compass_horizCircle">
+                                            <div class="compass_heading_marker" style="top:-0.3em; left:50px;"><div style="transform:rotateY(180deg);">S</div></div>
+                                            <div class="compass_heading_marker" style="top:35%; right:-0.3em; transform-style:preserve-3d;"><div style="transform:rotateY(90deg);">E</div></div>
+                                            <div class="compass_heading_marker" style="bottom:-0.3em; left:50px;">N</div>
+                                            <div class="compass_heading_marker" style="top:35%; left:-0.3em; transform-style:preserve-3d;"><div style="transform:rotateY(-90deg);">W</div></div>
+                                            
+                                            <div class="compass_heading_marker" style="top:30px; left:30px; transform-style:preserve-3d;">
+                                                <div style="transform:rotateY(220deg);"><div class="compass_heading_marker_divider"></div></div>
+                                            </div>
+                                            <div class="compass_heading_marker" style="top:30px; right:30px; transform-style:preserve-3d;">
+                                                <div style="transform:rotateY(-220deg);"><div class="compass_heading_marker_divider"></div></div>
+                                            </div>
+                                            <div class="compass_heading_marker" style="bottom:30px; left:30px;">
+                                                <div style="transform:rotateY(40deg);"><div class="compass_heading_marker_divider"></div></div>
+                                            </div>
+                                            <div class="compass_heading_marker" style="bottom:30px; right:30px;">
+                                                <div style="transform:rotateY(-40deg);"><div class="compass_heading_marker_divider"></div></div>
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="compass_heading_greyout">
+                                        	<div class="compass_heading_blackout"></div>
+                                        </div>
+                                    </div> <!-- end #compass_horizCircle -->
+                                </div> <!-- end #compass_horizCircle_container -->
+                            </div> <!-- end #compass_outerContainer -->
+                        	<img src="images/compass_globe.png" style="position:absolute; height:140px;">
+                        </div>
+                        <div style="align-self:center; display:none;">
+                        	<div style="text-align:center;">No microphone connected.</div>
+                    	</div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                	<div class="just_LINK" data-anchorlink="#pageContainer_navigation" style="height:407px; background:rgba(245,243,212,0.9); color:#000; margin-right:3px; overflow:hidden;">
+                        <div id="mapContainer_HomePage">
+                            <div id="mapContainerOuter_HomePage_ZOOM" style="position:absolute; width:395px; height:405px;">
+								<div id="mapContainerOuter_HomePage" style="position:absolute; width:395px; height:405px;">
+                                	<div id="mapContainerInner_HomePage" style="position:absolute; top:170px; left:170px;">
+										<img id="HOME_MAP_IMG_UNDERLAY" class="mapGPSunderlay" src="" style="opacity:0.6; position:absolute;">
+										<img id="HOME_MAP_IMG" class="mapImg" src="" style="opacity:1; position:absolute;">
+									</div>
+								</div>
+							</div>
+                        </div>
+                        <div style="position:absolute; bottom:173px; right:170px;">
+                            <img src="images/entune_nav_loc_marker_TN.png" style="height:60px;">
+                        </div>                        
+                    </div>
+                    
+                    <div style="position:absolute; bottom:14px; right:8px; border:1px solid rgba(0,0,0,1); box-shadow:0px 0px 16px rgba(0,0,0,1.0);">
+                        <div id="AB_pageContainer_home_GPS_ZI" class="button button_MISC GPS_ZOOM_LVL" data-zoomtype="in" style="width:80x; height:50px; text-align:center; color:#FFF;" data-bid="1010">
+                            <img src="images/plus_outline.png" class="invertedImg" style="height:36px; margin-top:6px;" >
+                        </div>
+                        <div id="AB_pageContainer_home_GPS_ZO" class="button button_MISC GPS_ZOOM_LVL" data-zoomtype="out" style="width:80px; height:50px; text-align:center; color:#FFF;" data-bid="1011">
+                            <img src="images/minus_outline.png" class="invertedImg" style="height:36px; margin-top:6px;" >
+                        </div>
+                    </div>
+                    
+                </div>
+		    </div><!-- /grid-a -->
+        </div>
+    </div> <!-- end #pageContainer_home -->
+    
+    <div id="pageContainer_apps" data-role="page" class="BG-BLACK">
+		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	Apps
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:200px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_apps_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="1202">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_apps_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="1201">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div role="main" class="ui-content">
+            <div class="ui-grid-c" style="font-size:1.2em; font-weight:400; margin-top:20px;">
+                <div class="ui-block-a">
+                    <div id="AB_pageContainer_apps_NAV" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_navigation" data-bid="1203">
+                        <img src="images/nav.png" style="height:60px; margin-top:10px; margin-bottom:8px;">
+                        <div>Navigation</div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div id="AB_pageContainer_apps_AUDIO" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_select_audio_src" data-bid="1204">
+                        <img src="images/audio_file.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>Audio</div>
+                    </div>
+                </div>
+                <div class="ui-block-c">
+                	<div class="buttonDisabled buttonLarge">
+                        <img src="images/leaf.png" style="height:50px; margin-top:18px; margin-bottom:8px;">
+                        <div>Eco</div>
+                    </div>
+                </div>
+                <div class="ui-block-d">
+                    <div id="AB_pageContainer_apps_SETUP" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_setup" data-bid="1205">
+                        <img src="images/261.png" style="height:50px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>Setup</div>
+                    </div>
+                </div>
+		    </div><!-- /grid-c -->
+            
+            <div class="ui-grid-c" style="font-size:1.2em; font-weight:400;">
+                <div class="ui-block-a">
+                	<div class="buttonDisabled buttonLarge">
+                    	<img src="images/traffic_light.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                		<div>Traffic</div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                	<div class="buttonDisabled buttonLarge">
+                    	<img src="images/partly_cloudy.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                		<div>Weather</div>
+                    </div>
+                </div>
+                <div class="ui-block-c">
+                	<div id="AB_pageContainer_apps_MAINTENANCE" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_maintenance" data-bid="1206">
+                        <img src="images/maintenance.png" style="height:70px; margin-top:10px; margin-bottom:0px;">
+                        <div>Maintenance</div>
+                    </div>
+                </div>
+                <div class="ui-block-d"></div>
+		    </div><!-- /grid-c -->
+        </div>
+    </div> <!-- end #pageContainer_apps -->
+    
+    <div id="pageContainer_select_audio_src" data-role="page" class="BG-BLACK">
+		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	Select Audio Source
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_select_audio_src_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="1402">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_select_audio_src_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="1401">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div role="main" class="ui-content">
+            <div class="ui-grid-c" style="font-size:1.2em; font-weight:400; margin-top:20px;">
+                <div class="ui-block-a">
+                	<div class="buttonDisabled buttonLarge">
+                    	<img src="images/radio_tower.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                		<div>AM</div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                	<div id="AB_pageContainer_select_audio_src_FM" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_radio_play" data-bid="1403">
+                        <img src="images/radio_tower.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>FM</div>
+                    </div>
+                </div>
+                <div class="ui-block-c">
+                	<div class="buttonDisabled buttonLarge">
+                    <img src="images/cd.png" style="height:50px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                    <div>CD</div>
+                    </div>
+                </div>
+                <div class="ui-block-d">
+                	<div id="AB_pageContainer_select_audio_src_MP3" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_MP3" data-bid="1404">
+                        <img src="images/audio_file.png" style="height:50px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>MP3</div>
+                    </div>
+                </div>
+		    </div><!-- /grid-c -->
+            
+            <div class="ui-grid-c" style="font-size:1.2em; font-weight:400;">
+                <div class="ui-block-a">
+                	<div class="buttonDisabled buttonLarge">
+                    	<img src="images/bluetooth.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                		<div>
+                        	<span>
+                            	<img src="images/bluetooth.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin-bottom:-3px;">
+                            </span>
+                        	<span>Audio</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                	<div class="buttonDisabled buttonLarge">
+                        <img src="images/usb_stick.png" style="height:50px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>USB</div>
+                    </div>
+                </div>
+                <div class="ui-block-c"></div>
+                <div class="ui-block-d"></div>
+		    </div><!-- /grid-c -->
+        </div>
+    </div> <!-- end #pageContainer_select_audio_src -->
+    
+    <div id="pageContainer_MP3" data-role="page" class="BG-BLACK">
+		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	MP3
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_MP3_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="1602">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_MP3_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="1601">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div role="main" class="ui-content">
+ 			<div style="height:415px; overflow:hidden; position: relative;">
+            	<div id="MP3_album_list_container" class="ui-grid-c scrollableContent" style="position:absolute; top:0; bottom:0; left:0; width:816px; overflow-y:scroll;"></div>
+            </div>
+        </div>
+    </div> <!-- end #pageContainer_MP3 -->
+    
+    <div id="pageContainer_MP3_play" data-role="page" class="BG-BLACK">
+		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                    <div id="MP3_playlist_page_title" style="width:380px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">
+                        MP3
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_MP3_play_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="1802">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_MP3_play_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="1801">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        <div role="main" class="ui-content">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+               		<div style="height:410px; overflow: hidden; position: relative;">
+                    	<div id="MP3_playlist_container" style="position:absolute; top:0; bottom:0; left:0; width:417px; overflow-y:scroll;"></div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div style="position:absolute; padding:0 10px 30px 10px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.7) 20%, rgba(0,0,0,0)); width:400px;">
+                        <div class="AUDIO_title" style="font-size:0.8em; width:360px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; color:rgba(255,255,255,0.5); margin-top:12px; text-shadow:none;"></div>
+                        <div class="AUDIO_subtitle" style="width:360px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"></div>
+					</div>
+
+                    <div id="MP3_playlist_album_cover_container" class="entune_grouping" style="height:280px;"></div>
+                    <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; margin-top:10px;">
+                    	<div id="AB_pageContainer_MP3_play_TR_BACK" class="button buttonDisabled buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_mp3_back" style="flex-grow:1; text-align:center;" data-type="back" data-bid="1803">
+                        	<img src="images/track_fwd.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg); margin-top:12px;">
+                        </div>
+                        <div id="AB_pageContainer_MP3_play_PAUSE" class="button buttonDisabled buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_mp3_playPause_toggle" style="flex-grow:1; text-align:center;" data-showing="play" data-bid="1804">
+                        	<img src="images/play.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; margin-top:12px;" >
+                        </div>
+                        <div id="AB_pageContainer_MP3_play_TR_FWD" class="button buttonDisabled buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_mp3_fwd" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1805">
+                        	<img src="images/track_fwd.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; margin-top:12px;">
+                        </div>
+                        <div id="AB_pageContainer_MP3_play_VOLTOG" class="button buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_VOLUME_modal_toggle" style="flex-grow:1; text-align:center;" data-bid="1806">
+                        	<img src="images/speaker_mid.png" style="filter:invert(100%); -webkit-filter:invert(1); height:28px; margin-top:8px;" >
+                      	</div>
+                    </div>
+                </div> <!-- end .ui-block-b -->
+            </div> <!-- end .ui-grid-a -->
+        </div>
+    </div> <!-- end #pageContainer_MP3_play -->
+    
+    <div id="pageContainer_radio_play" data-role="page" class="BG-BLACK">
+		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	FM
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_radio_play_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="2002">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_radio_play_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="2001">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        <div role="main" class="ui-content">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+               		<div style="height:410px; overflow: hidden; position: relative;">
+                    	<div id="FM_playlist_container" style="position:absolute; top:0; bottom:0; left:0; width:417px; overflow-y:scroll;">
+                        	<div id="AB_pageContainer_radio_play_T1" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://stream.kcck.org/jazz883kcck" data-albumtitle="FM 88.3" data-trackname="KCCK">88.1 KCCK</div>
+                            <div id="AB_pageContainer_radio_play_T2" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://krui.student-services.uiowa.edu:8000" data-albumtitle="FM 89.7" data-trackname="KRUI">89.7 KRUI</div>
+                            <div id="AB_pageContainer_radio_play_T3" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://studioone-stream.iowapublicradio.org/StudioOne.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (Studio One)">90.9 KUNI (Studio One)</div>
+                            <div id="AB_pageContainer_radio_play_T4" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://news-stream.iowapublicradio.org/News.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (News)">90.9 KUNI (News)</div>
+                            <div id="AB_pageContainer_radio_play_T5" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://classical-stream.iowapublicradio.org/Classical.mp3" data-albumtitle="FM 91.7" data-trackname="KSUI">91.7 KSUI</div>
+                            <div id="AB_pageContainer_radio_play_T6" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://15363.live.streamtheworld.com:80/KRNAFMAAC_SC" data-albumtitle="FM 94.1" data-trackname="KRNA">94.1 KRNA</div>
+                            <div id="AB_pageContainer_radio_play_T7" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://13633.live.streamtheworld.com:80/KHAKFMAAC_SC" data-albumtitle="FM 98.1" data-trackname="KHAK">98.1 KHAK</div>
+                            <div id="AB_pageContainer_radio_play_T8" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://14023.live.streamtheworld.com:80/KDATFMAAC_SC" data-albumtitle="FM 104.5" data-trackname="KDAT">104.5 KDAT</div>
+                            <div id="AB_pageContainer_radio_play_T9" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="http://14533.live.streamtheworld.com:80/KFMWFMAAC_SC" data-albumtitle="FM 107.9" data-trackname="KFMW">107.9 KFMW</div>
+                        </div>                        
+                    </div>
+                </div>
+                
+                <div class="ui-block-b">
+               		<div style="position:absolute; padding:0 10px 30px 10px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.7) 20%, rgba(0,0,0,0)); width:400px;">
+                        <div class="AUDIO_title" style="font-size:0.8em; width:360px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; color:rgba(255,255,255,0.5); margin-top:12px; text-shadow:none;"></div>
+                        <div class="AUDIO_subtitle" style="width:360px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"></div>
+                    </div>
+                	<div class="entune_grouping" style="height:270px; display:-webkit-flex; display:flex; justify-content:center;">
+                    	
+                        <div style="border:1px solid rgba(130,130,130,1); padding:16px; width:120px; align-self:center; text-align:center;">
+                    		<img src="images/radio_tower.png" style="filter:invert(100%); -webkit-filter:invert(1); height:130px;">
+                        </div>
+                    </div>
+                    <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; margin-top:10px;">
+                    	<div class="buttonDisabled buttonThin buttonThinPadding" style="flex-grow:1; text-align:center;">Tag</div>
+                        <div class="buttonDisabled buttonThin buttonThinPadding" style="flex-grow:1; text-align:center;">Station List</div>
+                        <div id="AB_pageContainer_radio_play_PAUSE" class="button buttonThin buttonThinPadding BUTTON_FM_playPause_toggle" style="flex-grow:1; text-align:center;" data-showing="play" data-bid="2003">
+                        	<img src="images/pause.png" style="filter:invert(100%); -webkit-filter:invert(1); height:20px; margin-top:12px;" >
+                        </div>
+                        <div id="AB_pageContainer_radio_play_VOLTOG" class="button buttonThin buttonThinPadding PLAY_CONTROLS BUTTON_VOLUME_modal_toggle" style="flex-grow:1; text-align:center;" data-bid="2004">
+                        	<img src="images/speaker_mid.png" style="filter:invert(100%); -webkit-filter:invert(1); height:28px; margin-top:8px;" >
+                      	</div>
+                    </div>
+                </div> <!-- end .ui-block-b -->
+            </div> <!-- end .ui-grid-a -->
+        </div>
+    </div> <!-- end #pageContainer_radio_play -->
+    
+    <div id="pageContainer_setup" data-role="page" class="BG-BLACK">
+		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	Setup
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_setup_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="2202">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_setup_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="2201">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div role="main" class="ui-content">
+            <div class="ui-grid-c" style="font-size:1.2em; font-weight:400; margin-top:20px;">
+                <div class="ui-block-a">
+                	<div class="buttonDisabled buttonLarge">
+                    	<img src="images/261.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                		<div>General</div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                	<div id="AB_pageContainer_setup_NADSLOGO" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_logo_NADSonly" data-bid="2203">
+                        <img src="images/home_screen.png" style="height:44px; margin-top:20px; margin-bottom:10px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>Home Screen</div>
+                    </div>
+                </div>
+                <div class="ui-block-c">
+                	<div class="buttonDisabled buttonLarge">
+                        <img src="images/voice.png" style="height:49px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>Voice</div>
+                    </div>
+                </div>
+                <div class="ui-block-d">
+                	<div class="buttonDisabled buttonLarge">
+                        <img src="images/display.png" style="height:40px; margin-top:22px; margin-bottom:10px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>Display</div>
+                    </div>
+                </div>
+		    </div><!-- /grid-c -->
+            
+            <div class="ui-grid-c" style="font-size:1.2em; font-weight:400;">
+                <div class="ui-block-a">
+                	<div class="buttonDisabled buttonLarge">
+                    	<img src="images/bluetooth.png" style="height:60px; margin-top:10px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                		<div>
+                        	<span>Bluetooth</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                	<div id="AB_pageContainer_setup_PHONE" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_text_entry_task_a" data-bid="2204">
+                        <img src="images/phone.png" style="height:60px; margin-top:13px; margin-bottom:4px; filter:invert(100%); -webkit-filter:invert(1); -ms-transform: rotate(-20deg); -webkit-transform: rotate(-20deg); transform: rotate(-20deg);">
+                        <div>Phone</div>
+                    </div>
+                </div>
+                <div class="ui-block-c">
+                	<div id="AB_pageContainer_setup_AUDIO" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_select_audio_src" data-bid="2205">
+                        <img src="images/audio_file.png" style="height:50px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1);">
+                        <div>Audio</div>
+                    </div>
+                </div>
+                <div class="ui-block-d">
+                	<div id="AB_pageContainer_setup_NAV" class="button buttonLarge button_LINK" data-anchorlink="#pageContainer_map_debug" data-bid="2206">
+                    	<img src="images/nav.png" style="height:60px; margin-top:10px; margin-bottom:8px;">
+                		<div>Navigation</div>
+                    </div>
+                </div>
+		    </div><!-- /grid-c -->
+            
+            <div class="ui-grid-b" style="font-size:1.2em; font-weight:400;">
+            	<div class="ui-block-a" style="width:25%;">
+                	<div class="blackButton buttonThin">
+                   		<img src="images/29.png" style="height:12px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg);">
+                    </div>
+                </div>
+                <div class="ui-block-b" style="width:50%;">
+                	<div id="AB_pageContainer_setup_BLACK" class="blackButton buttonThin  button_LINK" data-anchorlink="#pageContainer_screen_blackout">
+                        <div style="margin-top:3px;">Screen Off</div>
+                    </div>
+                </div>
+                <div class="ui-block-c" style="width:25%;">
+                	<div class="blackButton buttonThin">
+                   		<img src="images/29.png" style="height:12px; margin-top:18px; margin-bottom:8px; filter:invert(100%); -webkit-filter:invert(1); -ms-transform: rotate(-90deg); -webkit-transform: rotate(-90deg); transform: rotate(-90deg);">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end #pageContainer_setup -->
+    
+    <div id="pageContainer_navigation" data-role="page" class="BG-BLACK">
+  		<div role="main" class="ui-content" style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(245,243,212,0.9); overflow:hidden;">
+            
+            <div id="mapContainer">
+                <div id="mapContainerOuter" style="position:absolute;">
+                    <div id="mapContainerInner" style="position:absolute; top:210px; left:390px;">
+                    	<img id="MAIN_MAP_IMG_UNDERLAY" class="mapGPSunderlay" src="" style="opacity:0.6; position:absolute;">
+                        <img id="MAIN_MAP_IMG" class="mapImg" src="" style="opacity:1; position:absolute; -webkit-filter: drop-shadow(0px 0px 16px rgba(0,0,0,0.6)); filter: url(#drop-shadow);">
+                    </div>
+                </div>
+            </div>
+            
+            <div style="position:absolute; top:210px; left:390px;">
+                <img id="cabCG_car_dot" src="images/entune_nav_loc_marker_TN.png" style="height:60px;">
+            </div>
+            
+            <div style="position:absolute; top:4px; left:5px;">
+            	<div class="button button_LINK" data-anchorlink="#pageContainer_map_debug" style="position:absolute; left:96px; width:100px; height:42px; text-align:center; color:#FFF; border:1px solid rgba(0,0,0,0.9); box-shadow:0 0 16px rgba(0,0,0,1); " >
+                    Options
+                </div>
+                <div class="button" style="width:90px; height:52px; text-align:center; color:#FFF; border:1px solid rgba(0,0,0,0.9); box-shadow:0 0 16px rgba(0,0,0,1); " >
+                    <div style="background:rgba(0,0,0,1); border-radius:3px; position:absolute; width:80px; height:30px; top:10px; left:6px;">
+                        <img src="images/nav.png" style="height:32px; margin-bottom:-6px;" >
+                        <span>N</span>
+                    </div>
+                </div>
+                <div style="background:rgba(0,0,0,0.6); box-shadow:0 0 10px rgba(0,0,0,1); padding:2px; margin-top:4px; text-align:center; font-size:0.5em; font-stretch:extra-expanded;">GPS</div>
+            </div>
+            
+            <div style="position:absolute; top:0; right:0; width:50%; background:rgba(0,0,0,0.5); box-shadow:0 0 16px rgba(0,0,0,1); padding:2px;">
+            	<div style="position:absolute; right:180px; top:1px;">
+                    <img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px;">
+                </div>
+                <div id="AB_pageContainer_navigation_BACK" style="position:absolute; right:6px; top:3px; width:110px; height:42px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="2402" >
+                    <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:32px; margin-top:4px;" >
+                </div>
+                <div class="entune_clock">--:--</div>
+            </div>
+            
+            <div style="position:absolute; bottom:8px; left:8px;">
+                <div class="buttonDisabled" style="width:80px; height:50px; text-align:center; color:#FFF; border:1px solid rgba(0,0,0,1); box-shadow:0px 0px 16px rgba(0,0,0,1.0); float:left;">
+                    <img src="images/plus_outline.png" style="filter:invert(100%); -webkit-filter:invert(1); height:36px; margin-top:6px;" >
+                </div>
+                <div class="buttonDisabled" style="width:80px; height:50px; text-align:center; color:#FFF; border:1px solid rgba(0,0,0,1); box-shadow:0px 0px 16px rgba(0,0,0,1.0); float:left; margin-left:6px;">
+                    <img src="images/minus_outline.png" style="filter:invert(100%); -webkit-filter:invert(1); height:36px; margin-top:6px;" >
+                </div>
+                <div class="button" style="width:80px; height:50px; text-align:center; color:#FFF; border:1px solid rgba(0,0,0,1); box-shadow:0px 0px 16px rgba(0,0,0,1.0); float:left; margin-left:6px;">
+                    <img src="images/nav.png" style="height:36px; margin-top:6px;" >
+                </div>
+                <div class="button" style="width:90px; height:50px; text-align:center; color:#FFF; border:1px solid rgba(0,0,0,1); box-shadow:0px 0px 16px rgba(0,0,0,1.0); float:left; margin-left:6px;">
+                    <div style="margin-top:5px;">Dest.</div>
+                </div>
+            </div>
+            
+            <!-- DEBUG WINDOW - GPS -->
+            <div style="display:none; position:absolute; bottom:8px; right:8px; border:1px solid rgba(0,0,0,1); padding:4px; color:rgba(0,21,255,1.00); font-size:0.8em;">
+                <div id="OSD_scenario_name"></div>
+                <div id="OSD_subject_name"></div>
+                <div id="OSD_run_name"></div>
+            </div>
+        </div>
+    </div> <!-- end #pageContainer_navigation -->
+    
+    <div id="pageContainer_text_entry_task_a" data-role="page" class="BG-BLACK">
+  		<div role="main" class="ui-content">
+        	<div style="font-size:4em; height:200px; text-align:center;">
+        		<div id="task_a_display" style="display:inline;"></div><span class="blinking-cursor">|</span>
+            </div>
+            
+            <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row;">
+            	<div class="button_KB" style="flex-grow:1;">Q</div>
+                <div class="button_KB" style="flex-grow:1;">W</div>
+                <div class="button_KB" style="flex-grow:1;">E</div>
+                <div class="button_KB" style="flex-grow:1;">R</div>
+                <div class="button_KB" style="flex-grow:1;">T</div>
+                <div class="button_KB" style="flex-grow:1;">Y</div>
+                <div class="button_KB" style="flex-grow:1;">U</div>
+                <div class="button_KB" style="flex-grow:1;">I</div>
+                <div class="button_KB" style="flex-grow:1;">O</div>
+                <div class="button_KB" style="flex-grow:1;">P</div>
+            </div>
+            <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row;">
+            	<div class="button_KB" style="flex-grow:1; margin-left:40px;">A</div>
+                <div class="button_KB" style="flex-grow:1;">S</div>
+                <div class="button_KB" style="flex-grow:1;">D</div>
+                <div class="button_KB" style="flex-grow:1;">F</div>
+                <div class="button_KB" style="flex-grow:1;">G</div>
+                <div class="button_KB" style="flex-grow:1;">H</div>
+                <div class="button_KB" style="flex-grow:1;">J</div>
+                <div class="button_KB" style="flex-grow:1;">K</div>
+                <div class="button_KB" style="flex-grow:1; margin-right:40px;">L</div>
+            </div>
+            <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row;">
+            	<div class="button_KB" style="flex-grow:1; margin-left:80px;">Z</div>
+                <div class="button_KB" style="flex-grow:1;">X</div>
+                <div class="button_KB" style="flex-grow:1;">C</div>
+                <div class="button_KB" style="flex-grow:1;">V</div>
+                <div class="button_KB" style="flex-grow:1;">B</div>
+                <div class="button_KB" style="flex-grow:1;">N</div>
+                <div class="button_KB" style="flex-grow:1;">M</div>
+                <div class="button_KB" style="flex-grow:2; margin-right:10px;" data-specialkey="backspace" data-bid="8">
+                	<img src="images/backspace.png" style="height:40px; filter:invert(100%); -webkit-filter:invert(1);" >
+                </div>
+            </div>
+            <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row;">
+            	<div class="button_KB" style="flex-grow:4; margin-left:190px;" data-specialkey="space" data-bid="32">
+                	<img src="images/space_key.png" style="height:8px; filter:invert(100%); -webkit-filter:invert(1);" >
+                </div>
+                <div class="button_KB" style="flex-grow:1; margin-right:50px;" data-specialkey="enter" data-bid="13">
+                	<img src="images/enter_key.png" style="height:13px;" >
+                </div>
+            </div>
+        </div> <!-- end .ui-content -->
+    </div> <!-- end #pageContainer_text_entry_task_a -->
+    
+    <div id="pageContainer_screen_blackout" data-role="page" class="BG-BLACK">
+  		<div role="main" class="ui-content button_BACK_LINK" style="position:absolute; top:0; left:0; right:0; bottom:0;"></div>
+    </div> <!-- end #pageContainer_screen_blackout -->
+    
+    <div id="pageContainer_logo_NADSonly" data-role="page" class="BG-BLACK">
+  		<div role="main" class="ui-content button_BACK_LINK" style="position:absolute; top:0; left:0; right:0; bottom:0; display:-webkit-flex; justify-content:center;">
+        	<div style="align-self:center;">
+            	<div style="width:360px; height:360px;">
+                    <img id="NADS_logo_spinny" src="images/FLIPICON_NADS.png" style="position:absolute; -webkit-backface-visibility:hidden; -moz-backface-visibility:hidden; -ms-backface-visibility:hidden; height:360px;">
+                    <img id="NADS_words_spinny" src="images/FLIPICON_NADSwords.png" style="position:absolute; -webkit-backface-visibility:hidden; -moz-backface-visibility:hidden; -ms-backface-visibility:hidden; height:360px;">
+            	</div>
+            </div>
+        </div>
+    </div> <!-- end #pageContainer_logo_NADSonly -->
+    
+    <div id="pageContainer_ignitionRollover" data-role="page" class="BG-BLACK">
+  		<div role="main" class="ui-content" style="position:absolute; top:0; left:0; right:0; bottom:0; display:-webkit-flex; justify-content:center;">
+        	<div style="align-self:center;">
+                <div style="margin-left:175px;">
+                	<img id="ignitionRollover_Toyota_img" src="images/toyota_startup.png">
+                </div>
+            	<div style="text-shadow:none; font-size:0.9em; margin-top:50px;">Check surroundings for safety while camera images are displayed.</div>
+            </div>
+        </div>
+    </div> <!-- end #pageContainer_cab_ignitionRollover -->
+    
+    <div id="pageContainer_maintenance" data-role="page" class="BG-BLACK">
+  		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	Maintenance
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_maintenance_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="2602">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_maintenance_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="2601">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div role="main" class="ui-content">
+            <div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	<div id="debug_connectionStatus">Unknown</div>
+                </div> <!-- end .ui-block-a -->
+                <div class="ui-block-b">
+                	<div class="ui-grid-a">
+                    	<div class="ui-block-a">
+                        	<div id="AB_pageContainer_maintenance_DISPLAY" class="button buttonThreeHigh buttonDisabled">
+                                <img src="images/display.png" style="height:40px; margin-top:22px; margin-bottom:10px; filter:invert(100%); -webkit-filter:invert(1);">
+                                <div>Display</div>
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                        	<div id="AB_pageContainer_mainenance_REFRESH" class="button buttonThreeHigh button_MISC" data-bid="2603">
+                                <img src="images/refresh.png" style="height:40px; margin-top:22px; margin-bottom:10px; filter:invert(100%); -webkit-filter:invert(1);">
+                                <div>Refresh</div>
+                            </div>
+                        </div>
+                        <div class="ui-block-a">
+                        	<div id="AB_pageContainer_maintenance_AUDIO_OFF" class="button buttonThreeHigh button_MISC" data-bid="2604">
+                                <img src="images/crossed_out.png" style="height:40px; margin-top:22px; margin-bottom:10px; filter:invert(100%); -webkit-filter:invert(1);">
+                                <div>Audio Off</div>
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                        	<div class="buttonDisabled buttonThreeHigh">
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="ui-block-a">
+                        	<div class="buttonDisabled buttonThreeHigh">
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                        	<div class="buttonDisabled buttonThreeHigh">
+                                <div></div>
+                            </div>
+                        </div>
+                    </div> <!-- end .ui-grid-a -->
+                </div> <!-- end .ui-block-b -->
+            </div>
+        </div>
+    </div> <!-- end #pageContainer_maintenance -->
+    
+    <div id="pageContainer_map_debug" data-role="page" class="BG-BLACK">
+  		<div class="infotainmentHeader">
+        	<div class="ui-grid-a">
+            	<div class="ui-block-a">
+                	GPS Debug
+                </div>
+                <div class="ui-block-b">
+                	<div style="position:absolute; right:180px; top:6px;">
+                    	<img src="images/313b.png" style="filter:invert(100%); -webkit-filter:invert(1); height:40px; margin-top:6px;">
+                    </div>
+                    <div style="position:absolute; right:10px; top:0px; display:inline-table">
+                        <div id="AB_pageContainer_map_debug_BACK" style="display:table-cell; width:100px; height:48px; text-align:center; color:#FFF;" class="button button_BACK_LINK" data-bid="2802">
+                            <img src="images/back.png" style="filter:invert(100%); -webkit-filter:invert(1); height:38px;" >
+                        </div>
+                        <div id="AB_pageContainer_map_debug_HOME" style="display:table-cell; height:48px;" data-anchorlink="#pageContainer_home" class="button button_LINK" data-bid="2801">
+                            <img src="images/home.png" style="height:30px; filter:invert(100%); -webkit-filter:invert(1); margin:11px 11px 6px 11px;">
+                        </div>
+                    </div>
+                	<div class="entune_clock">--:--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div role="main" class="ui-content">
+            <div class="ui-grid-a" style="font-size:0.75em;">
+                <div class="ui-block-a">
+                	                    
+                    <div class="ui-grid-a entune_list_row" style="text-align:center;">                        
+                        <img src="" class="mapImg" style="max-height:180px; margin:auto;">
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                        <div class="ui-block-a">TL corner (x,y)</div>
+                        <div class="ui-block-b">
+                        	<span id="PixPer_dimensions_TL_X"></span>, <span id="PixPer_dimensions_TL_Y"></span>
+                    	</div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                        <div class="ui-block-a">BR corner (x,y)</div>
+                        <div class="ui-block-b">
+                        	<span id="PixPer_dimensions_BR_X"></span>, <span id="PixPer_dimensions_BR_Y"></span>
+                    	</div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                    	<div class="ui-block-a">LRI size (W x H)</div>
+                        <div class="ui-block-b">
+                            <span id="PixPer_width" class="smallerText"></span> x <span id="PixPer_height" class="smallerText"></span>
+                        </div>
+                    </div>
+                
+                	<div class="ui-grid-a entune_list_row">
+                    	<div class="ui-block-a">Source (W x H)</div>
+                        <div class="ui-block-b">
+                    		<span id="OSD_source_width"></span> x <span id="OSD_source_height"></span>
+                    	</div>
+                    </div>
+                </div> <!-- /block-a -->
+                
+                <div class="ui-block-b">
+                	<div class="ui-grid-a entune_list_row">
+                    	<div class="inlineDiv">
+                        	<span class="entune_title">X</span><span id="OSD_VDS_Chassis_Position_QPNL_X"></span>
+                        </div>
+                        <div class="inlineDiv">
+                        	<span class="entune_title">Y</span><span id="OSD_VDS_Chassis_Position_QPNL_Y"></span>
+                        </div>
+                        <div class="inlineDiv">
+                        	<span class="entune_title">Z</span><span id="OSD_VDS_Chassis_Position_QPNL_Z"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                    	<div class="ui-block-a">PixPer_xoff_percent</div>
+                        <div class="ui-block-b">
+                        	<div id="PixPer_xoff_percent" style="float:left;"></div>%
+                        </div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                    	<div class="ui-block-a">PixPer_xoff</div>
+                        <div class="ui-block-b" id="PixPer_xoff">0</div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                    	<div class="ui-block-a">PixPer_yoff_percent</div>
+                        <div class="ui-block-b">
+                        	<div id="PixPer_yoff_percent" style="float:left;"></div>%
+                        </div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">                        
+                        <div class="ui-block-a">PixPer_yoff</div>
+                        <div class="ui-block-b" id="PixPer_yoff">0</div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                    	<div class="ui-block-a">Chassis orientation</div>
+                        <div class="ui-block-b">
+                        	<div id="OSD_VDS_Chassis_Orient"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-grid-a entune_list_row">
+                    	<div class="ui-block-a">Chassis yaw (opposite angle)</div>
+                        <div class="ui-block-b">
+                        	<div id="OSD_VDS_Chassis_Yaw_Opp"></div>
+                        </div>
+                    </div>
+                </div>
+                
+		    </div><!-- /grid-a -->
+        </div>
+    </div> <!-- end #pageContainer_map_debug -->
+    
+    <a id="MSTR_LINK_BACK" href="" data-rel="back"></a>
+    <a id="MSTR_LINK" href=""></a>
+    <a id="MSTR_LINK_MODAL" href="" data-rel="popup"></a>
+
+    </div>
+    
+    <div data-role="popup" data-overlay-theme="b" id="panelContainer_VOLUME" class="BG-BLACK" style="border:1px solid rgba(200,200,200,0.3); border-radius:3px;">
+        <div class="infotainmentHeader" style="text-align:center;">Volume</div>
+        <div role="main" class="ui-content">
+            <div class="ui-grid-a" style="width:240px;">
+                <div class="ui-block-a">
+                    <div id="VOLUME_level_container" style="height:250px; border:1px solid rgba(0,0,0,1); margin:10px 20px; background:linear-gradient(to bottom,red,yellow,green);">
+                        <div id="VOLUME_level_blackout" style="position:absolute; top:73px; left:20px; height:125px; width:80px; background:black;"></div>
+                        <div id="VOLUME_level_gauge_stripes" style="position:absolute; top:73px; left:20px; height:251px; width:80px; background:repeating-linear-gradient(180deg, rgba(0,0,0,1), rgba(0,0,0,1) 5px, rgba(0,0,0,0) 5px, rgba(0,0,0,0) 10px);"></div>
+                        <div id="VOLUME_level_gauge_value" style="position:absolute; bottom:120px; left:32px; width:56px; color:rgba(255,255,255,1); text-align:center; background:rgba(0,0,0,0.6); box-shadow:0px 0px 10px rgba(0,0,0,1); border-radius:50px;">50</div>
+                    </div>
+                </div> <!-- end .ui-block-a -->
+                <div class="ui-block-b">
+                    <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column; text-align:center; margin-top:9px;">
+                        <div id="VOLUME_level_UP" class="button buttonVolume" style="align-self:flex-start; align-self:center;" data-bid="5000">
+                            <img src="images/speaker_high.png" >
+                        </div>
+                        <div style="height:39px;"></div>
+                        <div id="VOLUME_level_DOWN" class="button buttonVolume" style="align-self:flex-end; align-self:center;" data-bid="5001">
+                            <img src="images/speaker_low.png" style="height:30px; margin-top:33px;">
+                        </div>
+                    </div>
+                </div> <!-- end .ui-block-b -->
+            </div> <!-- end .ui-grid-a -->
+        </div>
+    </div> <!-- end #panelContainer_VOLUME -->
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/infotainment_system.io.js"></script>
+</body>
+
+</html>

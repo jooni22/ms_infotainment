@@ -1,0 +1,37 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <meta charset="utf-8">
+    <title>NMC</title>
+    <link rel="stylesheet" type="text/css" href="css/channel_default.css">               
+</head>
+
+<body>
+
+<div id="video-viewport">
+    <video preload width="640" height="360">
+        <source src="http://localhost:7471/clouds/ch_1.mp4" />
+    </video>
+</div>
+
+<div id="debug-viewport" style="display:none;">
+    <div id="debug-container-outer">
+        <div id="debug-container-inner">
+            <div class="rot90">
+				<div id="debug-host"></div>
+				<div id="debug-channel"></div>
+				<div id="debug_connectionStatus"></div>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div id="blending_top"></div>
+<div id="blending_bottom"></div>
+    
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/channel_client_general.io.js"></script>
+</body>
+</html>

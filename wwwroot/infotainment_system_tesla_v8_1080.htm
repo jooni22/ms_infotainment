@@ -1,0 +1,663 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Tesla Model S Infotainment</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    
+    <link rel="icon" sizes="128x128" href="images/tesla_logo_white_ds.png">
+    <link rel="icon" sizes="192x192" href="images/tesla_logo_white_ds.png">
+    
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <script src="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.js"></script>     
+    <script src="scripts/moment.min.js"></script>  
+    <script src="scripts/moment-duration-format.js"></script>     
+    
+    <link rel="stylesheet" href="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/infotainment_tesla_v8.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!--
+    <link rel="stylesheet" type="text/css" href="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.css" />
+	<script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    -->
+</head>
+
+<body>
+	<div id="TOUCH_COVER" style="background:#000;">
+        <div id="TOUCH_COVER_INNER" style="position:fixed; width:1080px; height:1920px;">
+            <div id="pageContainer_home" class="BG-BLACK">
+                
+                <div class="infotainmentHeader">
+                    <div style="display:flex; width:100%;">
+                        <div style="width:300px;">
+                           <div style="display:flex;">
+                           		<div class="icon" style="padding-left:20px; padding-top:8px;">
+                                	<img src="images/unlocked.png" class="invertedImg" style="height:26px; opacity:0.3; margin-top:8px;">
+                                </div>
+                                <div class="icon" style="padding-top:8px;">
+                                	<img src="images/lightning.png" class="invertedImg" style="height:26px; opacity:0.3; margin-top:8px;">
+                                </div>
+                                <div class="icon" style="padding-top:8px;">
+                                	<img src="images/home.png" class="invertedImg" style="height:26px; opacity:0.3; margin-top:8px;">
+                                </div>
+                                <div class="icon" style="padding-top:8px;">
+                                	<img src="images/user.png" class="invertedImg" style="height:26px; opacity:0.3; margin-top:8px;">
+                                </div>
+                           </div>
+                        </div>
+                        
+                        <div style="width:410px;">
+                            <div style="margin-top:-8px; margin-left:194px; z-index:100;">
+                            	<div style="position:relative; width:60px; padding:14px 6px 4px 6px;">
+                            		<img src="images/tesla_logo_white_ds.png" style="height:40px; margin-top:2px; margin-left:2px;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="flex-grow:1;">
+                            <div style="display:flex; padding-top:14px;">
+                            	<div style=""><img src="images/bluetooth_color.png" style="height:26px;"></div>
+                                <div style="padding-left:50px;"><img src="images/lte.png" class="invertedImg" style="height:32px; opacity:0.3;"></div>
+                                <div class="tesla_clock" style="flex-grow:1; text-align:right;">--:--</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="TESLA_MAIN_MENU_container" role="main" class="ui-content" style="height:1861px; background:rgba(0,0,0,1.0);">
+                	<div style="position:absolute; top:60px; left:0px; display:flex; height:110px; width:100%;">
+                    	<!-- <img src="images/tesla_it_menu_v7.png" style="width:100%; height:110px; position:absolute;"> -->
+                        <div style="flex-grow:0.5"></div>
+                        <div class="MM_ICON">
+                            <img src="images/tesla/t_v8_media.png" style="height:80px; margin-top:16px;">
+                        </div>
+                        <div class="MM_ICON">
+                            <img src="images/tesla/t_v8_maps.png" style="height:80px; margin-top:16px;">
+                        </div>
+                        <div class="MM_ICON">
+                            <img src="images/tesla/t_v8_calendar.png" style="height:80px; margin-top:16px;">
+                            <div style="position:absolute; margin-top:-76px; margin-left:45px; text-align:center; width:47px; line-height:24px; perspective: 400px;">
+                            	<div style="transform: rotateY(-35deg);">
+                                    <div id="MM_month" style="font-size:16px; color:rgba(205,8,3,1.0); text-shadow:1px 1px rgba(45,45,45,0.1);">DEC</div>
+                                    <div id="MM_day" style="font-size:37px; color:#222; text-shadow:1px 1px rgba(255,255,255,0.6);">99</div>
+                            	</div>
+                            </div>
+                        </div>
+                        <div class="MM_ICON">
+                            <img src="images/tesla/t_v8_energy.png" style="height:80px; margin-top:16px;">
+                        </div>
+                        <div class="MM_ICON">
+                            <img src="images/tesla/t_v8_web.png" style="height:80px; margin-top:16px;">
+                        </div>
+                        <div class="MM_ICON">
+                            <img src="images/tesla/t_v8_camera.png" style="height:80px; margin-top:16px;">
+                        </div>
+                        <div class="MM_ICON">
+                            <img src="images/tesla/t_v8_phone.png" style="height:80px; margin-top:16px;">
+                        </div>
+                        <div style="flex-grow:0.5"></div>
+                    </div>
+                
+                
+                <div id="MAIN_CONTAINER">
+                	<div id="MAIN_CONTAINER_inner">
+                    
+                    <div id="SUB_CONTAINER_TOP" class="sub_container_outer">
+                    	<div id="PROTO_NAV" class="sub_container_front_outer halfheight" style="width:100%;">
+                            <div class="sub_container_front halfheight mapDay DARK_TOG"> <!-- .dark can go here -->
+                            	<div id="PROTO_NAV_MAPCONT" class="halfheight" style="position:absolute; width:100%; border-radius:5px; overflow:hidden;">
+                                    
+                                    <div id="NAV_mapContainer">
+                                        <div id="mapContainerOuter_ZOOM" style="position:absolute; top:0; width:100%; height:100%;">
+                                            <div id="mapContainerOuter" style="position:absolute;">
+                                                <div id="mapContainerInner" style="position:absolute; top:385px; left:540px;">
+                                                    <img id="NAV_MAP_IMG_UNDERLAY" class="mapGPSunderlay" src="" style="position:absolute; display:none;">
+                                                    <img id="NAV_MAP_IMG" class="mapImg" src="" style="opacity:1; position:absolute; -webkit-filter: drop-shadow(0px 0px 16px rgba(0,0,0,0.6)); filter: url(#drop-shadow);">
+                                                </div>
+                                            </div>
+                                        </div> <!-- end #mapContainerOuter_ZOOM -->
+                                    </div> <!-- end #NAV_mapContainer -->
+                                </div>
+                                
+                                <div class="nav_navigate_button_outer">
+                                	<div class="button" style="padding:20px; padding-left:10px; padding-right:14px; width:170px;">
+                                        <img src="images/nav_icon_open.png" style="height:26px; float:left; margin-top:-2px; margin-left:3px; opacity:0.3;">
+                                        <img src="images/carat_right.png" style="height:14px; float:right; opacity:0.3; margin-top:4px;">
+                                        Navigate
+                                    </div>
+                                </div>
+                                
+                                <div class="nav_orient_button_outer">
+                                	<div class="button" style="width:75px; height:75px; padding:0 !important;">
+                                        <img src="images/tesla/icon_north_up.png" style="width:60px; margin-top:8px; opacity:0.3;">
+                                    </div>
+                                </div>
+                                
+                                <div class="nav_zoom_controls_outer" style="margin-right:20px;">
+                                	<div>
+                                        <div class="button IT_zoom" data-io="in" style="width:75px; height:75px; padding:0 !important; border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                                            <img src="images/44_v8.png" style="height:30px; opacity:0.3; margin:22px 10px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div >
+                                        <div class="button IT_zoom" data-io="out" style="width:75px; height:75px; padding:0 !important; border-top-left-radius:0; border-top-right-radius:0; border-top:none;">
+                                            <img src="images/45_v8.png" style="width:30px; opacity:0.3; margin:36px 10px;">
+                                        </div>
+                                    </div>
+                                </div> <!-- end .nav_zoom_controls_outer -->
+                                
+                                <div class="nav_other_controls_outer" style="margin-right:20px;">
+                                	<div>
+                                        <div class="button" style="width:75px; height:75px; padding:0 !important;">
+                                            <img src="images/globe.png" style="height:40px; opacity:0.3; margin:18px 10px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="margin-top:20px">
+                                        <div class="button IT_traffic_toggle" data-layertoadd="traffic" style="width:75px; height:75px; padding:0 !important;">
+                                            <img src="images/traffic_light.png" style="height:40px; opacity:0.3; margin:18px 10px;">
+                                        </div>
+                                    </div>
+                                </div> <!-- end .nav_other_controls_outer -->
+                                
+                                <div class="button_GROW" data-sourcediv="SUB_CONTAINER_TOP" data-sourceproto="PROTO_NAV" style="position:absolute; bottom:0px; left:0; z-index:100;">
+                                    <img src="images/tesla_section_grow_v8.png">
+                                </div>
+                                <div class="button_SWAP" style="position:absolute; bottom:0px; right:0; z-index:100;">
+                                    <img src="images/tesla_section_flip_v8.png">
+                                </div>
+                                
+                                <div id="cabCG_car_dot_outer" style="position:absolute; top:335px; left:490px; z-index:100;">
+                                    <img id="cabCG_car_dot" src="images/nav_arrow_100.png" style="position:absolute;">
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="SUB_CONTAINER_BOTTOM" class="sub_container_outer">
+                       	<div id="PROTO_MEDIA" class="sub_container_front_outer halfheight" style="width:100%;">
+                        <div class="sub_container_front halfheight DARK_TOG"> <!-- .dark can go here -->
+                        	
+                            <div class="sub_container_header_container">
+                            	<div style="display:flex;">
+                                    <div style="flex-grow:1;">
+                                    	<div class="button" style="margin:10px 0px 10px 12px; padding-left:6px; padding-right:0px;">
+                                        	<img src="images/glass_hvy.png" style="height:30px; float:left; margin-top:-3px; margin-left:3px; opacity:0.3;">
+                                            Anything
+                                        </div>
+                                    </div>
+                                    <div style="flex-grow:1;">
+                                    	<div class="sub_container_tab" data-tabtarget="cont_BrowseRadio">Radio</div>
+                                    </div>
+                                    <div style="flex-grow:1;">
+                                    	<div class="sub_container_tab tab_selected" data-tabtarget="cont_BrowseStreaming">Streaming</div>
+                                    </div>
+                                    <div style="flex-grow:1;">
+                                    	<div class="sub_container_tab" data-tabtarget="cont_BrowseTuneIn">TuneIn</div>
+                                    </div>
+                                    <div style="flex-grow:1;">
+                                    	<div class="sub_container_tab" data-tabtarget="cont_BrowseMedia">Phone</div>
+                                    </div>
+                                    <div style="flex-grow:1; text-align:right;">
+                                    	<div style="padding:23px 16px 14px 14px;">
+                                        	<img src="images/tesla_icon_sliders_v8.png" class="iconImg" style="height:30px; opacity:0.3;">
+                                        </div>
+                                    </div>
+                                </div> <!-- end flex row -->
+                            </div> <!-- end .sub_container_header_container -->
+                            
+                            <div id="cont_BrowseRadio" class="container_media" style="display:none;">
+                            	<div style="padding:30px 130px;">
+                                	<div style="text-align:center; color:rgba(170,170,170,1.00);">FAVORITES</div>
+                                    <hr/>
+                                    <div style="display:flex;">
+                                    	<div style="width:45%">
+                                        	<div id="AB_pageContainer_radio_play_T1" class="button_PLAYFILE mediaCell" data-playlink="http://stream.kcck.org/jazz883kcck" data-albumtitle="FM 88.3" data-trackname="KCCK">88.1 KCCK<div class="radioBand">FM</div></div>
+                                        </div>
+                                        <div style="width:80px;"></div>
+                                        <div style="width:45%;">
+                                        	<div id="AB_pageContainer_radio_play_T2" class="button_PLAYFILE mediaCell" data-playlink="http://krui.student-services.uiowa.edu:8000" data-albumtitle="FM 89.7" data-trackname="KRUI">89.7 KRUI<div class="radioBand">FM</div></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display:flex;">
+                                    	<div style="width:45%;">
+                                        	<div id="AB_pageContainer_radio_play_T3" class="button_PLAYFILE mediaCell mediaCell_hr_top" data-playlink="http://studioone-stream.iowapublicradio.org/StudioOne.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (Studio One)">90.9 KUNI (Studio One)<div class="radioBand">FM</div></div>
+                                        </div>
+                                        <div style="width:80px;"></div>
+                                        <div style="width:45%;">
+                                        	<div id="AB_pageContainer_radio_play_T4" class="button_PLAYFILE mediaCell mediaCell_hr_top" data-playlink="http://news-stream.iowapublicradio.org/News.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (News)">90.9 KUNI (News)<div class="radioBand">FM</div></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display:flex;">
+                                    	<div style="width:45%;">
+                                        	<div id="AB_pageContainer_radio_play_T5" class="button_PLAYFILE mediaCell mediaCell_hr_top" data-playlink="http://classical-stream.iowapublicradio.org/Classical.mp3" data-albumtitle="FM 91.7" data-trackname="KSUI">91.7 KSUI<div class="radioBand">FM</div></div>
+                                        </div>
+                                        <div style="width:80px;"></div>
+                                        <div style="width:45%;">
+                                        	<div id="AB_pageContainer_radio_play_T6" class="button_PLAYFILE mediaCell mediaCell_hr_top" data-playlink="http://15363.live.streamtheworld.com:80/KRNAFMAAC_SC" data-albumtitle="FM 94.1" data-trackname="KRNA">94.1 KRNA<div class="radioBand">FM</div></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display:flex;">
+                                    	<div style="width:45%;">
+                                        	<div id="AB_pageContainer_radio_play_T7" class="button_PLAYFILE mediaCell mediaCell_hr_top" data-playlink="http://14023.live.streamtheworld.com:80/KDATFMAAC_SC" data-albumtitle="FM 104.5" data-trackname="KDAT">104.5 KDAT<div class="radioBand">FM</div></div>
+                                        </div>
+                                        <div style="width:80px;"></div>
+                                        <div style="width:45%;">
+                                        	<div id="AB_pageContainer_radio_play_T8" class="button_PLAYFILE mediaCell mediaCell_hr_top" data-playlink="http://14533.live.streamtheworld.com:80/KFMWFMAAC_SC" data-albumtitle="FM 107.9" data-trackname="KFMW">107.9 KFMW<div class="radioBand">FM</div></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display:flex;">
+                                    	<div style="width:45%;"></div>
+                                        <div style="width:80px;"></div>
+                                        <div style="width:45%;"></div>
+                                    </div>
+                                </div>
+                            </div> <!-- end #cont_BrowseRadio -->
+                            
+                            <div id="cont_BrowseStreaming" class="container_media" style="height:530px;">
+                            	<div style="padding:30px 0px; height:100%; overflow-y:scroll;">
+                                	<div style="text-align:center; margin-bottom:0.6em; color:rgba(170,170,170,1.00);">FAVORITES</div>
+                                    
+                                    <div class="FAVORITES_container" style="display:flex; flex-direction:row; justify-content:center; align-items:flex-start;"></div>
+                                    
+                                    <br />
+                                    
+                                    <div style="text-align:center; margin-bottom:0.6em; color:rgba(170,170,170,1.00);">ALBUMS</div>
+                                    <div id="MP3_album_list_container" style="display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-start;"></div>
+                                    
+                                </div>
+                            </div> <!-- end #cont_BrowseStreaming -->
+                            
+                            <div id="cont_BrowseMedia" class="container_media" style="display:none;">
+                            	<div style="padding:30px 40px;">
+                                    <div id="browseMedia_menu" class="tesla_it_nested_menu" style="height:430px;">
+                                    	<div class="topLvl">
+                                        	<ul>
+                                                <li data-menutarget="InternetRadio">Internet</li>
+                                                <li data-menutarget="MMD" class="selectedItem">My Music &amp; Devices</li>
+                                                <li>Favorites</li>
+                                                <li>Recently Played</li>
+                                            </ul>
+                                        </div> <!-- end .topLvl -->
+                                        
+                                        <div id="menu_Radio" class="lowerLvl" style="display:none;">
+                                            <div class="second3rdLvl">
+                                                <ul>
+                                                    <li class="selectedItem"><img src="images/carat_right.png" style="height:20px; float:right; opacity:0.5;">FM</li>
+                                                    <li><img src="images/carat_right.png" style="height:20px; float:right; opacity:0.5;">AM</li>
+                                                    <li><img src="images/carat_right.png" style="height:20px; float:right; opacity:0.5;">XM Satellite Radio</li>
+                                                </ul>
+                                            </div> <!-- end .second3rdLvl -->
+                                            
+                                            <div class="third3rdLvl">
+                                                <div style="height:100%; overflow: hidden; position: relative; border-top-right-radius:10px; border-bottom-right-radius:10px;">
+                                                    <div id="FM_playlist_container" style="position:absolute; top:0; bottom:0; left:0; width:400px; overflow-y:scroll;">
+                                                    </div>                        
+                                                </div>
+                                            </div> <!-- end .third3rdLvl -->
+                                        </div> <!-- end #menu_Radio -->
+                                        
+                                        <div id="menu_MMD" class="lowerLvl">
+                                            <div class="second3rdLvl">
+                                                <ul>
+                                                    <li class="selectedItem"><img src="images/carat_right.png" style="height:20px; float:right; opacity:0.5;">Local Storage</li>
+                                                    <li><img src="images/carat_right.png" style="height:20px; float:right; opacity:0.2;">Add Bluetooth Device</li>
+                                                    <li><img src="images/carat_right.png" style="height:20px; float:right; opacity:0.2;"><img src="images/bluetooth_color.png" style="float:right; height:28px; margin:-3px 10px;">Steve C Phone</li>
+                                                </ul>
+                                            </div> <!-- end .second3rdLvl -->
+                                            
+                                            <div class="third3rdLvl">
+                                                <div style="height:100%; overflow: hidden; position: relative; border-top-right-radius:10px; border-bottom-right-radius:10px;">
+                                                    <!-- <div id="MP3_album_list_container" style="position:absolute; top:0; bottom:0; left:0; width:400px; overflow-y:scroll;"></div> -->                      
+                                                </div>
+                                            </div> <!-- end .third3rdLvl -->
+                                        </div> <!-- end #menu_MMD -->
+                                        
+                                        <div id="menu_InternetRadio" class="lowerLvl" style="display:none;">
+                                        	<div class="secondLvl">
+                                                <div style="height:100%; overflow: hidden; position: relative; border-top-right-radius:10px; border-bottom-right-radius:10px;">
+                                                    <div id="INTERNET_RADIO_playlist_container" style="position:absolute; top:0; bottom:0; left:0; width:800px; overflow-y:scroll;">
+                                                        <div id="AB_pageContainer_intradio_play_T1" class="tesla_list_row button_PLAY_STREAM" data-playlink="http://tunein.streamguys1.com/cnn" data-albumtitle="CNN" data-trackname="CNN"><img src="images/radio_icons/cnn.png" style="height:100px; margin:-29px 10px -36px -29px;">CNN (National News)</div>
+                                                    	<div id="AB_pageContainer_intradio_play_T2" class="tesla_list_row button_PLAY_STREAM" data-playlink="http://traffic.libsyn.com/force-cdn/highwinds/spookyshit/bs114_kyle_dave.mp3" data-albumtitle="The Nerdist" data-trackname="Bizarre States" data-tracksubname="Good Chicken with Kyle Kinane and Dave Stone"><img src="images/radio_icons/nerdistlogo.jpg" style="height:100px; margin:-29px 10px -36px -29px;">The Nerdist (Bizarre States)</div>
+                                                    </div>                        
+                                                </div>
+                                            </div> <!-- end .secondLvl -->
+                                        </div> <!-- end #menu_InternetRadio -->
+                                        
+                                        <div id="menu_ALBUM" class="lowerLvl" style="display:none;">
+                                        	<div class="second3rdLvl">
+                                                <ul>
+                                                    <li class="selectedItem">
+                                                    	<div id="menu_ALBUM_COVER_cont" style="width:100%;">
+                                                        	<img src="" style="width:360px; margin:10px;">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div> <!-- end .second3rdLvl -->
+                                            
+                                            <div class="third3rdLvl">
+                                                <div style="height:100%; overflow: hidden; position: relative; border-top-right-radius:10px; border-bottom-right-radius:10px;">
+                                                    <div id="MP3_playlist_container" style="position:absolute; top:0; bottom:0; left:0; width:400px; overflow-y:scroll;"></div>                       
+                                                </div>
+                                            </div> <!-- end .third3rdLvl -->
+                                        </div> <!-- end #menu_ALBUM -->
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="cont_BrowseTuneIn" class="container_media" style="display:none;">
+                            	<div style="position:absolute; top:45%; left:50%;">
+                                    <div style="position:relative;">
+                                        <p id="spinner" class="iconImg" style="opacity:0.3;"></p>
+                                        <div style="font-size:16px;">Loading...</div>
+                                    </div>
+                                </div>
+                            </div> <!-- end #cont_BrowseTuneIn -->
+                            
+                            <div id="NOW_PLAYING_container" style="position:absolute; bottom:0; left:0; min-height:110px; width:100%;">
+                            	<!-- minimized media NowPlaying bar -->
+                                <div id="NP_container">
+                                	<div id="NP_pulltab" style="position:absolute; top:-40px; height:60px; width:100%;" data-npopen="no"></div>
+                                    
+                                    <div class="AUDIO_playlist_group AUDIO_playlist_MP3" style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row; padding-top:8px;">
+                                        <div id="NP_PLAYLIST_CONTROLS" class="np_playcontrols_bigwidth" style="display:-webkit-flex; display:flex; align-items:center;">
+                                            <div id="AB_pageContainer_home_MP3_TBACK" class="PLAY_CONTROLS BUTTON_mp3_back" style="flex-grow:1; text-align:center;" data-type="back" data-bid="1002">
+                                                <img src="images/track_fwd_v8.png" class="iconImg" style="height:30px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg);">
+                                            </div>
+                                            <div id="AB_pageContainer_home_MP3_PAUSE" class="PLAY_CONTROLS BUTTON_mp3_playPause_toggle" style="text-align:center;" data-showing="play" data-bid="1003">
+                                                <div style="display:block;">
+                                                    <img src="images/play.png"  class="iconImg" style="height:60px;" >
+                                                </div>
+                                            </div>
+                                            <div id="AB_pageContainer_home_MP3_TFWD" class="PLAY_CONTROLS BUTTON_mp3_fwd" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1004">
+                                                <img src="images/track_fwd_v8.png" class="iconImg" style="height:30px;">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mp3_album_LINK NowPlaying_Art" data-albumtitle="" style="text-align:center;">
+                                            <img id="NP_ALBUMART" class="folderArt np_smallalbumpic" src="" style="margin-right:20px;">
+                                        </div>
+                                        
+                                        <div id="NP_mp3_text_cont">
+                                            <div id="NP_mp3_favtarget" data-thisalbum="" class="AUDIO_albumtitle_fav smallText" style="margin-bottom:20px; display:none;">
+                                            	<img class="heartIcon iconImg" src="images/heart_empty.png" style="width:28px; float:left; margin-right:10px; margin-top:-4px; opacity:0.3;">
+                                                <div class="AUDIO_albumtitle smallText" style="width:342px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; font-weight:bold;"></div>
+                                            </div>
+                                            <div class="AUDIO_title smallText vertPaddingOpt" style="width:380px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; font-weight:bold;"></div>
+                                            <div class="AUDIO_subtitle vertPaddingOpt" style="width:380px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; font-weight:bold;"></div>
+                                            <div class="AUDIO_albumtitle smallText vertPaddingOpt" style="width:342px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; font-weight:bold;"></div>
+                                            
+                                            <div class="vertPaddingOpt_last">
+                                                <div style="width:380px; overflow:hidden;">
+                                                    <div class="CURRENTLY_PLAYING_METER_touchtarget" style="position:absolute; height:30px; width:380px;"></div>
+                                                    <div class="CURRENTLY_PLAYING_METER_outer" style="height:4px; margin:10px 0;">
+                                                        <div class="CURRENTLY_PLAYING_METER_inner" style="height:6px;"></div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div style="display:-webkit-flex; display:flex; flex-direction:row; padding-right:50px;">
+                                                    <div class="CURRENTLY_PLAYING_TIME txtTiny" style="flex:1; display:none;">0:00</div>
+                                                    <div class="CURRENTLY_PLAYING_DURATION txtTiny" style="flex:1; text-align:right; display:none;">0:00</div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div> <!-- end .AUDIO_playlist_MP3 -->
+                                    
+                                    <div class="AUDIO_playlist_group AUDIO_playlist_radio" style="display:-webkit-flex; display:flex; -webkit-flex-direction:row; flex-direction:row;">
+                                        <div style="display:-webkit-flex; display:flex; margin-top:10px; width:100%;">
+                                            <div style="flex-grow:3;"></div>
+                                            <div id="AB_pageContainer_home_MP3_TBACK" class="PLAY_CONTROLS BUTTON_radio_back" style="flex-grow:1; text-align:center;" data-type="back" data-bid="1002">
+                                                <img src="images/track_fwd_v8.png" class="iconImg" style="height:30px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg); margin-top:15px;">
+                                            </div>
+                                            <div style="flex-grow:1; min-height:100px; padding-top:4px;">
+                                                <div style="display:flex; width:100%;">
+                                                    <div style="flex-grow:1; text-align:right;">
+                                                        <div class="AUDIO_subtitle" style="font-weight:bold; font-size:16px; display:none;"></div>
+                                                        <div class="AUDIO_title" style="font-size:38px;"></div>
+                                                        <div class="AUDIO_albumtitle" style="color:rgba(170,170,170,1.0);overflow:hidden; font-weight:bold; font-size:16px; display:none;"></div>
+                                                    </div>
+                                                    <div style="flex-grow:1; text-align:left;"><img src="images/tesla/radio_strength_bg.png" style="height:30px; margin:6px 20px;"></div>
+                                                </div>
+                                            </div>
+                                            <div id="AB_pageContainer_home_MP3_TFWD" class="PLAY_CONTROLS BUTTON_radio_fwd" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1004">
+                                                <img src="images/track_fwd_v8.png" class="iconImg" style="height:30px; margin-top:15px;">
+                                            </div>
+                                            <div style="flex-grow:3;"></div>
+                                        </div>
+                                    </div> <!-- end .AUDIO_playlist_radio -->
+                                    
+                                    <div id="NP_FAVRECENT" style="display:none;">
+                                    	<div style="height:300px; overflow-y:scroll;">
+                                            <div style="display:-webkit-flex; display:flex; justify-content:center; margin-top:10px; width:100%; padding:30px 0;">
+                                                <div class="gen_tab tab_selected">FAVORITES</div>
+                                                <div class="gen_tab">RECENT</div>
+                                            </div>
+                                            
+                                            <div class="FAVORITES_container" style="display:flex; flex-direction:row; justify-content:center; align-items:flex-start;"></div>
+                                            
+                                            <br /><br /><br /><br /><br /><br /><br />
+                                        </div>
+                                        
+                                    </div> <!-- end #NP_FAVRECENT -->
+                                    
+                                </div> <!-- end minimized media NowPlaying bar -->
+                            </div>
+                            
+                            <div class="button_GROW" data-sourcediv="SUB_CONTAINER_BOTTOM" data-sourceproto="PROTO_MEDIA" style="position:absolute; bottom:-9px; left:0;">
+                                <img src="images/tesla_section_grow_v8.png">
+                            </div>
+                            <div class="button_SWAP" style="position:absolute; bottom:-9px; right:0;">
+                                <img src="images/tesla_section_flip_v8.png">
+                            </div>
+                            
+                        </div>
+                        </div>
+					</div>
+                
+                	<div id="SUB_CONTAINER_FULL" class="sub_container_full"></div>
+                                        
+                    </div>
+                </div> <!-- end #MAIN_CONTAINER -->
+                
+                <div id="footer">
+                    <div id="footer_controls_label" style="position:absolute; padding:50px 30px;">
+                    	<img src="images/testa_controls_icon_v7.png">
+                        <div class="txtShadow_toU_hvy" style="font-size:16px; color:#DDD;">CONTROLS</div>
+                    </div>
+                    
+                    <!-- SEAT WARMER (Driver) -->
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:50px; left:196px;">
+                    	<img src="images/tesla_icon_seatwarmer_v8.png" class="op_50" style="height:60px;">
+                    </div>
+                    
+                    <!-- TEMP CONTROL (Driver) -->
+                    <div id="footer_env_driver_rocker" style="position:absolute; padding:6px 20px; left:260px;">
+                    	<div style="position:absolute; width:110px; height:140px; border:2px groove rgba(9,9,9,1.0); border-radius:6px;"></div>
+                        <div style="position:absolute; top:8px; left:65px;">
+                        	<img src="images/carat_down.png" class="invertedImg" class="op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                        </div>
+                        <div style="position:absolute; top:50px; width:110px; text-align:center;">
+                        	<span style="font-size:50px;">74</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
+                        </div>
+                        <div style="position:absolute; top:110px; left:65px;">
+                        	<img src="images/carat_down.png" class="invertedImg" class="op_50" style="width:26px; height:8px;">
+                        </div>
+                    </div>
+                    
+                    <!-- DEFROST (Front) -->
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:94px; left:412px; text-align:center;">
+                    	<img src="images/tesla_envcontrols_defrost_front.png" class="op_50" style="width:50px;">
+                        <div class="txtShadow_toU_hvy" style="font-size:14px; color:#DDD; margin-top:-18px; display:none;">FRONT</div>
+                    </div>
+                    
+                    <!-- CLIMATE -->
+                    <div id="footer_envcontrols_climatetoggle_outer">
+                    	<img src="images/288.png" class="invertedImg op_50" style="position:absolute; width:36px; top:2px; left:33px;">
+                        <div class="txtShadow_toU_hvy" style="position:absolute; top:47px; font-size:14px; color:#DDD; width:100px;">CLIMATE</div>
+                    </div>
+                    
+                    <!-- DEFROST (Rear) -->
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:94px; right:406px; text-align:center;">
+                    	<img src="images/tesla_envcontrols_defrost_rear.png" class="op_50" style="width:50px;">
+                        <div class="txtShadow_toU_hvy" style="font-size:14px; color:#DDD; margin-top:-18px; display:none;">REAR</div>
+                    </div>
+                    
+                    <!-- TEMP CONTROL (Passenger) -->
+                    <div id="footer_env_pass_rocker" style="position:absolute; padding:6px 20px; right:356px; text-align:center;">
+                    	<div style="position:absolute; width:110px; height:140px; border:2px groove rgba(9,9,9,1.0); border-radius:6px;"></div>
+                        <div style="position:absolute; top:8px; left:65px;">
+                        	<img src="images/carat_down.png" class="invertedImg" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                        </div>
+                        <div style="position:absolute; top:50px; width:110px;">
+                        	<span style="font-size:50px;">75</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
+                        </div>
+                        <div style="position:absolute; top:110px; left:65px;">
+                        	<img src="images/carat_down.png" class="invertedImg" class="op_50" style="width:26px; height:8px;">
+                        </div>
+                    </div>
+                    
+                    <!-- SEAT WARMER (Passenger) -->
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:50px; right:186px;">
+                    	<img src="images/tesla_icon_seatwarmer_v8.png" class="op_50" style="height:60px; -webkit-transform: scaleX(-1); transform: scaleX(-1);">
+                    </div>
+                    
+                    <!-- VOLUME -->
+                    <div id="footer_vol_rocker" style="position:absolute; padding:10px 20px; right:110px;">
+                        <div style="position:absolute; width:110px; height:140px; border:2px groove rgba(9,9,9,1.0); border-radius:6px;"></div>
+                        <div id="VOLUME_level_UP" style="position:absolute; top:8px; left:22px; width:110px; height:50px;">
+                        	<img src="images/carat_down.png" class="invertedImg" class="op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg); margin-left:42px;">
+                        </div>
+                        <div style="position:absolute; top:55px; width:110px; text-align:center; padding-top:12px;">
+                        	<img id="vol_speaker_main" src="images/speaker_off.png" class="invertedImg" style="height:34px;" >
+                            <img id="vol_main_off" src="images/52.png" class="invertedImg" style="height:20px; margin-bottom:6px;" >
+                        </div>
+                        <div id="VOLUME_level_DOWN" style="position:absolute; top:108px; left:22px; width:110px; height:50px;">
+                        	<img src="images/carat_down.png" class="invertedImg" class="op_50" style="width:26px; height:8px; bottom:0; margin-left:42px;">
+                        </div>
+                    </div> 
+                    <!-- end VOLUME -->
+                </div>
+                
+                <div id="footer_envcontrols_outer" style="">
+                	<div style="display:flex; padding:17px;">
+                    	<div style="flex-grow:1;"></div>
+                    	<img src="images/fan.png" class="invertedImg" style="height:25px; float:left; margin-right:10px;">
+                    	<div style="margin-top:3px;">AUTO</div>
+                        <div style="flex-grow:1;"></div>
+                    </div>
+                </div>
+            </div> <!-- end #pageContainer_home -->
+        </div>
+        
+        <div id="pageContainer_map_debug" data-role="page" style="display:none;">
+			<span id="PixPer_dimensions_TL_X"></span>, <span id="PixPer_dimensions_TL_Y"></span>
+            <span id="PixPer_dimensions_BR_X"></span>, <span id="PixPer_dimensions_BR_Y"></span>
+            <span id="PixPer_width" class="smallerText"></span> x <span id="PixPer_height" class="smallerText"></span>
+            <span id="OSD_source_width"></span> x <span id="OSD_source_height"></span>
+            <span class="entune_title">X</span><span id="OSD_VDS_Chassis_Position_QPNL_X"></span>
+            <span class="entune_title">Y</span><span id="OSD_VDS_Chassis_Position_QPNL_Y"></span>
+            <span class="entune_title">Z</span><span id="OSD_VDS_Chassis_Position_QPNL_Z"></span>
+            <div id="PixPer_xoff_percent" style="float:left;"></div>
+            <div id="PixPer_xoff">0</div>
+            <div id="PixPer_yoff_percent" style="float:left;"></div>
+            <div id="PixPer_yoff">0</div>
+            <div id="OSD_VDS_Chassis_Orient"></div>
+            <div id="OSD_VDS_Chassis_Yaw_Opp"></div>
+    	</div>
+    
+    <a id="MSTR_LINK_BACK" href="" data-rel="back"></a>
+    <a id="MSTR_LINK" href=""></a>
+    <a id="MSTR_LINK_MODAL" href="" data-rel="popup"></a>
+
+    </div>
+    
+    <img src="images/Springfield_B.svg" style="width:100%; position:fixed; top:200px; left:0px; color:#FFF; background:#D73639; display:none;">
+    
+    <div data-role="popup" data-overlay-theme="b" id="panelContainer_CONTROLS" class="BG-BLACK DARK_TOG" style="border:1px solid rgba(200,200,200,0.3); background:rgba(192,192,192,1.0); border-radius:10px; font-size:24px;">
+        
+        <div style="display:flex; text-align:center;">
+        	<div style="flex-grow:1"></div>
+            <div>Controls</div>
+            <div>Settings</div>
+            <div style="flex-grow:1"></div>
+        </div>
+        
+        <div role="main" class="ui-content">
+        	<div style="padding:30px;">
+                <div id="controls_menu" class="tesla_it_nested_menu" style="height:670px; margin-top:50px;">
+                    <div class="topLvl_modal">
+                        <ul>
+                            <li data-menutarget="Sunroof" class="selectedItem">Sunroof</li>
+                            <li data-menutarget="InternetRadio">Suspension</li>
+                            <li data-menutarget="MMD">Driving</li>
+                            <li>Cold Weather</li>
+                            <li>Trips</li>
+                            <li>Displays</li>
+                            <li>E-Brake &amp; Power Off</li>
+                        </ul>
+                    </div> <!-- end .topLvl -->
+                    
+                    <div id="menu_Sunroof" class="lowerLvl" style="width:670px;">                    
+                        <div class="secondLvl" style="width:674px;">
+                            <div style="height:100%; overflow: hidden; position: relative; border-top-right-radius:7px; border-bottom-right-radius:7px;">
+                                <img src="images/tesla_model_s_ovhd.jpg" style="margin:0; padding:0; width:704px;">                  
+                            </div>
+                        </div> <!-- end .secondLvl -->
+                    </div> <!-- end #menu_Sunroof -->
+                   
+                </div> <!-- end #controls_menu -->
+                
+                <div style="margin-top:30px; color:#999; text-shadow:0px 1px 0px rgba(255,255,255,0.6); font-size:22px;">
+                	<div style="position:absolute;">DOORS &amp; LOCKS</div>
+                    <div style="position:absolute; left:250px;">LIGHTS</div>
+                </div>
+                
+                <div style="margin-top:70px;">
+                    <div style="display:flex; border:3px solid rgba(166,166,166,1.0); border-radius:10px;">
+                    	<div style="background:rgba(220,220,220,1.0); width:33%;"><img src="images/tesla_model_s_ovhd_sm.jpg" style="width:100%;"></div>
+                        <div style="background:linear-gradient(to bottom, rgba(194,194,194,1.0), rgba(220,220,220,1.0)); width:100%; border-left:3px solid rgba(166,166,166,1.0); height:316px; border-bottom-right-radius:10px; border-top-right-radius:10px;"></div>
+                    </div>
+                </div>
+            </div> <!-- end padding -->
+        </div> <!-- end .ui-content -->
+        
+        <div class="sub_container_header_container" style="position:absolute; top:0; background:rgba(155,155,155,1.0);">
+            <div style="display:flex;">
+                <div style="flex-grow:2;">
+                </div>
+                <div style="flex-grow:1;">
+                    <div class="sub_container_tab sub_container_tab_selected" data-tabtarget="cont_ControlsControls">Controls</div>
+                </div>
+                <div style="flex-grow:1;">
+                    <div class="sub_container_tab" data-tabtarget="cont_ControlsSettings">Settings</div>
+                </div>
+                <div style="flex-grow:2;"></div>
+            </div> <!-- end flex row -->
+        </div> <!-- end .sub_container_header_container -->
+
+    </div> <!-- end #panelContainer_CONTROLS -->
+    
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/infotainment_system_tesla.io.js"></script>
+
+</div>
+</body>
+
+</html>

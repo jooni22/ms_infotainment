@@ -1,0 +1,50 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <meta charset="utf-8">
+    <title>Cab Infotainment</title>
+    
+    <link rel="icon" sizes="128x128" href="images/toyota_icon_128.png">
+    <link rel="icon" sizes="192x192" href="images/toyota_icon_192.png">
+    
+    <link rel="stylesheet" href="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/infotainment_audio_default.css">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="icon" sizes="128x128" href="images/toyota_icon_128.png">
+    <link rel="icon" sizes="192x192" href="images/toyota_icon_192.png">                   
+</head>
+
+<body>
+
+<div class="warningStripe">
+	<div style="background:rgba(0,0,0,0.6); margin:0;">
+    	<div style="display:inline-block;">Cab Infotainment - DROWSINESS</div>
+        <div id="debug_connectionStatus" style="display:inline-block; font-size:0.5em;">Unknown</div>
+    </div>
+</div>
+
+<div style="border:1px solid rgba(255,255,255,0.2); padding:1em; text-align:center;">
+    <div style="font-weight:bold; font-size:0.8em;">Select alert state:</div>
+    <div class="button GUI_btn" data-reqtype="open" data-stagelevel="1">Stage 1<img src="alert_src/drow/stage1.png" style="height:1em; margin-left:8px;"/></div>
+    <div class="button GUI_btn" data-reqtype="open" data-stagelevel="2">Stage 2<img src="alert_src/drow/stage2.png" style="height:1em; margin-left:8px;"/></div>
+    <div class="button GUI_btn" data-reqtype="open" data-stagelevel="3">Stage 3<img src="alert_src/drow/stage3.png" style="height:1em; margin-left:8px;"/></div>
+    
+    <div style="height:20px;"></div>
+    
+    <div class="button GUI_btn" data-reqtype="close" data-stagelevel="0"><i>NO SCREEN (BLACK)</i></div>
+	
+	<div style="height:20px;"></div>
+	
+	<div class="button GUI_btn" data-reqtype="reset" data-stagelevel="0"><i>Reset (normal operation)</i></div>
+</div>
+    
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/cp_drow.io.js"></script>
+</body>
+</html>

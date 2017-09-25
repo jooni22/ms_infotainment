@@ -1,0 +1,146 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	/* cursor:default; */
+}
+
+.ui-overlay-a, .ui-page-theme-a .ui-panel-wrapper {
+	background-color:rgba(249,249,249,0.5);
+}
+
+.MIRROR_BUTTON {
+	width:180px;
+	height:107px;
+	border:1px solid rgba(100,100,100,0.6);
+	border-radius:2px;
+	margin-top:2px;
+	margin-right:2px;
+	background:rgba(0,0,0,1);
+	color:rgba(255,255,255,1);
+	position:relative;
+}
+
+.MIRROR_BUTTON img {
+	position:absolute;
+	width:180px;
+	top:0;
+	opacity:0.5;
+}
+
+.MIRROR_BUTTON_INNER {
+	display:flex; 
+	justify-content:center; 
+	flex-direction:column; 
+	height:107px;
+}
+
+.MIRROR_BUTTON_CAPTION {
+	z-index:8000;
+	text-align:center;
+	background:rgba(0,0,0,0.9);
+	border-radius:3px;
+	padding:14px;
+	margin:auto;
+	font-weight:bold;
+}
+
+.touchSplash_echo {
+	position:absolute;
+	z-index:8900;
+	height:40px;
+	width:40px;
+	border:3px solid rgba(255,255,255,1.0);
+	border-radius:40px;
+	-webkit-animation: 0.6s touchpulseout cubic-bezier(.66,.01,.31,1) forwards;
+	-moz-animation: 0.6s touchpulseout cubic-bezier(.66,.01,.31,1) forwards;
+	animation: 0.6s touchpulseout cubic-bezier(.66,.01,.31,1) forwards;
+}
+
+#TOUCH_TARGET {
+	position:absolute;
+	z-index:9000;
+	height:40px;
+	width:40px;
+	display:none;
+	border:3px solid green;
+	border-radius:40px;
+	-webkit-animation: 1s touchpulse linear infinite;
+	-moz-animation: 1s touchpulse linear infinite;
+	animation: 1s touchpulse linear infinite;
+}
+
+@keyframes "touchpulse" {
+  from, to {
+    border:3px solid  rgba(0,255,0,1.00);
+  }
+  50% {
+    border:3px solid  rgba(0,255,0,0);
+  }
+  100% {
+  	border:3px solid  rgba(0,255,0,1.00);
+  }
+}
+
+@-moz-keyframes touchpulse {
+  from, to {
+    border:3px solid  rgba(0,255,0,1.00);
+  }
+  50% {
+    border:3px solid  rgba(0,255,0,0);
+  }
+  100% {
+  	border:3px solid  rgba(0,255,0,1.00);
+  }
+}
+
+@-webkit-keyframes "touchpulse" {
+  from, to {
+    border:3px solid  rgba(0,255,0,1.00);
+  }
+  50% {
+    border:3px solid  rgba(0,255,0,0);
+  }
+  100% {
+  	border:3px solid  rgba(0,255,0,1.00);
+  }
+}
+
+
+@keyframes "touchpulseout" {
+  from, to {
+	-webkit-transform: scale(1,1);
+	transform: scale(1,1);
+	opacity:1.0;
+  }
+  100% {
+	-webkit-transform: scale(1.2,1.2);
+	transform: scale(1.2,1.2);
+	opacity:0.0;
+  }
+}
+
+@-moz-keyframes touchpulseout {
+  from, to {
+	-webkit-transform: scale(1,1);
+	transform: scale(1,1);
+	opacity:1.0;
+  }
+  100% {
+	-webkit-transform: scale(1.2,1.2);
+	transform: scale(1.2,1.2);
+	opacity:0.0;
+  }
+}
+
+@-webkit-keyframes "touchpulseout" {
+  from, to {
+	-webkit-transform: scale(1,1);
+	transform: scale(1,1);
+	opacity:1.0;
+  }
+  100% {
+	-webkit-transform: scale(1.2,1.2);
+	transform: scale(1.2,1.2);
+	opacity:0.0;
+  }
+}

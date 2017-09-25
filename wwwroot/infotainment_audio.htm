@@ -1,0 +1,64 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <meta charset="utf-8">
+    <title>Cab Infotainment Audio</title>
+    
+    <link rel="icon" sizes="128x128" href="images/toyota_icon_128.png">
+    <link rel="icon" sizes="192x192" href="images/toyota_icon_192.png">
+    
+    <link rel="stylesheet" href="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/infotainment_audio_default.css">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="icon" sizes="128x128" href="images/toyota_icon_128.png">
+    <link rel="icon" sizes="192x192" href="images/toyota_icon_192.png">                   
+</head>
+
+<body>
+
+<div class="warningStripe">
+	<img src="images/error.png" style="float:left;">
+    <img src="images/error.png" style="float:right;">
+	<div style="background:rgba(0,0,0,0.6); margin:0;">
+    	<div style="display:inline-block;">Cab Infotainment Audio</div>
+        <div id="debug_connectionStatus" style="display:inline-block; font-size:0.5em;">Unknown</div>
+    </div>
+</div>
+
+<div style="border:1px solid rgba(255,255,255,0.2); padding:1em;">
+    <div>Main playback (Player A)</div>
+    <div id="audio-player-a">
+        <audio id="audio-player-a-OBJ" controls>
+            <source src="http://128.255.250.145/mp3/silence.mp3" type="audio/mpeg"></source>
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<div style="border:1px solid rgba(255,255,255,0.2); border-top:none; padding:1em;">
+    <div>Secondary playback (Player B)</div>
+	<div id="audio-player-b">
+        <audio id="audio-player-b-OBJ" controls>
+            <source src="http://90.0.0.30/mp3/silence.mp3" type="audio/mpeg"></source>
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<div class="warningStripe" style="position:absolute; bottom:0; left:0; right:0;">
+	<img src="images/error.png" style="float:left;">
+    <img src="images/error.png" style="float:right;">
+    <div>DO NOT CLOSE!</div>
+</div>
+
+    
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/infotainment_audio.io.js"></script>
+</body>
+</html>

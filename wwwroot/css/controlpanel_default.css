@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+    margin:0;
+}
+#video-viewport {
+    position: absolute;
+    top: 0;
+    left:0;
+    overflow: hidden;
+    z-index: -1; /* for accessing the video by click */
+}
+
+

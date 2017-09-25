@@ -1,0 +1,281 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tesla Model S Infotainment</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    
+    <link rel="icon" sizes="128x128" href="images/tesla_logo_white_ds.png">
+    <link rel="icon" sizes="192x192" href="images/tesla_logo_white_ds.png">
+    
+    <link rel="stylesheet" href="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/infotainment_tesla.css">
+    
+	<script src="scripts/jquery-1.9.1.min.js"></script>
+    <script src="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.js"></script>     
+    <script src="scripts/moment.min.js"></script>  
+    <script src="scripts/moment-duration-format.js"></script>     
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+	<div id="TOUCH_COVER" style="background:#000;">
+        <div id="TOUCH_COVER_INNER" style="position:fixed; width:1060px; height:1980px;">
+            <div id="pageContainer_home" data-role="page" class="BG-BLACK">
+                <div class="infotainmentHeader">
+                    <div class="ui-grid-d">
+                        <div class="ui-block-a" style="padding-left:8px;">
+                            64&deg;F
+                        </div>
+                        
+                        <div class="ui-block-b">
+                        	<div style="display:inline;">
+                            	<img src="images/tesla_ic_battery_outer.png" style="height:20px; position:absolute; margin-top:4px;">
+                                <div id="batt_current_lvl_outer">
+                                    <div id="batt_current_lvl"></div>
+                                </div>
+                            </div>
+                            <div style="display:none;">
+                            	<span id="range_reading_int" class="ltGrey_txt txtShadow_toU">73</span>
+                                <span id="range_reading_scale" class="dkGrey_txt txtShadow_toU"> %</span>
+                            </div>
+                        </div>
+                        
+                        <div class="ui-block-c" style="text-align:center;">
+                            <div style="position:absolute; margin-top:-10px; margin-left:64px; z-index:100;">
+                            	<div style="position:relative; width:60px; border:2px solid rgba(160,160,160,1.00); padding:8px; background:linear-gradient(to bottom, rgba(88,88,88,1.00), rgba(0,0,0,1.0)); box-shadow:0px 0px 30px rgba(0,0,0,1.0);">
+                            		<img src="images/tesla_logo_white_ds.png" style="height:40px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-block-d"></div>
+                        <div class="ui-block-e" style="text-align:right; padding-right:8px;">
+                            <div class="tesla_clock">--:--</div>
+                            <div style="font-size:10px; color:#999; margin-top:-3px;">PASS AIRBAG <span style="color:yellow;">OFF</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div role="main" class="ui-content" style="height:1870px; background:linear-gradient(to right, rgba(96,103,110,1.0), rgba(0,0,0,1.0) 25%, rgba(0,0,0,1.0) 75%, rgba(96,103,110,1.0));">
+                	<div style="position:absolute; top:60px; left:10px;">
+                    	<img src="images/tesla_it_menu.png" style="width:1040px;">
+                    </div>
+                </div>
+                
+                <div id="MAIN_CONTAINER">
+                	<div id="MAIN_CONTAINER_inner">
+                    <div id="SUB_CONTAINER_INSET_BL" style="position:absolute; bottom:4px; left:-40px;">
+                    	<img src="images/tesla_inset_corner_bot_left.png" style="position:absolute;">
+                    </div>
+                    <div id="SUB_CONTAINER_INSET_BR" style="position:absolute; bottom:4px; right:0px;">
+                    	<img src="images/tesla_inset_corner_bot_right.png" style="position:absolute;">
+                    </div>
+                    
+                    <img src="images/tesla_container_topside_20.png" style="position:absolute; top:12px; left:1px;">
+                    <img src="images/tesla_container_topside_20.png" style="position:absolute; top:772px; left:1px;">
+                    
+                    <div id="SUB_CONTAINER_TOP" class="sub_container_outer">
+                    	<div class="sub_container_front_outer" style="top:750px;">
+                            <div class="sub_container_front">
+                            	<div class="sub_container_header_container">
+                                	<div style="display:flex;">
+                                        <div style="padding:8px">
+                                            <div class="button buttonShadow" style="padding-left:24px; padding-right:24px;">
+                                                PLACES
+                                            </div>
+                                        </div>
+                                        <div style="flex-grow:2;">
+                                            <div style="position:absolute; padding:0; margin-top:-7px;">
+                                                <input type="text" style="margin-top:-3px; margin-bottom:-10px;" placeholder="Enter Address or Search" disabled>
+                                            </div>
+                                        </div>
+                                        <div style="flex-grow:2;"></div>
+                                        <div style="flex-grow:1;">
+                                            <div style="position:absolute; padding:16px 16px 14px 14px;">
+                                                <img src="images/lightning.png" class="invertedImg" style="height:30px;">
+                                            </div>
+                                        </div>
+                                    </div> <!-- end flex row -->
+                                    
+                                    <div style="position:absolute; background:rgba(188,189,163,0.3); height:650px; width:100%; border-bottom-left-radius:10px; border-bottom-right-radius:10px; margin:0 0 0 1px; overflow:hidden;">
+                                    <div id="NAV_mapContainer">
+                                        <div id="mapContainerOuter" style="position:absolute;">
+                                            <div id="mapContainerInner" style="position:absolute; top:210px; left:390px;">
+                                                <!-- <img id="NAV_MAP_IMG_UNDERLAY" class="mapGPSunderlay" src="" style="opacity:0.6; position:absolute;"> -->
+                                                <img id="NAV_MAP_IMG" class="mapImg" src="" style="opacity:1; position:absolute; -webkit-filter: drop-shadow(0px 0px 16px rgba(0,0,0,0.6)); filter: url(#drop-shadow);">
+                                            </div>
+                                        </div>
+                                    </div> <!-- end #NAV_mapContainer -->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+						</div>
+                    </div>
+                    
+                    <div id="SUB_CONTAINER_BOTTOM" class="sub_container_outer">
+                       	<div class="sub_container_front_outer" style="top:770px;">
+                        <div class="sub_container_front">
+                        	<div class="sub_container_header_container">
+                            	<div style="display:flex;">
+                                    <div style="flex-grow:1;">
+                                    	<div style="position:absolute; padding:16px 34px 32px 34px;">
+                                        	<img src="images/heart.png" class="invertedImg" style="height:30px;">
+                                        </div>
+                                    </div>
+                                    <div style="flex-grow:2;">
+                                    	<div style="position:absolute; padding:16px 34px 32px 34px;">
+                                        	<img src="images/clock.png" class="invertedImg" style="height:34px;">
+                                        </div>
+                                    </div>
+                                    <div style="flex-grow:1;">
+                                    	<div style="background:#FFF; border:1px solid #D8D7D7; border-bottom:none; border-top-left-radius:10px; border-top-right-radius:10px; padding:14px; margin:14px 0 0 0; text-align:center; font-size:24px;">Browse</div>
+                                    </div>
+                                    <div style="flex-grow:1;">
+                                    	<div style="padding:14px; margin:14px 0 0 0; text-align:center; font-size:24px;">Now Playing</div>
+                                    </div>
+                                    <div style="flex-grow:2;">
+                                    	<div style="position:absolute; padding:16px 16px 14px 14px;">
+                                        	<img src="images/tesla_icon_sliders.png" class="invertedImg" style="height:30px;">
+                                        </div>
+                                    </div>
+                                    <div style="flex-grow:1;"></div>
+                                </div> <!-- end flex row -->
+                            </div>
+                        </div>
+                        </div>
+					</div>
+                    
+                    
+                    </div>
+                </div> <!-- end #MAIN_CONTAINER -->
+                
+                <div id="footer">
+                	<div id="footer_upper_lip"></div>
+                    <div id="footer_controls_label" style="position:absolute; padding:50px 30px;">
+                    	<img src="images/testa_controls_icon.png" style="width:110px; margin-left:-6px;">
+                        <div class="txtShadow_toU_hvy" style="font-size:16px; color:#DDD;">CONTROLS</div>
+                    </div>
+                    
+                    <div id="footer_section_mark_l"><img src="images/testla_infotainment_crevice_l.png" style=""></div>
+                    
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:70px; left:196px;">
+                    	<img src="images/tesla_icon_seatwarmer_wh.png" style="width:50px; -webkit-transform: scaleX(-1); transform: scaleX(-1);">
+                    </div>
+                    
+                    <!-- TEMP CONTROL (Driver) -->
+                    <div id="footer_env_driver_rocker" style="position:absolute; padding:6px 20px; left:260px;">
+                    	<img src="images/tesla_envcontrols_rocker_c.png" style="position:absolute; width:110px;">
+                        <div style="position:absolute; top:8px; left:65px;">
+                        	<img src="images/29.png" class="invertedImg" style="width:22px; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                        </div>
+                        <div style="position:absolute; top:55px; width:110px; text-align:center;">
+                        	<span style="font-size:45px;">74</span><span style="font-size:26px;">&deg;</span>
+                        </div>
+                        <div style="position:absolute; top:110px; left:65px;">
+                        	<img src="images/29.png" class="invertedImg" style="width:22px;">
+                        </div>
+                    </div>
+                    
+                    <!-- DEFROST (Front) -->
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:94px; left:410px; text-align:center;">
+                    	<img src="images/tesla_envcontrols_defrost_front.png" style="width:50px;">
+                        <div class="txtShadow_toU_hvy" style="font-size:14px; color:#DDD; margin-top:-18px; ">FRONT</div>
+                    </div>
+                    
+                    <!-- CLIMATE -->
+                    <div id="footer_envcontrols_climatetoggle_outer">
+                    	<img src="images/tesla_envcontrols_rocker_c_top.png" style="position:absolute; width:100px;">
+                        <img src="images/288.png" class="invertedImg" style="position:absolute; width:20px; top:14px; left:40px;">
+                        <div class="txtShadow_toU_hvy" style="position:absolute; top:38px; font-size:14px; color:#DDD; width:100px;">CLIMATE</div>
+                    </div>
+                    
+                    <!-- DEFROST (Rear) -->
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:94px; right:406px; text-align:center;">
+                    	<img src="images/tesla_envcontrols_defrost_rear.png" style="width:50px;">
+                        <div class="txtShadow_toU_hvy" style="font-size:14px; color:#DDD; margin-top:-18px; ">REAR</div>
+                    </div>
+                    
+                    <!-- TEMP CONTROL (Passenger) -->
+                    <div id="footer_env_pass_rocker" style="position:absolute; padding:6px 20px; right:356px; text-align:center;">
+                    	<img src="images/tesla_envcontrols_rocker_c.png" style="position:absolute; width:110px;">
+                        <div style="position:absolute; top:8px; left:65px;">
+                        	<img src="images/29.png" class="invertedImg" style="width:22px; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                        </div>
+                        <div style="position:absolute; top:55px; width:110px;">
+                        	<span style="font-size:45px;">75</span><span style="font-size:26px;">&deg;</span>
+                        </div>
+                        <div style="position:absolute; top:110px; left:65px;">
+                        	<img src="images/29.png" class="invertedImg" style="width:22px;">
+                        </div>
+                    </div>
+                    
+                    <!-- SEAT WARMER (Passenger) -->
+                    <div id="footer_seatwarmer_driver" style="position:absolute; top:70px; right:186px;">
+                    	<img src="images/tesla_icon_seatwarmer_wh.png" style="width:50px;">
+                    </div>
+                    
+                    <div id="footer_section_mark_r"><img src="images/testla_infotainment_crevice_r.png" style=""></div>
+                    
+                    <!-- VOLUME -->
+                    <div id="footer_vol_rocker" style="position:absolute; padding:6px 20px; right:110px;">
+                    	<img src="images/tesla_envcontrols_rocker_c.png" style="position:absolute; width:110px;">
+                        <div style="position:absolute; top:8px; left:65px;">
+                        	<img src="images/29.png" class="invertedImg" style="width:22px; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                        </div>
+                        <div style="position:absolute; top:55px; width:110px; text-align:center; padding-top:12px;">
+                        	<img src="images/speaker_off.png" class="invertedImg" style="width:24px; height:34px;" >
+                            <img src="images/52.png" class="invertedImg" style="height:20px; margin-bottom:6px;" >
+                        </div>
+                        <div style="position:absolute; top:110px; left:65px;">
+                        	<img src="images/29.png" class="invertedImg" style="width:22px;">
+                        </div>
+                    </div> 
+                    <!-- end VOLUME -->
+                </div>
+                
+                <div id="footer_envcontrols_outer"><img src="images/tesla_envcontrols_center.png" style="width:240px;"></div>
+            </div> <!-- end #pageContainer_home -->
+        </div>
+    
+    <a id="MSTR_LINK_BACK" href="" data-rel="back"></a>
+    <a id="MSTR_LINK" href=""></a>
+    <a id="MSTR_LINK_MODAL" href="" data-rel="popup"></a>
+
+    </div>
+    
+    <div data-role="popup" data-overlay-theme="b" id="panelContainer_VOLUME" class="BG-BLACK" style="border:1px solid rgba(200,200,200,0.3); border-radius:3px;">
+        <div class="infotainmentHeader" style="text-align:center;">Volume</div>
+        <div role="main" class="ui-content">
+            <div class="ui-grid-a" style="width:240px;">
+                <div class="ui-block-a">
+                    <div id="VOLUME_level_container" style="height:250px; border:1px solid rgba(0,0,0,1); margin:10px 20px; background:linear-gradient(to bottom,red,yellow,green);">
+                        <div id="VOLUME_level_blackout" style="position:absolute; top:73px; left:20px; height:125px; width:80px; background:black;"></div>
+                        <div id="VOLUME_level_gauge_stripes" style="position:absolute; top:73px; left:20px; height:251px; width:80px; background:repeating-linear-gradient(180deg, rgba(0,0,0,1), rgba(0,0,0,1) 5px, rgba(0,0,0,0) 5px, rgba(0,0,0,0) 10px);"></div>
+                        <div id="VOLUME_level_gauge_value" style="position:absolute; bottom:120px; left:32px; width:56px; color:rgba(255,255,255,1); text-align:center; background:rgba(0,0,0,0.6); box-shadow:0px 0px 10px rgba(0,0,0,1); border-radius:50px;">50</div>
+                    </div>
+                </div> <!-- end .ui-block-a -->
+                <div class="ui-block-b">
+                    <div style="display:-webkit-flex; display:flex; -webkit-flex-direction:column; flex-direction:column; text-align:center; margin-top:9px;">
+                        <div id="VOLUME_level_UP" class="button buttonVolume" style="align-self:flex-start; align-self:center;" data-bid="5000">
+                            <img src="images/speaker_high.png" >
+                        </div>
+                        <div style="height:39px;"></div>
+                        <div id="VOLUME_level_DOWN" class="button buttonVolume" style="align-self:flex-end; align-self:center;" data-bid="5001">
+                            <img src="images/speaker_low.png" style="height:30px; margin-top:33px;">
+                        </div>
+                    </div>
+                </div> <!-- end .ui-block-b -->
+            </div> <!-- end .ui-grid-a -->
+        </div>
+    </div> <!-- end #panelContainer_VOLUME -->
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/infotainment_system_tesla.io.js"></script>
+
+</body>
+
+</html>

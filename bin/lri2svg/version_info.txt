@@ -1,0 +1,11 @@
+Current version:
+2017.09.06 update to 3/7/2017 file due to issues w/output, extents
+
+add 330 units for extents all 4 sides, generate extent info for Steve
+remove debugging output (clean up log file)
+
+ToDo:
+parameterize colors, stroke data using config.xml
+
+Obsolete
+A - initial version

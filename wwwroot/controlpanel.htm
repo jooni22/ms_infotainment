@@ -1,0 +1,57 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <meta charset="utf-8">
+    <title>NMC Control Panel</title>
+    <link rel="stylesheet" type="text/css" href="css/controlpanel_default.css">               
+</head>
+
+<body>
+
+<div id="button_launchChromeWindows" class="button">
+    Open windows
+</div>
+
+<div id="button_closeChromeWindows" class="button">
+    Close windows
+</div>
+
+<br />
+
+<div>
+	<select id="vidGroup">
+    	<option value="clouds">Clouds</option>
+        <option value="farm">Farm</option>
+    </select>
+</div>
+
+<br />
+
+<div id="button_video_play" class="button">
+	Play
+</div>
+
+<div id="button_video_pause" class="button">
+	Pause
+</div>
+
+<div id="button_video_rewind" class="button">
+	Rewind
+</div>
+
+<br />
+<div id="button_NMC_debug_hide" class="button">
+	Hide debug
+</div>
+
+<div id="button_NMC_debug_show" class="button">
+	Show debug
+</div>
+
+    
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/controlpanel_client_general.io.js"></script>
+</body>
+</html>

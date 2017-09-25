@@ -1,0 +1,50 @@
+<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>NADS MultiFunction Display</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    
+    <link rel="icon" sizes="128x128" href="images/toyota_icon_128.png">
+    <link rel="icon" sizes="192x192" href="images/toyota_icon_192.png">
+    
+    <link rel="stylesheet" href="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/mfd.css">
+    
+	<script src="scripts/jquery-1.9.1.min.js"></script>
+    <script src="scripts/jqm_1.4.5/jquery.mobile-1.4.5.min.js"></script>     
+    <script src="scripts/moment.min.js"></script>  
+    <script src="scripts/moment-duration-format.js"></script>     
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+	<div id="MFD_TOUCH_COVER" style="background:#000; position:absolute; top:0; left:0; right:0; bottom:0;">
+    
+	<div data-role="page" class="MFD_BG">
+    	<div id="MFD_pageContainer_home" data-role="content" style="display:block !important;"></div>
+    </div>
+		    
+    <div id="MFD_CONTROL_PANEL" data-role="panel" data-position="right" data-theme="a" data-display="overlay">
+        <!-- panel content goes here -->
+        <!-- use li class="ui-screen-hidden" to hide list items -->
+        <ul data-role="listview">
+        	<li><div id="MFD_L_Map" class="MFD_load_page" data-targeturl="128.255.250.194:8888/default_mobile.htm?sv=128.255.250.194">Map</div></li>
+			<li><div id="MFD_L_Infotainment_Mirror" class="MFD_load_page" data-targeturl="128.255.250.145/infotainment_mirror.htm?sv=128.255.250.145">Infotainment Mirror</div></li>
+        </ul>
+        
+        <div style="position:absolute; bottom:0; left:0; width:100%;">
+        	<ul data-role="listview">
+            	<li><a href="#" id="mscAdvanced_button" data-role="button" data-icon="gear" data-iconpos="right" data-theme="b">Advanced</a></li>
+            </ul>
+        </div>
+    </div><!-- end MIRROR_CONTROL -->
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/mfd.io.js"></script>
+</body>
+
+</html>

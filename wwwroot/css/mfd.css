@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+    margin:0;
+	padding:0;
+	border:none;
+}
+
+a {
+	color:inherit !important;
+	text-decoration:inherit !important;
+	font-weight:inherit !important;
+	cursor:none !important;
+}
+
+img {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.MFD_BG {
+	background:#000;
+	font-weight:600;
+	font-stretch: condensed;
+	positon:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+}
+
+.ui-mobile [data-role=page], .ui-mobile [data-role=dialog], .ui-page {
+	display:block !important;
+}
