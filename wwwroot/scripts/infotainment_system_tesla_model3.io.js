@@ -249,6 +249,12 @@ function check_phonePane_height() {
 	return parseInt(phonePaneTop);
 }
 
+function check_carSystemPane_height() {
+	var carSystemPaneTop = $('#PANE_CAR_SYSTEM').css('top').split('px')[0];
+	// '870'
+	return parseInt(carSystemPaneTop);
+}
+
 // Hammer(time)
 var phoneElement = document.getElementById('PANE_PHONE');
 var ht_Phone = new Hammer(phoneElement);
@@ -652,6 +658,24 @@ function bindDOMEvents() {
 				break;
 		}
 		//$('#PANE_AUDIO').toggle();
+	});
+	
+	$(document.body).on('click', '#footer_car_system', function() {
+		switch(check_carSystemPane_height()) {
+			case 870:
+				$('#PANE_CAR_SYSTEM').css('top','60px');
+				break;
+			case 710:
+				$('#PANE_CAR_SYSTEM').css('top','60px');
+				break;
+			case 60:
+				$('#PANE_CAR_SYSTEM').css('top','870px');
+				break;
+		}
+	});
+	
+	$(document.body).on('click', '#BTN_InfoCS_Toyota_Entune', function() {
+		window.location.href = serverAddress+'/infotainment_system.htm?sv='+CLIENT_URL_VARS.sv;
 	});
 	
 	$(document.body).on('mousedown touchstart', '.gen_button', function() {

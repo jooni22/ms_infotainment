@@ -577,6 +577,16 @@ hr {
 	justify-content:center;
 }
 
+.rounded_button {
+	border-radius:40px !important;
+	padding:6px 10px !important;
+	border:3px solid rgba(160,160,160,0.5) !important;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	margin:auto;
+}
+
 .dialpad_button {
 	flex-direction:column;
 }

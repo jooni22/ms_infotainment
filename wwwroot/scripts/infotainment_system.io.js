@@ -65,6 +65,8 @@ var AB_SCREEN_MATRIX = {
 };
 
 var sessionVars = {
+	'WINDOW_height'				: 0,
+	'WINDOW_width'				: 0,
 	'OSD_source_info'			: [],
 	'OSD_map_img_info'			: [],
 	'VDS_CG_Chassis_Position'	: [],
@@ -169,7 +171,6 @@ function updateOSD() {
 	$('.entune_clock').html(updatedDate);
 }
 
-
 var socket = null,
 	clientId = null,
 	nickname = null,
@@ -208,6 +209,10 @@ function bindDOMEvents() {
 		}
 		$(this).removeClass('buttonDOWN');
 		$('#MSTR_LINK').click();
+	});
+	
+	$(document.body).on('click', '#AB_pageContainer_maintenance_TM3IT', function() {
+		window.location.href = serverAddress+'/infotainment_system_tesla_model3.htm?sv='+CLIENT_URL_VARS.sv;
 	});
 	
 	$(document.body).on('mouseup', '.button', function() {
@@ -1188,11 +1193,18 @@ function connect() {
 
 function updateTouchLocation(x, y) {
 	//console.log('X: '+x+'; Y: '+y);
-	socket.emit('IUI_touchinfo',{ type: 'update', coord_x: x, coord_y: y });
+	var modX = x - ((sessionVars.WINDOW_width - ($('#FLOAT_CONTAINER').width())) / 2);
+	var modY = y - ((sessionVars.WINDOW_height - ($('#FLOAT_CONTAINER').height())) / 2);
+	socket.emit('IUI_touchinfo',{ type: 'update', coord_x: modX, coord_y: modY });
 }
 
 function updatePageContainerLoc(pageHashId) {
 	socket.emit('IUI_info',{ type: 'update', current_page_hash: pageHashId });
+}
+
+function measureWindow() {
+	sessionVars.WINDOW_width = $(window).width();
+	sessionVars.WINDOW_height = $(window).height();
 }
 
 $(function() { 
@@ -1212,7 +1224,8 @@ $(function() {
 	
 	// TOUCH TRACKING
 	document.addEventListener("touchstart", function(e) {
-        updateTouchLocation(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+        //console.log(e);
+		updateTouchLocation(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
     },false);
 
 	document.addEventListener("touchmove", function(e) {
@@ -1230,6 +1243,11 @@ $(function() {
 		CURRENT_CLIENT_HASH = 'pageContainer_home';
 	}
 	updatePageContainerLoc(CURRENT_CLIENT_HASH);
+	
+	$(window).resize(function() {
+		measureWindow();
+	});
+	measureWindow();
 	
 	bindDOMEvents();
 });
