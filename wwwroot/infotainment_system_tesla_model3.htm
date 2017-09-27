@@ -95,8 +95,9 @@
                                 
                                 <div class="nav_other_controls_outer" style="margin-right:20px;">
                                 	<div>
-                                        <div class="button gen_button" style="width:75px; height:75px; padding:0 !important; border-radius:38px;">
-                                            <img src="images/globe.png" style="height:40px; opacity:0.6; margin:18px 10px;">
+                                        <div class="button gen_button" style="width:75px; height:75px; padding:0 !important; border-radius:38px; display:flex; align-items:center; justify-content:center;">
+                                            <!-- <img src="images/globe.png" style="height:40px; opacity:0.6; margin:18px 10px;"> -->
+                                            <div style="width:40px; height:40px; border:1px solid rgba(111,111,111,1.00); border-radius:20px;"><i class="fa fa-bolt" aria-hidden="true" style="font-size:2em;"></i></div>
                                         </div>
                                     </div>
                                     
@@ -534,31 +535,199 @@
                                 </div> <!-- end #PROTO_PHONE -->
                             </div> <!-- end #PANE_PHONE -->
                             
-                            <div id="PANE_CAR_SYSTEM" class="tesla_pane dark DARK_TOG" style="position:absolute; top:870px; left:520px; height:810px; width:960px; z-index:100; transition: all 0.5s ease 0s;">
+                            <div id="PANE_CAR_SYSTEM" class="tesla_pane dark DARK_TOG" style="position:absolute; top:870px; left:520px; height:810px; width:960px; z-index:200; transition: all 0.5s ease 0s;">
                                 <div id="PROTO_CAR_SYSTEM" class="sub_container_front_outer sub_container_pane_right" style="width:100%;">
                                     <div class="sub_container_front">
-                                    	<div id="BTN_InfoCS_Toyota_Entune" class="button gen_button rounded_button">
-                                        	Toyota Entune Infotainment
+                                    	
+                                        <div style="padding:0px 0px 0px 60px; font-size:0.8em;">
+                                            <div style="display:flex; align-items:stretch; justify-content:space-between; height:810px;">
+                                            	<div style="width:60%;">
+                                                	<div id="BTN_CS_closeWindow" class="button gen_button" style="width:34px; height:34px; margin-left:-60px; border:none;">
+                                                    	<i class="fa fa-times" aria-hidden="true" style="font-size:34px;"></i>
+                                                    </div>
+                                                    
+                                                    <div id="CAR_SYSTEM_LEFT_CONTAINER">
+                                                    	
+                                                        <div id="CAR_SYSTEM_PANEL_QUICKCONTROLS" class="car_system_panel">
+                                                            <div class="HC" style="display:flex; align-items:center; margin-top:10px;">
+                                                                <i class="fa fa-television" aria-hidden="true" style="margin-right:10px;"></i>
+                                                                <div>Display Brightness</div>
+                                                            </div>
+                                                            <div style="height:60px; width:100%; border-radius:30px; background:rgba(118,118,118,0.5); margin-top:16px; display:flex; align-items:center; justify-content:space-between"">
+                                                                <div><i class="fa fa-sun-o" aria-hidden="true" style="font-size:0.8em; margin-left:22px;"></i></div>
+                                                                <div>50%</div>
+                                                                <div><i class="fa fa-sun-o" aria-hidden="true" style="font-size:1.6em; margin-right:18px;"></i></div>
+                                                            </div>
+                                                            
+                                                            <div class="HC" style="display:flex; align-items:center; margin-top:60px;">
+                                                                <img src="images/headlight-off.png" class="invertedImg" style="height:1.2em; margin-right:10px;">
+                                                                <div>Exterior Lights</div>
+                                                            </div>
+                                                            <div style="height:60px; width:100%; border-radius:30px; background:rgba(118,118,118,0.5); margin-top:16px; display:flex; align-items:center; justify-content:space-between"">
+                                                                <div style="margin-left:20px;">OFF</div>
+                                                                <div>PARKING</div>
+                                                                <div>ON</div>
+                                                                <div style="margin-right:20px;">AUTO</div>
+                                                            </div>
+                                                            <div style="width:50%; padding:20px 0;">
+                                                                <div class="button gen_button rounded_button">
+                                                                    FRONT FOG
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="HC" style="display:flex; align-items:center; margin-top:40px;">
+                                                                <i class="fa fa-sliders" aria-hidden="true" style="margin-right:10px;"></i>
+                                                                <div>Adjustments</div>
+                                                            </div>
+                                                            <div style="margin-top:16px; display:flex; align-items:center; justify-content:space-between;">
+                                                                <div style="width:49%; border-radius:30px; background:rgba(118,118,118,0.5); height:140px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                                                                    <div style="display:flex; align-items:center; justify-content:center;">
+                                                                        <img src="images/car_sidemirror_icon_r.png" class="invertedImg flippedImage" style="height:1.4em;">
+                                                                        <div style="width:50px;"></div>
+                                                                        <img src="images/car_sidemirror_icon_r.png" class="invertedImg" style="height:1.4em;">
+                                                                    </div>
+                                                                    <div style="margin-top:8px;">MIRRORS</div>
+                                                                </div>
+                                                                <div style="width:49%; border-radius:30px; background:rgba(118,118,118,0.5); height:140px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                                                                    <img src="images/driving_yoke.png" class="invertedImg" style="height:1.4em;">
+                                                                    <div style="margin-top:8px;">STEERING WHEEL</div>
+                                                                </div>
+                                                            </div>
+                                                            <div style="width:50%; padding:20px 0;">
+                                                                <div class="button gen_button rounded_button">
+                                                                    FOLD MIRRORS
+                                                                </div>
+                                                            </div>
+                                          				</div> <!-- #CAR_SYSTEM_QUICKCONTROLS -->
+                                                        
+                                                        <div id="CAR_SYSTEM_PANEL_LIGHTS" class="car_system_panel" style="display:none;">
+                                                        	Lights
+                                                        </div> <!-- end #CAR_SYSTEM_PANEL_LIGHTS -->
+                                                        
+                                                        <div id="CAR_SYSTEM_PANEL_LOCKS" class="car_system_panel" style="display:none;">
+                                                        	Locks
+                                                        </div> <!-- end #CAR_SYSTEM_PANEL_LOCKS -->
+                                                        
+                                                        <div id="CAR_SYSTEM_PANEL_DISPLAY" class="car_system_panel" style="display:none;">
+                                                        	Display
+                                                        </div> <!-- end #CAR_SYSTEM_PANEL_DISPLAY -->
+                                                        
+                                                        <div id="CAR_SYSTEM_PANEL_DRIVING" class="car_system_panel" style="display:none;">
+                                                        	Driving
+                                                        </div> <!-- end #CAR_SYSTEM_PANEL_DRIVING -->
+                                                        
+                                                        <div id="CAR_SYSTEM_PANEL_SAFETY" class="car_system_panel" style="display:none;">
+                                                        	Safety &amp; Security
+                                                        </div> <!-- end #CAR_SYSTEM_PANEL_SAFETY -->
+                                                        
+                                                        <!-- #CAR_SYSTEM_PANEL_SERVICE -->
+                                                        <div id="CAR_SYSTEM_PANEL_SERVICE" class="car_system_panel" style="display:none;">
+                                                        	<div id="BTN_InfoCS_Toyota_Entune" class="button gen_button rounded_button">
+                                                                Toyota Entune Infotainment
+                                                            </div>
+                                                        </div> <!-- end #CAR_SYSTEM_PANEL_SERVICE -->
+                                                    
+                                                    </div> <!-- end #CAR_SYSTEM_LEFT_CONTAINER" -->
+                                                    
+                                                </div> <!-- end left pane (Car system) -->
+                                                
+                                                <!-- RIGHT PANE -->
+                                                <div style="flex-grow:1; margin-left:40px;">
+                                                    <div class="pane_contextMenu_outer">
+                                                        <div id="CAR_SYSTEM_PANEL_CM" class="pane_contextMenu HC">
+                                                                                                                        
+                                                            <div class="CM_row">
+                                                            	<div class="CM_row_inner">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="CM_row selected CM_option" data-targetdiv="CAR_SYSTEM_PANEL_QUICKCONTROLS">
+                                                            	<div class="CM_row_inner">
+                                                                	<div class="CM_icon_column">
+                                                                    	<i class="fa fa-toggle-on" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div>Quick Controls</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_LIGHTS">
+                                                            	<div class="CM_row_inner">
+                                                                	<div class="CM_icon_column">
+                                                                    	<i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div>Lights</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_LOCKS">
+                                                            	<div class="CM_row_inner">
+                                                                	<div class="CM_icon_column">
+                                                                		<i class="fa fa-lock" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div>Locks</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_DISPLAY">
+                                                            	<div class="CM_row_inner">
+                                                                	<div class="CM_icon_column">
+                                                                		<i class="fa fa-television" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div>Display</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_DRIVING">
+                                                            	<div class="CM_row_inner">
+                                                                	<div class="CM_icon_column">
+                                                                		<i class="fa fa-car" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div>Driving</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_SAFETY">
+                                                            	<div class="CM_row_inner">
+                                                                	<div class="CM_icon_column">
+                                                                		<i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div>Safety &amp; Security</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_SERVICE">
+                                                            	<div class="CM_row_inner">
+                                                                	<div class="CM_icon_column">
+                                                                		<i class="fa fa-wrench" aria-hidden="true"></i>
+                                                                    </div>
+                                                                    <div>Service</div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div> <!-- end .pane_contextMenu -->
+                                                        
+                                                        <div style="position:absolute; bottom:0; padding:30px 20px; width:276px;">
+                                                        	<div class="button gen_button rounded_button">
+                                                                <div style="width:100%; display:flex; align-items:center; justify-content:space-between;">
+                                                                	<div><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
+                                                                    <div>GLOVEBOX</div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div> <!-- end "bottom" div -->
+                                                        
+                                                    </div> <!-- end .pane_contextMenu_outer -->
+                                            	</div> <!-- end right pane (Car system) -->
+                                            </div>
+                                            
+                                            
                                         </div>
-                                    </div>
+                                        
+                                    </div> <!-- end .sub_container_front -->
                                 </div> <!-- end #PROTO_CAR_SYSTEM -->
                             </div> <!-- end #PANE_CAR_SYSTEM -->
                             
                             
                         </div> <!-- end #RIGHT_PANE -->
-                    </div>
-                    
-                    <div id="SUB_CONTAINER_BOTTOM" class="sub_container_outer" style="display:none;">
-                       	
-					</div>
-                
-                	<div id="SUB_CONTAINER_FULL" class="sub_container_full"></div>
-                    
-                    
+                                       
+                             
                                         
-                    </div>
-                    
-                </div> <!-- end #MAIN_CONTAINER -->
+                
+                
                 
                 <div class="infotainmentHeader dark DARK_TOG">
                     <div style="display:flex; width:100%;">
@@ -601,6 +770,8 @@
                     </div>
                 </div>
                 
+                
+                
                 <div id="footer">
                 	<div style="display:flex; align-content:center; justify-content:space-around;">
                     
@@ -629,15 +800,15 @@
                     </div>
                     
                     <!-- TEMP CONTROL (Driver) -->
-                    <div id="footer_env_driver_rocker" class="footerButton gen_button">
+                    <div id="footer_env_driver_rocker" class="footerButton gen_button" style="justify-content:space-between;">
                     	<div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px -20px -10px -20px;">
                         </div>
-                        <div>
+                        <div style="margin:-20px 0 -20px 0;">
                         	<span style="font-size:44px;">74</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
                         <div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px;">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px -20px -10px -20px;">
                         </div>
                     </div>
                     
@@ -650,15 +821,15 @@
                     </div>
                     
                     <!-- TEMP CONTROL (Passenger) -->
-                    <div id="footer_env_pass_rocker" class="footerButton gen_button">
+                    <div id="footer_env_pass_rocker" class="footerButton gen_button" style="justify-content:space-between;">
                         <div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px -20px -10px -20px;">
                         </div>
-                        <div>
+                        <div style="margin:-20px 0 -20px 0;">
                         	<span style="font-size:44px;">75</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
                         <div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px;">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px -20px -10px -20px;">
                         </div>
                     </div>
                     
@@ -679,21 +850,110 @@
                     </div>
                     
                     <!-- VOLUME -->
-                    <div id="footer_vol_rocker" class="footerButton">
+                    <div id="footer_vol_rocker" class="footerButton" style="justify-content:space-between;">
                             <div id="VOLUME_level_UP">
-                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg);">
+                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px -20px -10px -20px;">
                             </div>
-                            <div style="display:flex; flex-direction:row; align-items:center; justify-content:center;">
-                                <img id="vol_speaker_main" src="images/speaker_off.png" class="invertedImg" style="height:34px;" >
-                                <img id="vol_main_off" src="images/52.png" class="invertedImg" style="height:20px; margin-left:6px;" >
+                            <div style="position:relative;">
+                            <div style="position:absolute; margin-top:2px;margin-left:-18px;">
+                                <div style="display:flex; flex-direction:row; align-items:center; justify-content:center; margin:-20px 0 -20px 0;">
+                                    <img id="vol_speaker_main" src="images/speaker_off.png" class="invertedImg" style="height:34px;" >
+                                    <img id="vol_main_off" src="images/52.png" class="invertedImg" style="height:20px; margin-left:6px;" >
+                                </div>
+                            </div>
                             </div>
                             <div id="VOLUME_level_DOWN">
-                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px;">
+                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px -20px -10px -20px;">
                             </div>
                     </div> 
                     <!-- end VOLUME -->
                     </div>
                 </div> <!-- end #footer -->
+                
+                <div id="osk">
+                        <div id="osk_inner" class="tesla_pane dark DARK_TOG">
+                            <div class="kb_outer_container HC">
+                                <div class="left" style="width:1100px;">
+                                    <div class="row_container">
+                                        <div class="row">
+                                            <div class="kb_key gen_button">Q</div>
+                                            <div class="kb_key gen_button">W</div>
+                                            <div class="kb_key gen_button">E</div>
+                                            <div class="kb_key gen_button">R</div>
+                                            <div class="kb_key gen_button">T</div>
+                                            <div class="kb_key gen_button">Y</div>
+                                            <div class="kb_key gen_button">U</div>
+                                            <div class="kb_key gen_button">I</div>
+                                            <div class="kb_key gen_button">O</div>
+                                            <div class="kb_key gen_button">P</div>
+                                            <div><div class="kb_key rounded_button gen_button" data-keyval="BACKSPACE" style="width:80px; height:30px;"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></div></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="kb_key gen_button">A</div>
+                                            <div class="kb_key gen_button">S</div>
+                                            <div class="kb_key gen_button">D</div>
+                                            <div class="kb_key gen_button">F</div>
+                                            <div class="kb_key gen_button">G</div>
+                                            <div class="kb_key gen_button">H</div>
+                                            <div class="kb_key gen_button">J</div>
+                                            <div class="kb_key gen_button">K</div>
+                                            <div class="kb_key gen_button">L</div>
+                                            <div><div class="kb_key rounded_button gen_button" data-keyval="ENTER" style="width:120px; height:30px;"><span style="font-size:0.5em;">ENTER</span></div></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="kb_key gen_button">Z</div>
+                                            <div class="kb_key gen_button">X</div>
+                                            <div class="kb_key gen_button">C</div>
+                                            <div class="kb_key gen_button">V</div>
+                                            <div class="kb_key gen_button">B</div>
+                                            <div class="kb_key gen_button">N</div>
+                                            <div class="kb_key gen_button">M</div>
+                                            <div class="kb_key gen_button">-</div>
+                                            <div class="kb_key gen_button">,</div>
+                                            <div class="kb_key gen_button">.</div>
+                                        </div>
+                                        <div class="row">
+                                        	<div style="flex-grow:0.3;"></div>
+                                        	<div><div class="kb_key rounded_button gen_button" data-keyval="SPACE" style="width:560px; height:30px;"></div></div>
+                                            <div><div class="kb_key rounded_button gen_button" data-keyval="ALTCHAR_TOGGLE" style="width:80px; height:30px;"><span style="font-size:0.5em;">? # &amp;</span></div></div>
+                                            <div><div class="kb_key rounded_button gen_button" data-keyval="CURSOR_LEFT" style="width:50px; height:30px;"><i class="fa fa-chevron-left" aria-hidden="true" style="font-size:0.5em;"></i></div></div>
+                                            <div><div class="kb_key rounded_button gen_button" data-keyval="CURSOR_RIGHT" style="width:50px; height:30px;"><i class="fa fa-chevron-right" aria-hidden="true" style="font-size:0.5em;"></i></div></div>
+                                        </div>
+                                    </div>
+                                    
+                                </div> <!-- end .left -->
+                                
+                                <div class="right" style="width:290px;">
+                                    <div class="row_container">
+                                        <div class="row">
+                                            <div class="kb_key gen_button">1</div>
+                                            <div class="kb_key gen_button">2</div>
+                                            <div class="kb_key gen_button">3</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="kb_key gen_button">4</div>
+                                            <div class="kb_key gen_button">5</div>
+                                            <div class="kb_key gen_button">6</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="kb_key gen_button">7</div>
+                                            <div class="kb_key gen_button">8</div>
+                                            <div class="kb_key gen_button">9</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="kb_key"></div>
+                                            <div class="kb_key gen_button">0</div>
+                                            <div class="kb_key"></div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end .right -->
+                            </div> <!-- end .kb_outer_container -->
+                        </div> <!-- end #osk_inner -->
+                    </div> <!-- end #osk -->   
+                
+                    </div>
+                
+                </div> <!-- end #MAIN_CONTAINER -->
                 </div>
             </div> <!-- end #pageContainer_home -->
         </div>

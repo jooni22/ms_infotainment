@@ -256,6 +256,23 @@ function check_carSystemPane_height() {
 }
 
 // Hammer(time)
+var oskElement = document.getElementById('osk');
+var ht_osk = new Hammer(oskElement);
+ht_osk.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+ht_osk.on('swipedown', function(ev) {
+	// Swipe down (on-screen keyboard)
+	$('#osk').removeClass('showing');
+});
+
+var carSystemElement = document.getElementById('PANE_CAR_SYSTEM');
+var ht_CarSystem = new Hammer(carSystemElement);
+ht_CarSystem.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+ht_CarSystem.on('swipedown', function(ev) {
+	// Swipe down (Car system pane)
+	$('#PANE_CAR_SYSTEM').css('top','870px');
+	console.log('swipe down');
+});
+
 var phoneElement = document.getElementById('PANE_PHONE');
 var ht_Phone = new Hammer(phoneElement);
 ht_Phone.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
@@ -674,8 +691,22 @@ function bindDOMEvents() {
 		}
 	});
 	
+	$(document.body).on('click', '.CM_option', function() {
+		if ($(this).data('targetdiv')) {
+			var targetDiv = $(this).data('targetdiv');
+			$('#CAR_SYSTEM_PANEL_CM .CM_row').removeClass('selected');
+			$('#CAR_SYSTEM_LEFT_CONTAINER .car_system_panel').hide();
+			$('#'+targetDiv).show();
+			$(this).addClass('selected');
+		}
+	});
+	
 	$(document.body).on('click', '#BTN_InfoCS_Toyota_Entune', function() {
 		window.location.href = serverAddress+'/infotainment_system.htm?sv='+CLIENT_URL_VARS.sv;
+	});
+	
+	$(document.body).on('click', '#footer_seatwarmer_passenger', function() {
+		$('#osk').addClass('showing');
 	});
 	
 	$(document.body).on('mousedown touchstart', '.gen_button', function() {
