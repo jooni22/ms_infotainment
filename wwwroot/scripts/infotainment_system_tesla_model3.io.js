@@ -92,7 +92,9 @@ var sessionVars = {
 	'LRI_bottomRight_Y'			: '',
 	'local_zoom'				: 3,
 	'DayNight_mode'				: 'day',
-	'MAPS_traffic_on'			: 'false'
+	'MAPS_traffic_on'			: 'false',
+	'OSK_target'				: '',
+	'gesture_control_on'			: false
 };
 
 /*
@@ -255,7 +257,28 @@ function check_carSystemPane_height() {
 	return parseInt(carSystemPaneTop);
 }
 
+function showPane(data) {
+	var paneToPromote = data.paneToShow;
+}
+
 // Hammer(time)
+$('.left_pane_tab').each(function() {
+	var ht_LPE = new Hammer(this);
+	ht_LPE.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+	ht_LPE.on('swiperight', function(ev) {
+		// Swipe right (on-screen keyboard)
+		$('.left_pane_tab').removeClass('showing');
+		$('#IN_DRIVE_CONTAINER').addClass('showing');
+		$('.AP_control_display').show();
+	});
+	ht_LPE.on('swipeleft', function(ev) {
+		// Swipe left (on-screen keyboard)
+		$('.left_pane_tab').removeClass('showing');
+		$('#IN_PARK_CONTAINER').addClass('showing');
+		$('.AP_control_display').hide();
+	});
+});
+
 var oskElement = document.getElementById('osk');
 var ht_osk = new Hammer(oskElement);
 ht_osk.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
@@ -443,6 +466,22 @@ function bindDOMEvents() {
 	
 	$(document.body).on('mouseup', '#footer_controls_label', function() {
 		$('#panelContainer_CONTROLS').popup('open');
+	});
+	
+	$(document.body).on('click', '.seat_temp_control', function() {
+		var targetSeat = $(this).data('targetseat');
+		var tempAdjustmentDirection = $(this).data('tempdir');
+		var currentSeatTemp = parseInt($('#footer_temp_'+targetSeat+'_val').html());
+		switch (tempAdjustmentDirection) {
+			case 'up':
+				currentSeatTemp++;
+				$('#footer_temp_'+targetSeat+'_val').html(currentSeatTemp);
+				break;
+			case 'down':
+				currentSeatTemp--;
+				$('#footer_temp_'+targetSeat+'_val').html(currentSeatTemp);
+				break;
+		}
 	});
 	
 	$(document.body).on('click', '.tesla_it_nested_menu div.topLvl li', function() {
@@ -832,6 +871,13 @@ function bindDOMEvents() {
 				break;
 		} //end switch(thisZoomType)
 	});
+	
+	$(document.body).on('click', '.osk_spawn_button', function() {
+		if ($(this).data('osktarget')) {
+			sessionVars.OSK_target = $(this).data('osktarget');
+			showPane({ paneToShow:'CAR_SYSTEM' });
+		}
+	});
 
 	// Virtual keyboard
 	$('.button_KB').on(smartClick,function() {
@@ -893,105 +939,6 @@ function bindDOMEvents() {
 	$(document.body).on('click', '#AB_pageContainer_mainenance_REFRESH', function() {
 		window.location.reload(true);
 	});
-
-	/*
-	$(document.body).on('click', '.button_GROW', function() {
-		var thisSource = $(this).parent().parent().parent().attr('id'); // section container ID
-		
-		var thisSourceProto = $(this).data('sourceproto');
-		var sourceHTML = $('#'+thisSource).html();
-		//alert(thisSourceProto);
-		
-		$('#'+thisSource).html('');
-		$('#SUB_CONTAINER_FULL').append(sourceHTML);
-		
-		switch(thisSourceProto) {
-			case 'PROTO_NAV':
-				$('#PROTO_NAV_MAPCONT').removeClass('halfheight').addClass('fullheight');
-				$('#mapContainerOuter').css('height','1554px');
-				$('#mapContainerInner').css('top','777px');
-				$('#cabCG_car_dot_outer').css('top','727px');
-				
-				break;
-			case 'PROTO_MEDIA':
-				$('#cont_BrowseStreaming').css('height','1300px');
-				break;
-		}
-		
-		// HERE mapping
-		//updateHEREmap(map);
-		//setTimeout(function() {
-		//	refreshHEREmap(map);
-		//}, 150);
-		
-		
-		$('#'+thisSourceProto).removeClass('halfheight').addClass('fullheight');
-		$('#'+thisSourceProto+' .sub_container_front').removeClass('halfheight').addClass('fullheight');
-		
-		// hide swap button
-		$('#'+thisSourceProto+' .sub_container_front .button_SWAP').hide();
-		// change grow button to shrink
-		$('#'+thisSourceProto+' .sub_container_front .button_GROW').removeClass('button_GROW').addClass('button_SHRINK').data('targetdiv',thisSource);
-
-		$('#SUB_CONTAINER_TOP').hide();
-		$('#SUB_CONTAINER_BOTTOM').hide();
-		$('#SUB_CONTAINER_FULL').show();	
-	});
-	
-	$(document.body).on('click', '.button_SHRINK', function() {
-		var thisTarget = $(this).data('targetdiv');
-		var thisSourceProto = $(this).data('sourceproto');
-		var sourceHTML = $('#SUB_CONTAINER_FULL').html();
-		
-		$('#SUB_CONTAINER_FULL').html('');
-		$('#'+thisTarget).append(sourceHTML);
-		
-		switch(thisSourceProto) {
-			case 'PROTO_NAV':
-				$('#PROTO_NAV_MAPCONT').removeClass('fullheight').addClass('halfheight');
-				$('#mapContainerOuter').css('height','770px');
-				$('#mapContainerInner').css('top','385px');
-				$('#cabCG_car_dot_outer').css('top','335px');
-				
-				//updateHEREmap(map);
-				//setTimeout(function() {
-				//	refreshHEREmap(map);
-				//}, 150);
-				
-				break;
-			case 'PROTO_MEDIA':
-				$('#cont_BrowseStreaming').css('height','530px');
-				break;
-		}
-		
-		$('#'+thisSourceProto).removeClass('fullheight').addClass('halfheight');
-		$('#'+thisSourceProto+' .sub_container_front').removeClass('fullheight').addClass('halfheight');
-		
-		// hide swap button
-		$('#'+thisSourceProto+' .sub_container_front .button_SWAP').show();
-		// change grow button to shrink
-		$('#'+thisSourceProto+' .sub_container_front .button_SHRINK').removeClass('button_SHRINK').addClass('button_GROW').data('sourcediv',thisTarget);
-		
-		$('#SUB_CONTAINER_TOP').show();
-		$('#SUB_CONTAINER_BOTTOM').show();
-		$('#SUB_CONTAINER_FULL').hide();
-	});
-	
-	
-	$(document.body).on('click', '.button_SWAP', function() {
-		var sourceHTML_TOP = $('#SUB_CONTAINER_TOP').html();
-		var sourceHTML_BOTTOM = $('#SUB_CONTAINER_BOTTOM').html();
-		
-		$('#SUB_CONTAINER_TOP').html('');
-		$('#SUB_CONTAINER_BOTTOM').html('');
-		
-		setTimeout(function() {
-			$('#SUB_CONTAINER_TOP').append(sourceHTML_BOTTOM);
-			$('#SUB_CONTAINER_BOTTOM').append(sourceHTML_TOP);
-			// refreshHEREmap(map);
-		}, 150);
-	});
-	*/
 	
 	// AUDIO OFF (UI button)
 	$(document.body).on('click', '#AB_pageContainer_maintenance_AUDIO_OFF', function() {
@@ -1080,6 +1027,35 @@ function bindSocketEvents(){
 			thisAlbumNum++;
 		});
 		// end each(data...
+	});
+	
+	socket.on('gesture_command', function(data) {
+		switch(data.gesture) {
+			case 'swipe_left':
+				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_left.png');
+				socket.emit('IUI_command',{ type: 'audio_back' });
+				break;
+			case 'swipe_right':
+				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_right.png');
+				socket.emit('IUI_command',{ type: 'audio_fwd' });
+				break;
+			case 'swipe_up':
+				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_up.png');
+				break;
+			case 'swipe_down': 
+				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_down.png');
+				break;
+			case 'keyTap':
+				$('#gestureIcon_img').attr('src','images/icon_gesture_tap.png');
+				break;
+			case 'screenTap':
+				$('#gestureIcon_img').attr('src','images/icon_gesture_tap.png');
+				break;
+		}
+		$('#gestureIcon_container').show();
+		var gestureTimeout = setTimeout(function() {
+			$('#gestureIcon_container').fadeOut('slow');
+		});
 	});
 
 	socket.on('PLAY_CURRENT', function(data) {
@@ -1682,15 +1658,6 @@ $(function() {
 	readURLvars();
 	
 	$('#panelContainer_CONTROLS').popup();
-	/*
-	$('#panelContainer_VOLUME').popup();
-	$('#panelContainer_VOLUME').on('popupafteropen',function() {
-		VOL_POPUP_SHOWING = true;
-	}).on('popupafterclose', function() {
-		socket.emit('IUI_command',{ type: 'audio_volume_modal', command: 'close' });
-		VOL_POPUP_SHOWING = false;	
-	});
-	*/
 	
 	$(window).on("hashchange", function() {
 		checkCurrentPageHash();
@@ -1743,8 +1710,6 @@ $(function() {
 	
 	
 	$.getScript('scripts/dtmf_tones.js', function() {
-		// script is now loaded and executed.
-		// put your dependent JS here.
 	});
 });
 

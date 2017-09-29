@@ -758,3 +758,115 @@ var RT_Update_Interval = setInterval(function() {
 //}, 1000);
 }, (1/60)*1000);
 */
+
+
+// GESTURE CONTROLS 
+var leapjs = require('leapjs');
+
+var confidenceArrayFirst = '';
+var confidenceArrayObject = {
+		'keyTap'		: 0,
+		'screenTap'		: 0,
+		'swipe_left'	: 0,
+		'swipe_right'	: 0,
+		'swipe_up'		: 0,
+		'swipe_down'	: 0
+};
+var confidenceLoopRunning = false;
+var confidenceTimeout;
+
+function clearConfidenceArray() {
+	confidenceArrayObject.keyTap = 0;
+	confidenceArrayObject.screenTap = 0;
+	confidenceArrayObject.swipe_left = 0;
+	confidenceArrayObject.swipe_right = 0;
+	confidenceArrayObject.swipe_up = 0;
+	confidenceArrayObject.swipe_down = 0;
+	confidenceArrayFirst = '';
+	
+	confidenceLoopRunning = false;
+}
+
+function sendGestureAck(data) {
+	try {
+		io.sockets.emit('gesture_command', data);
+	}
+	catch(e) {}
+}
+
+function determineAction() {
+	var roundWinner = '';
+	var roundWinnerHits = 0;
+	for (var index in confidenceArrayObject) {
+		if (confidenceArrayObject[index] > roundWinnerHits) {
+			roundWinner = index;
+			roundWinnerHits = confidenceArrayObject[index];
+		}
+	}
+	if (confidenceArrayObject[roundWinner]) {
+		console.log(LOCAL_DATETIME().timestamp+' Gesture action: '+roundWinner);
+		sendGestureAck({ gesture: roundWinner });
+	} else {
+		//console.log('Unknown winner: '+roundWinner);
+	}
+	clearConfidenceArray();
+}
+
+function startConfidenceTimer() {
+	confidenceTimeout = setTimeout(function() {
+		determineAction();
+	}, 800);
+	confidenceLoopRunning = true;
+}
+
+var controller = leapjs.loop({enableGestures: true}, function(frame){
+  if(frame.valid && frame.gestures.length > 0){
+	  frame.gestures.forEach(function(gesture){
+		  if (confidenceLoopRunning === true) {
+			  switch (gesture.type){
+				case "circle":
+					// Flaky?
+					break;
+				case "keyTap":
+					confidenceArrayObject.keyTap++;
+					break;
+				case "screenTap":
+					confidenceArrayObject.screenTap++;
+					break;
+				case "swipe":
+					//Classify swipe as either horizontal or vertical
+					var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+					//Classify as right-left or up-down
+					if(isHorizontal){
+						if(gesture.direction[0] > 0){
+							confidenceArrayObject.swipe_right++;
+						} else {
+							confidenceArrayObject.swipe_left++;
+						}
+					} else { //vertical
+						if(gesture.direction[1] > 0){
+							confidenceArrayObject.swipe_up++;
+						} else {
+							confidenceArrayObject.swipe_down++;
+						}                  
+					}
+					break;
+			  }
+		  } else {
+			  startConfidenceTimer();
+		  }
+	  });
+  }
+});
+
+controller.on('connect', function() {
+  console.log("Successfully connected.");
+});
+
+controller.on('streamingStarted', function() {
+  console.log("A Leap device has been connected.");
+});
+
+controller.on('streamingStopped', function() {
+  console.log("A Leap device has been disconnected.");
+});

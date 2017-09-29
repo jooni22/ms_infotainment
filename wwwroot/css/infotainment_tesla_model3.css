@@ -527,6 +527,45 @@ hr {
 	background:rgba(5,5,5,1.00);
 }
 
+.tesla_slider_control_horiz {
+	height:50px; 
+	width:100%; 
+	font-size:16px; 
+	border-radius:30px; 
+	background:rgba(118,118,118,0.3); 
+	display:flex; 
+	align-items:center; 
+	justify-content:space-between;
+}
+	
+	.dark .tesla_slider_control_horiz {
+		background:rgba(53,53,53,0.3);
+		border:1px solid rgba(172,172,172,0.2);
+	}
+
+	.tesla_slider_control_horiz .slider_option {
+		padding:0 54px;
+	}
+	
+	.tesla_slider_control_horiz .slider_option.small {
+		padding:0 30px;
+	}
+	
+	.tesla_slider_control_horiz .slider_option.selected {
+		background:rgba(240,240,240,1.00); 
+		border:1px solid rgba(172,172,172,1); 
+		border-radius:30px; 
+		box-shadow:0px 0px 10px rgba(100,100,100,0.6); 
+		height:46px;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+	}
+	
+	.dark .tesla_slider_control_horiz .slider_option.selected {
+		background:rgba(53,53,53,1.00); 
+	}
+
 .media_container {
 	color:rgba(122,122,122,1.00);
 	text-shadow:0px 0px 1px rgba(122,122,122,0.4);
@@ -613,6 +652,15 @@ hr {
 	-ms-filter: "FlipH";
 }
 
+.folderArt {
+	user-drag: none; 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
 .footerButton {
 	flex-grow:1;
 	display:flex;
@@ -667,6 +715,24 @@ hr {
 	right:150px;
 }
 
+#IN_PARK_CONTAINER img {
+	user-drag: none; 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+#IN_DRIVE_CONTAINER img {
+	user-drag: none; 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
 .invertedImg {
 	filter:invert(100%); 
 	-webkit-filter:invert(1);
@@ -674,6 +740,27 @@ hr {
 
 .inlineDiv {
 	display:inline;
+}
+
+#LEFT_PANE div.well {
+	background:rgba(246,246,246,0.9);
+}
+
+#LEFT_PANE.dark div.well {
+	background:rgba(172,172,172,0.1);
+}
+
+.left_pane_tab {
+	left:0; 
+	right:0; 
+	display:none; 
+	flex-direction:column; 
+	align-items:center; 
+	justify-content:space-between;
+}
+
+.left_pane_tab.showing {
+	display:block;
 }
 
 #osk {
@@ -845,6 +932,12 @@ hr {
 	width:130px;
 	border:1px solid rgba(177,177,177,0.5);
 	box-shadow:0px 1px 2px rgba(142,142,142,0.6);
+	user-drag: none; 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 .dark .media_album_cover {
@@ -900,6 +993,8 @@ hr {
 .dark .HC {
 	color:#FFF;
 }
+
+#NP_ALBUMART {}
 
 #NP_PLAYLIST_CONTROLS {
 	color:#EEE;
@@ -1183,6 +1278,16 @@ hr {
 }
 
 #mapContainerInner {
+}
+
+#WIPER_CONTAINER {
+	border-radius:20px; 
+	height:196px; 
+	box-shadow:0px 0px 10px rgba(100,100,100,0.3);
+}
+
+.dark #WIPER_CONTAINER {
+	box-shadow:none;
 }
 
 .ui-content {

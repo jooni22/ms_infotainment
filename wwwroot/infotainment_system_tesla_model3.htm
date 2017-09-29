@@ -152,34 +152,78 @@
                             	<div style="height:4px; background:#666; left:0; right:0;"></div>
                             </div>
                             
-                            <div id="IN_PARK_CONTAINER" style="left:0; right:0; display:none; flex-direction:column; align-items:center; justify-content:space-between;">
-                            	<div class="button gen_button" style=" border-radius:38px; padding:18px 44px; margin-top:10px; margin-bottom:5px; background:rgba(172,172,172,0.3);">OPEN</div>
-                                <div id="PARKED_CAR_CONTAINER" style="position:relative; height:470px; overflow:hidden;">
-                                	<img src="images/tesla_model_3_ovhd_sm.jpg" style="height:400px;">
-                                </div>
-                            </div>
-                            
-                            <div id="IN_DRIVE_CONTAINER" style="left:0; right:0; display:flex; flex-direction:column; align-items:center; justify-content:space-between;">
-                                <div id="AUTOPILOT_CONTAINER" style="width:100%;">
-                                    <div style="display:flex; align-items:flex-start; justify-content:space-between; padding:20px 20px 0 20px;">
-                                        <div>
-                                            <img src="images/tesla_ic_swheel.png" style="height:40px;" alt="Auto pilot engaged">
-                                        </div>
-                                        
-                                        <div style="text-align:center; display:flex; align-items:flex-start; justify-content:center; color:#999;">
+                            <div id="AUTOPILOT_CONTAINER" style="width:100%; height:50px;">
+                                <div style="display:flex; align-items:flex-start; justify-content:space-between; padding:20px 20px 0 20px;">
+                                    <div>
+                                        <img src="images/tesla_ic_swheel.png" class="AP_control_display" style="height:40px;" alt="Auto pilot engaged">
+                                    </div>
+                                    
+                                    <div style="text-align:center;">
+                                        <div class="AP_control_display" style="display:flex; align-items:flex-start; justify-content:center; color:#999;">
                                             <div style="font-size:0.6em; padding:15px 25px;"><i class="fa fa-minus" aria-hidden="true"></i></div>
                                             <div><div style="height:40px; width:40px; border:3px solid #999; border-radius:24px; display:flex; align-items:center; justify-content:center;">35</div></div>
                                             <div style="font-size:0.6em; padding:15px 25px;"><i class="fa fa-plus" aria-hidden="true"></i></div>
                                         </div>
-                                        
-                                        <div style="text-align:right;">
-                                            <img src="images/tesla_ic_cc_img.png" style="width:33px; margin-top:-12px;" alt="Auto pilot engaged">
-                                        </div>
+                                    </div>
+                                    
+                                    <div style="width:30px;">
+                                        <img src="images/speed_limit_blank.png" style="position:absolute; width:50px; margin-left:-22px;" alt="Speed limit">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="IN_PARK_CONTAINER" class="left_pane_tab">
+                            	<!--
+                                <div style="padding:5px 20px;">
+                                	<div class="button gen_button" style=" border-radius:38px; padding:18px 44px; margin-top:10px; margin-bottom:5px; background:rgba(172,172,172,0.3);">OPEN</div>
+                                </div>
+                                -->
+                                <div id="PARKED_CAR_CONTAINER" style="position:relative; height:320px; display:flex; align-items:center; justify-content:center;">
+                                	<!-- FRUNK -->
+                                    <div style="position:absolute; margin-top:-170px;">
+                                    	<div class="button gen_button HC" style="border-radius:38px; padding:12px 44px; background:rgba(172,172,172,0.3);">OPEN</div>
+                                    </div>
+                                    <!-- Base vehicle img -->
+                                    <img src="images/tesla/model_3_overhead_blackout.png" style="height:280px;">
+                                    <!-- CHARGING -->
+                                    <div style="position:absolute; margin-left:-144px; margin-top:96px;">
+                                    	<div class="button gen_button" style="border-radius:38px; padding:12px 44px; background:rgba(172,172,172,0.3);"><i class="fa fa-bolt" aria-hidden="true" style="font-size:1.3em;"></i></div>
+                                    </div>
+                                    <!-- TRUNK -->
+                                    <div style="position:absolute; margin-top:168px;">
+                                    	<div class="button gen_button HC" style="border-radius:38px; padding:12px 44px; background:rgba(172,172,172,0.3);">OPEN</div>
                                     </div>
                                 </div>
                                 
-                                <div id="ROAD_CONTAINER" style="position:relative; height:370px; overflow:hidden;">
-                                    <div id="ROAD_CONTAINER_BG" style="position:relative; margin-left:-270px; bottom:-10px;">
+                                <div style="padding:50px 20px 8px 20px;">
+                                    <div id="WIPER_CONTAINER" class="well">
+                                    	<div style="padding:10px;">
+                                            <div style="display:flex; align-items:center; justify-content:center; padding:10px 0 20px 0;">
+                                                <div class="button round_button gen_button" style="height:86px; width:86px; border-radius:50px !important; flex-direction:column;">
+                                                	<img src="images/wiper_icon.png" style="width:30px;">
+                                                    <div style="margin-top:3px;">OFF</div>
+                                                </div>
+                                            </div>
+                                            <div id="wiper_function_speed_container" style="opacity:0.3;">
+                                                <div style="display:flex; align-items:center; justify-content:space-between;">
+                                                    <div class="button gen_button HC" style="border-radius:38px; flex-grow:1;"><img src="images/wiper_icon.png" style="width:28px;"></div>
+                                                    <div style="margin-left:10px;">
+                                                    	<div class="tesla_slider_control_horiz HC">
+                                                            <div class="slider_option selected">SLOW</div>
+                                                            <div class="slider_option">FAST</div>
+                                                        </div> <!-- end .tesla_slider_control_horiz  -->
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end #wiper_function_speed_container -->
+                                        </div> <!-- end padding container -->
+                                    </div> <!-- end #WIPER_CONTAINER -->
+                                </div> <!-- end sub-panel padding container -->
+                            </div> <!-- end #IN_PARK_CONTAINER -->
+                            
+                            <div id="IN_DRIVE_CONTAINER" class="left_pane_tab showing">
+                                
+                                <div id="ROAD_CONTAINER" style="position:relative; height:383px; overflow:hidden;">
+                                    <div id="ROAD_CONTAINER_BG" style="position:relative; margin-left:-266px; bottom:-10px;">
                                         <img src="images/tesla/tesla_road_mid_defaultbg.png" style="width:770px; opacity:0.2;">
                                     </div>
                                     <div id="ROAD_MID_CONTAINER" style="position:absolute; width:100%; bottom:-8px;">
@@ -207,9 +251,9 @@
                                     </div>
                                 </div>
                                 
-                                <div id="LP_QUICKCUT_CONTAINER" style=" padding:20px;left:0; right:0;">
-                                    <div style="display:flex; align-items:flex-start; justify-content:space-between;">
-                                        <div style="text-align:center; display:flex; align-items:flex-start; justify-content:center; color:#999;">
+                                <div id="LP_QUICKCUT_CONTAINER" style="padding:30px 20px;left:0; right:0;">
+                                    <div style="display:flex; align-items:flex-start; justify-content:center;">
+                                        <div style="text-align:center; display:flex; align-items:flex-start; justify-content:space-between; color:#999;">
                                             <div style="padding:50px;"><i class="fa fa-camera" aria-hidden="true"></i></div>
                                             <div style="padding:50px;"><i class="fa fa-bolt" aria-hidden="true"></i></div>
                                             <div style="padding:50px;"><i class="fa fa-microphone" aria-hidden="true"></i></div>
@@ -330,10 +374,10 @@
                             <div class="sub_container_header_container">
                                 <div id="TABS_AUDIO" style="display:flex;">
                                     <div style="padding:10px 0px 0px 10px;">
-                                        <div class="button" style="padding-left:6px; padding-right:0px; border:1px solid rgba(114,114,114,1.00); border-radius:38px;">
+                                        <div class="button osk_spawn_button" data-osktarget="AUDIO_SEARCH_input_box" style="padding-left:6px; padding-right:0px; border:1px solid rgba(114,114,114,1.00); border-radius:38px;">
                                             <div style="display:flex;">
                                                 <i class="fa fa-search" aria-hidden="true" style="padding-left:0.6em;"></i>
-                                                <div style="padding:0 120px 0 8px;;">Anything</div>
+                                                <div id="AUDIO_SEARCH_input_box" style="padding:0 120px 0 8px;;">Anything</div>
                                             </div>
                                         </div>
                                     </div>
@@ -553,21 +597,21 @@
                                                                 <i class="fa fa-television" aria-hidden="true" style="margin-right:10px;"></i>
                                                                 <div>Display Brightness</div>
                                                             </div>
-                                                            <div style="height:60px; width:100%; border-radius:30px; background:rgba(118,118,118,0.5); margin-top:16px; display:flex; align-items:center; justify-content:space-between"">
-                                                                <div><i class="fa fa-sun-o" aria-hidden="true" style="font-size:0.8em; margin-left:22px;"></i></div>
-                                                                <div>50%</div>
-                                                                <div><i class="fa fa-sun-o" aria-hidden="true" style="font-size:1.6em; margin-right:18px;"></i></div>
+                                                            <div class="tesla_slider_control_horiz HC" style="margin-top:20px;">
+                                                                <div class="slider_option" style="padding-left:0;"><i class="fa fa-sun-o" aria-hidden="true" style="font-size:0.8em; margin-left:22px;"></i></div>
+                                                                <div class="slider_option selected">50%</div>
+                                                                <div class="slider_option" style="padding-right:0;"><i class="fa fa-sun-o" aria-hidden="true" style="font-size:1.6em; margin-right:18px;"></i></div>
                                                             </div>
                                                             
                                                             <div class="HC" style="display:flex; align-items:center; margin-top:60px;">
                                                                 <img src="images/headlight-off.png" class="invertedImg" style="height:1.2em; margin-right:10px;">
                                                                 <div>Exterior Lights</div>
                                                             </div>
-                                                            <div style="height:60px; width:100%; border-radius:30px; background:rgba(118,118,118,0.5); margin-top:16px; display:flex; align-items:center; justify-content:space-between"">
-                                                                <div style="margin-left:20px;">OFF</div>
-                                                                <div>PARKING</div>
-                                                                <div>ON</div>
-                                                                <div style="margin-right:20px;">AUTO</div>
+                                                            <div class="tesla_slider_control_horiz HC" style="margin-top:20px;">
+                                                                <div class="slider_option small">OFF</div>
+                                                                <div class="slider_option small">PARKING</div>
+                                                                <div class="slider_option small">ON</div>
+                                                                <div class="slider_option small selected">AUTO</div>
                                                             </div>
                                                             <div style="width:50%; padding:20px 0;">
                                                                 <div class="button gen_button rounded_button">
@@ -617,7 +661,16 @@
                                                         </div> <!-- end #CAR_SYSTEM_PANEL_DRIVING -->
                                                         
                                                         <div id="CAR_SYSTEM_PANEL_SAFETY" class="car_system_panel" style="display:none;">
-                                                        	Safety &amp; Security
+                                                        	<div class="HC" style="display:flex; align-items:center; margin-top:10px;">
+                                                                <img src="images/icon_gesture_tap.png" class="invertedImg" style="height:1.1em; margin-right:10px;">
+                                                                <div>Gesture Controls</div>
+                                                            </div>
+                                                            <div style="width:60%; margin-top:20px;">
+                                                                <div class="tesla_slider_control_horiz HC">
+                                                                    <div class="slider_option selected">OFF</div>
+                                                                    <div class="slider_option">ON</div>
+                                                                </div> <!-- end .tesla_slider_control_horiz  -->
+                                                            </div>
                                                         </div> <!-- end #CAR_SYSTEM_PANEL_SAFETY -->
                                                         
                                                         <!-- #CAR_SYSTEM_PANEL_SERVICE -->
@@ -800,15 +853,15 @@
                     </div>
                     
                     <!-- TEMP CONTROL (Driver) -->
-                    <div id="footer_env_driver_rocker" class="footerButton gen_button" style="justify-content:space-between;">
-                    	<div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px -20px -10px -20px;">
+                    <div id="footer_env_driver_rocker" class="footerButton" style="justify-content:space-between;">
+                    	<div class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="driver">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                         <div style="margin:-20px 0 -20px 0;">
-                        	<span style="font-size:44px;">74</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
+                        	<span id="footer_temp_driver_val" style="font-size:44px;">74</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
-                        <div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px -20px -10px -20px;">
+                        <div class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="driver">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                     </div>
                     
@@ -821,15 +874,15 @@
                     </div>
                     
                     <!-- TEMP CONTROL (Passenger) -->
-                    <div id="footer_env_pass_rocker" class="footerButton gen_button" style="justify-content:space-between;">
-                        <div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px -20px -10px -20px;">
+                    <div id="footer_env_pass_rocker" class="footerButton" style="justify-content:space-between;">
+                        <div class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="passenger">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                         <div style="margin:-20px 0 -20px 0;">
-                        	<span style="font-size:44px;">75</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
+                        	<span id="footer_temp_passenger_val" style="font-size:44px;">75</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
-                        <div>
-                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px -20px -10px -20px;">
+                        <div class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="passenger">
+                        	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                     </div>
                     
@@ -845,14 +898,14 @@
                     </div>
                     
                     <!-- PHONE -->
-                    <div id="BUTTON_footer_phone" class="footerButton gen_button">
+                    <div id="BUTTON_footer_phone" class="footerButton gen_button" style="margin-right:-20px;">
                     	<i class="fa fa-mobile" aria-hidden="true" style="font-size:48px;"></i>
                     </div>
                     
                     <!-- VOLUME -->
                     <div id="footer_vol_rocker" class="footerButton" style="justify-content:space-between;">
-                            <div id="VOLUME_level_UP">
-                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px -20px -10px -20px;">
+                            <div id="VOLUME_level_UP" class="gen_button">
+                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                             </div>
                             <div style="position:relative;">
                             <div style="position:absolute; margin-top:2px;margin-left:-18px;">
@@ -862,16 +915,22 @@
                                 </div>
                             </div>
                             </div>
-                            <div id="VOLUME_level_DOWN">
-                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px -20px -10px -20px;">
+                            <div id="VOLUME_level_DOWN" class="gen_button">
+                                <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                             </div>
                     </div> 
                     <!-- end VOLUME -->
                     </div>
                 </div> <!-- end #footer -->
                 
+                <div id="gestureIcon_container" style="position:absolute; z-index:900; top:10px; left:10px; display:none;">
+                	<div id="gestureIcon_bg" style="width:60px; height:60px; background:rgba(0,163,3,1.00);">
+                    	<img id="gestureIcon_img" src="images/icon_gesture_swipe_up.png" class="invertedImg">
+                    </div>
+                </div>
+                
                 <div id="osk">
-                        <div id="osk_inner" class="tesla_pane dark DARK_TOG">
+                        <div id="osk_inner" class="tesla_pane dark DARK_TOG" data-osktarget="">
                             <div class="kb_outer_container HC">
                                 <div class="left" style="width:1100px;">
                                     <div class="row_container">
