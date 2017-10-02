@@ -374,41 +374,47 @@ io.sockets.on('connection', function(socket){
 				socket.broadcast.emit('NCWC_control', data);
 				break;
 			case 'audio_back':
-				var parsedAUDIO_CURRENT_STATUS = JSON.parse(AUDIO_CURRENT_STATUS);				
-				if(parsedAUDIO_CURRENT_STATUS.currenttime < 5) {
+				try {
+					var parsedAUDIO_CURRENT_STATUS = JSON.parse(AUDIO_CURRENT_STATUS);				
+					if(parsedAUDIO_CURRENT_STATUS.currenttime < 5) {
+						ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List.map(function(obj,index) {
+							if (obj.filename === parsedAUDIO_CURRENT_STATUS.nowplaying_subtitle) {
+								if (index !== 0) {
+									//console.log(parsedAUDIO_CURRENT_STATUS);
+									socket.broadcast.emit('NCWC_control', { type: 'playMP3', 'playlink':ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index-1)].url, albumtitle: parsedAUDIO_CURRENT_STATUS.nowplaying_title, trackname: ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index-1)].filename });
+								} else {
+									// this is the first track, return to beginning
+									socket.broadcast.emit('NCWC_control', { type:'reset_and_play' });
+									console.log('beginning');
+								}
+							} else {
+								// not found
+							}
+						});
+					} else {
+						// return to beginning of current track
+						socket.broadcast.emit('NCWC_control', { type:'reset_and_play' });
+						//console.log('back to beginning');
+					}
+				}
+				catch(e) {} 
+				break;
+			case 'audio_fwd':
+				try {
+					var parsedAUDIO_CURRENT_STATUS = JSON.parse(AUDIO_CURRENT_STATUS);
 					ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List.map(function(obj,index) {
 						if (obj.filename === parsedAUDIO_CURRENT_STATUS.nowplaying_subtitle) {
-							if (index !== 0) {
-								//console.log(parsedAUDIO_CURRENT_STATUS);
-								socket.broadcast.emit('NCWC_control', { type: 'playMP3', 'playlink':ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index-1)].url, albumtitle: parsedAUDIO_CURRENT_STATUS.nowplaying_title, trackname: ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index-1)].filename });
+							if (index < ObjectLength(ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List)-1) {
+								socket.broadcast.emit('NCWC_control', { type: 'playMP3', 'playlink':ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index+1)].url, albumtitle: parsedAUDIO_CURRENT_STATUS.nowplaying_title, trackname: ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index+1)].filename });
 							} else {
-								// this is the first track, return to beginning
-								socket.broadcast.emit('NCWC_control', { type:'reset_and_play' });
-								console.log('beginning');
+								// this is the last track in this album--do nothing.
 							}
 						} else {
 							// not found
 						}
 					});
-				} else {
-					// return to beginning of current track
-					socket.broadcast.emit('NCWC_control', { type:'reset_and_play' });
-					//console.log('back to beginning');
 				}
-				break;
-			case 'audio_fwd':
-				var parsedAUDIO_CURRENT_STATUS = JSON.parse(AUDIO_CURRENT_STATUS);
-				ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List.map(function(obj,index) {
-					if (obj.filename === parsedAUDIO_CURRENT_STATUS.nowplaying_subtitle) {
-						if (index < ObjectLength(ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List)-1) {
-							socket.broadcast.emit('NCWC_control', { type: 'playMP3', 'playlink':ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index+1)].url, albumtitle: parsedAUDIO_CURRENT_STATUS.nowplaying_title, trackname: ALBUMS[parsedAUDIO_CURRENT_STATUS.nowplaying_title].mp3List[(index+1)].filename });
-						} else {
-							// this is the last track in this album--do nothing.
-						}
-					} else {
-						// not found
-					}
-				});
+				catch(e){}
 				break;
 			case 'audio_pause':
 				socket.broadcast.emit('NCWC_control', { type:'button_pause' });
@@ -774,6 +780,8 @@ var confidenceArrayObject = {
 };
 var confidenceLoopRunning = false;
 var confidenceTimeout;
+var fist_longHoldTimeoutRunning = false;
+var fist_longHoldTimeout;
 
 function clearConfidenceArray() {
 	confidenceArrayObject.keyTap = 0;
@@ -794,6 +802,20 @@ function sendGestureAck(data) {
 	catch(e) {}
 }
 
+function sendGestureHitBoxStatus(data) {
+	try {
+		io.sockets.emit('gesture_hb_status', data);
+	}
+	catch(e) {}
+}
+
+function sendGestureFingerStatus(data) {
+	try {
+		io.sockets.emit('gesture_finger_status', data);
+	}
+	catch(e) {}
+}
+
 function determineAction() {
 	var roundWinner = '';
 	var roundWinnerHits = 0;
@@ -805,7 +827,9 @@ function determineAction() {
 	}
 	if (confidenceArrayObject[roundWinner]) {
 		console.log(LOCAL_DATETIME().timestamp+' Gesture action: '+roundWinner);
-		sendGestureAck({ gesture: roundWinner });
+		if (last_known_numHands > 0) {
+			sendGestureAck({ gesture: roundWinner });
+		}
 	} else {
 		//console.log('Unknown winner: '+roundWinner);
 	}
@@ -819,44 +843,95 @@ function startConfidenceTimer() {
 	confidenceLoopRunning = true;
 }
 
+var last_known_numHands = 0;
+var last_fist = false;
+var isFist;
+const minValue = 0.5;
+
 var controller = leapjs.loop({enableGestures: true}, function(frame){
-  if(frame.valid && frame.gestures.length > 0){
-	  frame.gestures.forEach(function(gesture){
-		  if (confidenceLoopRunning === true) {
-			  switch (gesture.type){
-				case "circle":
-					// Flaky?
-					break;
-				case "keyTap":
-					confidenceArrayObject.keyTap++;
-					break;
-				case "screenTap":
-					confidenceArrayObject.screenTap++;
-					break;
-				case "swipe":
-					//Classify swipe as either horizontal or vertical
-					var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
-					//Classify as right-left or up-down
-					if(isHorizontal){
-						if(gesture.direction[0] > 0){
-							confidenceArrayObject.swipe_right++;
-						} else {
-							confidenceArrayObject.swipe_left++;
+	if(frame.hands.length > 0) {
+	  
+	  if (last_known_numHands < 1) {
+		  console.log(LOCAL_DATETIME().timestamp+' Hand detected in box');
+		  sendGestureHitBoxStatus({ handsInBox: frame.hands.length });
+	  }
+	  //var hand = frame.hands[0];
+	  //var position = hand.palmPosition;
+	  //var velocity = hand.palmVelocity;
+	  //var direction = hand.direction;
+	  
+	  var hand = frame.hands[0];
+      isFist = checkFist(hand);
+	  if (isFist !== last_fist) {
+	  	switch (isFist) {
+			case true:
+				console.log(LOCAL_DATETIME().timestamp+' Making fist');
+				sendGestureFingerStatus({ makingFist:isFist });
+				fist_longHoldTimeout = setTimeout(function() {
+					io.sockets.emit('gesture_command', { gesture: 'fist_long' });
+					console.log(LOCAL_DATETIME().timestamp+' Fist: LONG hold');
+					fist_longHoldTimeoutRunning = false;
+				}, 2000);
+				fist_longHoldTimeoutRunning = true;
+				break;
+			case false:
+				console.log(LOCAL_DATETIME().timestamp+' Releasing fist');
+				sendGestureFingerStatus({ makingFist:isFist });
+				if (fist_longHoldTimeoutRunning === true) {
+					clearTimeout(fist_longHoldTimeout);
+					io.sockets.emit('gesture_command', { gesture: 'fist_short' });
+					console.log(LOCAL_DATETIME().timestamp+' Fist: SHORT hold');
+					fist_longHoldTimeoutRunning = false;
+				}
+				break;
+		}
+	  }
+		
+	  if(frame.valid && frame.gestures.length > 0){
+		  frame.gestures.forEach(function(gesture){
+			  if (confidenceLoopRunning === true) {
+				  switch (gesture.type){
+					case "circle":
+						// Flaky?
+						break;
+					case "keyTap":
+						confidenceArrayObject.keyTap++;
+						break;
+					case "screenTap":
+						confidenceArrayObject.screenTap++;
+						break;
+					case "swipe":
+						//Classify swipe as either horizontal or vertical
+						var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+						//Classify as right-left or up-down
+						if(isHorizontal){
+							if(gesture.direction[0] > 0){
+								confidenceArrayObject.swipe_right++;
+							} else {
+								confidenceArrayObject.swipe_left++;
+							}
+						} else { //vertical
+							if(gesture.direction[1] > 0){
+								confidenceArrayObject.swipe_up++;
+							} else {
+								confidenceArrayObject.swipe_down++;
+							}                  
 						}
-					} else { //vertical
-						if(gesture.direction[1] > 0){
-							confidenceArrayObject.swipe_up++;
-						} else {
-							confidenceArrayObject.swipe_down++;
-						}                  
-					}
-					break;
+						break;
+				  }
+			  } else {
+				  startConfidenceTimer();
 			  }
-		  } else {
-			  startConfidenceTimer();
-		  }
-	  });
+		  });
+	  }
+  } else {
+	  if (last_known_numHands > 0) {
+		  console.log(LOCAL_DATETIME().timestamp+' No hand detected');
+		  sendGestureHitBoxStatus({ handsInBox: frame.hands.length });
+	  }
   }
+  last_known_numHands = frame.hands.length;
+  last_fist = isFist;
 });
 
 controller.on('connect', function() {
@@ -870,3 +945,34 @@ controller.on('streamingStarted', function() {
 controller.on('streamingStopped', function() {
   console.log("A Leap device has been disconnected.");
 });
+
+function getExtendedFingers(hand){
+   var f = 0;
+   for(var i=0;i<hand.fingers.length;i++){
+      if(hand.fingers[i].extended){
+         f++;
+      }
+   }
+   return f;
+}
+
+function checkFist(hand){
+   var sum = 0;
+   for(var i=0;i<hand.fingers.length;i++){
+      var finger = hand.fingers[i];
+      var meta = finger.bones[0].direction();
+      var proxi = finger.bones[1].direction();
+      var inter = finger.bones[2].direction();
+      var dMetaProxi = leapjs.vec3.dot(meta,proxi);
+      var dProxiInter = leapjs.vec3.dot(proxi,inter);
+      sum += dMetaProxi;
+      sum += dProxiInter
+   }
+   sum = sum/10;
+
+   if(sum<=minValue && getExtendedFingers(hand)==0){
+       return true;
+   }else{
+       return false;
+   }
+}

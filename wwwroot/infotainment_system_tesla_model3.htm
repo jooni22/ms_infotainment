@@ -384,14 +384,14 @@
                                     
                                     <div style="flex-grow:0.3;"></div>
                                     
-                                    <div style="display:flex; align-items:center;">
-                                        <div class="sub_container_tab" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseRadio" style="flex-grow:1;">
+                                    <div id="tab_audio_inner" style="display:flex; align-items:center;">
+                                        <div id="tab_audio_radio" class="sub_container_tab" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseRadio" style="flex-grow:1;">
                                             <div>Radio</div>
                                         </div>
-                                        <div class="sub_container_tab tab_selected" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseStreaming" style="flex-grow:1;">
+                                        <div id="tab_audio_streaming" class="sub_container_tab tab_selected" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseStreaming" style="flex-grow:1;">
                                             <div>Streaming</div>
                                         </div>
-                                        <div class="sub_container_tab" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseTuneIn" style="flex-grow:1;">
+                                        <div id="tab_audio_usb" class="sub_container_tab" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseTuneIn" style="flex-grow:1;">
                                             <div>USB</div>
                                         </div>
                                     </div>
@@ -665,7 +665,7 @@
                                                                 <img src="images/icon_gesture_tap.png" class="invertedImg" style="height:1.1em; margin-right:10px;">
                                                                 <div>Gesture Controls</div>
                                                             </div>
-                                                            <div style="width:60%; margin-top:20px;">
+                                                            <div style="width:50%; margin-top:20px;">
                                                                 <div class="tesla_slider_control_horiz HC">
                                                                     <div class="slider_option selected">OFF</div>
                                                                     <div class="slider_option">ON</div>
@@ -854,19 +854,19 @@
                     
                     <!-- TEMP CONTROL (Driver) -->
                     <div id="footer_env_driver_rocker" class="footerButton" style="justify-content:space-between;">
-                    	<div class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="driver">
+                    	<div id="footer_env_driver_rocker_up" class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="driver">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                         </div>
-                        <div style="margin:-20px 0 -20px 0;">
+                        <div id="footer_env_driver_temp_btn" style="margin:-20px 0 -20px 0;">
                         	<span id="footer_temp_driver_val" style="font-size:44px;">74</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
-                        <div class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="driver">
+                        <div id="footer_env_driver_rocker_down" class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="driver">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                     </div>
                     
                     <!-- CLIMATE -->
-                    <div id="footer_envcontrols_climatetoggle_outer" class="footerButton">
+                    <div id="footer_envcontrols_climate_control" class="footerButton">
 
                         <img src="images/fan.png" class="invertedImg" style="height:33px;">
                         <div class="txtShadow_toU_hvy" style="font-size:14px; margin-top:8px;">MANUAL</div>
@@ -875,13 +875,13 @@
                     
                     <!-- TEMP CONTROL (Passenger) -->
                     <div id="footer_env_pass_rocker" class="footerButton" style="justify-content:space-between;">
-                        <div class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="passenger">
+                        <div id="footer_env_pass_rocker_up" class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="passenger">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                         </div>
-                        <div style="margin:-20px 0 -20px 0;">
+                        <div id="footer_env_pass_temp_btn" style="margin:-20px 0 -20px 0;">
                         	<span id="footer_temp_passenger_val" style="font-size:44px;">75</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
-                        <div class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="passenger">
+                        <div id="footer_env_pass_rocker_down" class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="passenger">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                     </div>
@@ -893,12 +893,12 @@
                     
                     
                     <!-- MUSIC -->
-                    <div id="BUTTON_footer_music" class="footerButton gen_button">
+                    <div id="footer_music" class="footerButton gen_button">
                     	<i class="fa fa-music" aria-hidden="true" style="font-size:38px;"></i>
                     </div>
                     
                     <!-- PHONE -->
-                    <div id="BUTTON_footer_phone" class="footerButton gen_button" style="margin-right:-20px;">
+                    <div id="footer_phone" class="footerButton gen_button" style="margin-right:-20px;">
                     	<i class="fa fa-mobile" aria-hidden="true" style="font-size:48px;"></i>
                     </div>
                     
@@ -908,12 +908,12 @@
                                 <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                             </div>
                             <div style="position:relative;">
-                            <div style="position:absolute; margin-top:2px;margin-left:-18px;">
-                                <div style="display:flex; flex-direction:row; align-items:center; justify-content:center; margin:-20px 0 -20px 0;">
-                                    <img id="vol_speaker_main" src="images/speaker_off.png" class="invertedImg" style="height:34px;" >
-                                    <img id="vol_main_off" src="images/52.png" class="invertedImg" style="height:20px; margin-left:6px;" >
+                                <div style="position:absolute; margin-top:2px;margin-left:-18px;">
+                                    <div style="display:flex; flex-direction:row; align-items:center; justify-content:center; margin:-20px 0 -20px 0;">
+                                        <img id="vol_speaker_main" src="images/speaker_off.png" class="invertedImg" style="height:34px;" >
+                                        <img id="vol_main_off" src="images/52.png" class="invertedImg" style="height:20px; margin-left:6px;" >
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                             <div id="VOLUME_level_DOWN" class="gen_button">
                                 <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
@@ -923,8 +923,8 @@
                     </div>
                 </div> <!-- end #footer -->
                 
-                <div id="gestureIcon_container" style="position:absolute; z-index:900; top:10px; left:10px; display:none;">
-                	<div id="gestureIcon_bg" style="width:60px; height:60px; background:rgba(0,163,3,1.00);">
+                <div id="gestureIcon_container" style="position:absolute; z-index:900; width:60px; height:60px; top:10px; left:10px;">
+                	<div id="gestureIcon_bg" style="width:60px; height:60px; background:rgba(0,163,3,1.00); display:none;">
                     	<img id="gestureIcon_img" src="images/icon_gesture_swipe_up.png" class="invertedImg">
                     </div>
                 </div>

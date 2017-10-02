@@ -15,22 +15,20 @@ var VOL_POPUP_SHOWING = false;
 var NP_MP3_ALBUM_TITLE = null;
 var NP_MP3_ALBUM_SUBTITLE = null;
 
-var CLIENT_CARD_MAXIMIZED;
-var CLIENT_CARD_STACK = {
-	0	:	{},
-	1	:	{}
-};
-
 var CURRENT_CLIENT_HASH = 'pageContainer_home';
 var AB_CURSOR_HL_TIMEOUT = null;
 var AB_CURSOR_HL_SHOWING = false;
 var AB_CURSOR_HL_MATRIXLOC = [0,0];
 var AB_SCREEN_MATRIX = {
 	pageContainer_home	: {
-		0:	['AB_pageContainer_home_APPS'],
-		1:	['AB_pageContainer_home_NOAUDIO'],
-		2:	['AB_pageContainer_home_GPS_ZI'],
-		3:	['AB_pageContainer_home_GPS_ZO']
+	 '-1':  ['NP_container'],	
+		0:	['footer_car_system', 'footer_env_front_window', 'footer_env_rear_window', 'footer_seatwarmer_driver', 'footer_env_driver_rocker',
+			 'footer_envcontrols_climate_control', 
+			 'footer_env_pass_rocker', 'footer_seatwarmer_passenger', 'footer_music', 'footer_phone'
+			]
+	},
+	PANE_AUDIO	: {
+		0:	['tab_audio_inner']
 	},
 	pageContainer_apps	: {
 		0:	['AB_pageContainer_apps_BACK', 'AB_pageContainer_apps_HOME'],
@@ -94,7 +92,10 @@ var sessionVars = {
 	'DayNight_mode'				: 'day',
 	'MAPS_traffic_on'			: 'false',
 	'OSK_target'				: '',
-	'gesture_control_on'			: false
+	'gesture_control_on'		: false,
+	'gesture_control_menus_on'	: false,
+	'gesture_control_menu_focus': '',
+	'active_pane'				: ''
 };
 
 /*
@@ -239,6 +240,14 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
 }
 
 
+function checkPaneTop(data) {
+	var paneTarget = data.paneTarget;
+	var selectedPaneTop = $('#'+paneTarget).css('top').split('px')[0];
+	// '870'
+	return parseInt(selectedPaneTop);
+}
+
+/*
 function check_audioPane_height() {
 	var audioPaneTop = $('#PANE_AUDIO').css('top').split('px')[0];
 	// '870'
@@ -259,7 +268,8 @@ function check_carSystemPane_height() {
 
 function showPane(data) {
 	var paneToPromote = data.paneToShow;
-}
+}*/
+
 
 // Hammer(time)
 $('.left_pane_tab').each(function() {
@@ -350,7 +360,7 @@ ht_Audio_NP.on('swipedown', function(ev) {
 });
 ht_Audio_NP.on('swipeup', function(ev) {
 	// Swipe up (Audio pane)
-	switch(check_audioPane_height()) {
+	switch(checkPaneTop({ paneTarget: 'PANE_AUDIO' })) {
 		case 710:
 			$('#PANE_AUDIO').css('top','60px');
 			break;
@@ -390,6 +400,36 @@ ht_Audio_SwipeBlock.on('swiperight', function(ev) {
 		//alert('nothing to left');
 	}
 });
+
+
+function hideActivePane() {
+	if (sessionVars.active_pane !== '') {
+		$('#'+sessionVars.active_pane).css('top','870px');
+		sessionVars.active_pane = '';
+	}
+}
+
+function showPane(data) {
+	var effectedPane = data.paneTarget;
+	if ($('#'+effectedPane)) {
+		hideActivePane();
+		
+		$('#'+effectedPane).css('top','60px');
+		sessionVars.active_pane = effectedPane;
+		return true;
+	}
+	else {
+		console.log('No pane: '+effectedPane);
+		return false;
+	}
+}
+
+function moveIntoPane(data) {
+	var effectedPane = data.paneTarget;
+	CURRENT_CLIENT_HASH = effectedPane;
+	highlightFirstABbutton();
+	sessionVars.gesture_control_menu_focus = effectedPane;
+}
 
 function bindDOMEvents() {
 	$('.button_BACK_LINK').on('mousedown touchstart',function() {
@@ -536,9 +576,13 @@ function bindDOMEvents() {
 		$('#browseMedia_menu div.lowerLvl').hide();
 		//$('#menu_ALBUM').show();
 	}); 
-	
+		
 	$(document.body).on('click', '.button_PLAYFILE', function() {
+		var playlink = $(this).data('playlink');
 		var thisAlbumTitle = $(this).data('albumtitle');
+		var thisTrackName = $(this).data('trackname');
+		socket.emit('IUI_command',{ type: 'playMP3', 'playlink':playlink, albumtitle: thisAlbumTitle, trackname: thisTrackName });
+		
 		if ($(this).data('albumtitle')) {
 			thisAlbumTitle = $(this).data('albumtitle');
 			$('#NP_ALBUMART').data('albumtitle',thisAlbumTitle);
@@ -549,13 +593,6 @@ function bindDOMEvents() {
 		}
 	});
 	
-	$(document.body).on('mouseup', '.button_PLAYFILE', function() {
-		var playlink = $(this).data('playlink');
-		var thisAlbumTitle = $(this).data('albumtitle');
-		var thisTrackName = $(this).data('trackname');
-		socket.emit('IUI_command',{ type: 'playMP3', 'playlink':playlink, albumtitle: thisAlbumTitle, trackname: thisTrackName });
-	});
-	
 	$(document.body).on('mouseup', '.button_PLAY_STREAM', function() {
 		var playlink = $(this).data('playlink');
 		var thisAlbumTitle = $(this).data('albumtitle');
@@ -564,7 +601,7 @@ function bindDOMEvents() {
 	});
 	
 	// PLAY / PAUSE
-	$(document.body).on(smartClick, '.BUTTON_mp3_playPause_toggle, .BUTTON_FM_playPause_toggle', function() {
+	$(document.body).on('click', '.BUTTON_mp3_playPause_toggle, .BUTTON_FM_playPause_toggle', function() {
 		var thisButtonType = $(this).data('showing');
 		switch(thisButtonType) {
 			case 'play':
@@ -577,7 +614,7 @@ function bindDOMEvents() {
 	});
 	
 	// FWD / BACK
-	$(document.body).on(smartClick, '.BUTTON_mp3_fwd, .BUTTON_mp3_back', function() {
+	$(document.body).on('click', '.BUTTON_mp3_fwd, .BUTTON_mp3_back', function() {
 		var thisButtonType = $(this).data('type');
 		switch(thisButtonType) {
 			case 'back':
@@ -595,17 +632,13 @@ function bindDOMEvents() {
 		$('#panelContainer_VOLUME').popup('open');
 		//$('#MSTR_LINK_MODAL').click();
 	});
-	
-	$(document.body).on('mousedown touchstart', '.buttonVolume', function() {
-		$(this).addClass('buttonDOWN');
-	});
-	
-	$(document.body).on('mouseup', '#VOLUME_level_UP', function() {
+		
+	$(document.body).on('click', '#VOLUME_level_UP', function() {
 		socket.emit('IUI_command',{ type: 'audio_volume_up' });
 		$('.buttonVolume').removeClass('buttonDOWN');
 	});
 	
-	$(document.body).on('mouseup', '#VOLUME_level_DOWN', function() {
+	$(document.body).on('click', '#VOLUME_level_DOWN', function() {
 		socket.emit('IUI_command',{ type: 'audio_volume_down' });
 		$('.buttonVolume').removeClass('buttonDOWN');
 	});
@@ -623,38 +656,7 @@ function bindDOMEvents() {
 		var percent =(normalizedX/380);
 		socket.emit('IUI_command', { type:'audio_play_head', pct:percent });
 		//console.log(e);
-	});
-	
-	/*
-	$(document.body).on('click', '.IT_zoom', function() {
-		var thisDirection = $(this).data('io');
-		switch(thisDirection) {
-			case 'in':
-				zoomLvl = zoomLvl + 1;
-				setMapZoomLvl(map);
-				break;
-			case 'out':
-				zoomLvl = zoomLvl - 1;
-				setMapZoomLvl(map);
-				break;
-		}
-	});
-	*/
-	
-	/*
-	$(document.body).on('click', '.IT_traffic_toggle', function() {
-		var showLayer = $(this).data('layertoadd');
-		switch(showLayer) {
-			case 'traffic':
-				enableTrafficInfo(map);
-				break;
-			case 'base':
-				disableTrafficInfo(map);
-				break;
-		}
-	});
-	*/
-	
+	});	
 	
 	$(document.body).on('click', '.NP_pulltab', function() {
 		if ($(this).data('npopen') === 'no') {
@@ -685,47 +687,43 @@ function bindDOMEvents() {
 		$('#NP_ALBUMART').toggleClass('np_largealbumpic');
 	});
 	
-	
-	$(document.body).on('click', '#BUTTON_footer_music', function() {
-		switch(check_audioPane_height()) {
+	$(document.body).on('click', '#footer_music', function() {
+		switch(checkPaneTop({ paneTarget: 'PANE_AUDIO' })) {
 			case 870:
-				$('#PANE_AUDIO').css('top','60px');
+				showPane({ paneTarget:'PANE_AUDIO' });
 				break;
 			case 710:
-				$('#PANE_AUDIO').css('top','60px');
+				showPane({ paneTarget:'PANE_AUDIO' });
 				break;
 			case 60:
-				$('#PANE_AUDIO').css('top','870px');
+				hideActivePane();
+				sessionVars.gesture_control_menu_focus = 'footer';
 				break;
 		}
 		//$('#PANE_AUDIO').toggle();
 	});
 	
-	$(document.body).on('click', '#BUTTON_footer_phone', function() {
-		switch(check_phonePane_height()) {
+	$(document.body).on('click', '#footer_phone', function() {
+		switch(checkPaneTop({ paneTarget: 'PANE_PHONE' })) {
 			case 870:
-				$('#PANE_PHONE').css('top','60px');
-				break;
-			case 710:
-				$('#PANE_PHONE').css('top','60px');
+				showPane({ paneTarget:'PANE_PHONE' });
 				break;
 			case 60:
-				$('#PANE_PHONE').css('top','870px');
+				hideActivePane();
+				sessionVars.gesture_control_menu_focus = 'footer';
 				break;
 		}
 		//$('#PANE_AUDIO').toggle();
 	});
 	
 	$(document.body).on('click', '#footer_car_system', function() {
-		switch(check_carSystemPane_height()) {
+		switch(checkPaneTop({ paneTarget: 'PANE_CAR_SYSTEM' })) {
 			case 870:
-				$('#PANE_CAR_SYSTEM').css('top','60px');
-				break;
-			case 710:
-				$('#PANE_CAR_SYSTEM').css('top','60px');
+				showPane({ paneTarget:'PANE_CAR_SYSTEM' });
 				break;
 			case 60:
-				$('#PANE_CAR_SYSTEM').css('top','870px');
+				hideActivePane();
+				sessionVars.gesture_control_menu_focus = 'footer';
 				break;
 		}
 	});
@@ -878,6 +876,13 @@ function bindDOMEvents() {
 			showPane({ paneToShow:'CAR_SYSTEM' });
 		}
 	});
+	
+	$(document.body).on(smartClick, '.slider_option', function () {
+		if (!$(this).hasClass('selected')) {
+			$(this).siblings('.slider_option').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
 
 	// Virtual keyboard
 	$('.button_KB').on(smartClick,function() {
@@ -969,17 +974,116 @@ function showExpiringVolumePopup() {
 function highlightFirstABbutton() {
 	if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH]) {
 		//alert(AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][AB_CURSOR_HL_MATRIXLOC[1]]);
-		if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][1]) {
-			AB_CURSOR_HL_MATRIXLOC = [1,0];
-		} else {
-			AB_CURSOR_HL_MATRIXLOC = [0,0];
+		switch(CURRENT_CLIENT_HASH) {
+			case 'pageContainer_home':
+				AB_CURSOR_HL_MATRIXLOC = [0,5];
+				break;
+			default:
+				if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][1]) {
+					AB_CURSOR_HL_MATRIXLOC = [1,0];
+				} else {
+					AB_CURSOR_HL_MATRIXLOC = [0,0];
+				}
 		}
-		$('#'+AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][AB_CURSOR_HL_MATRIXLOC[1]]).addClass('BUTTON_AB_HL');
-		AB_CURSOR_HL_SHOWING=true;
+		
+		select_ABbutton();
+		//$('#'+AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][AB_CURSOR_HL_MATRIXLOC[1]]).addClass('BUTTON_AB_HL');
+		//AB_CURSOR_HL_SHOWING=true;
 	}
 	else {
 		// No AB_SCREEN_MATRIX entry... do nothing
-		//alert('No AB_SCREEN_MATRIX entry for: '+CURRENT_CLIENT_HASH);
+		console.log('No AB_SCREEN_MATRIX entry for: '+CURRENT_CLIENT_HASH);
+	}
+}
+
+function highlight_prev_ABbutton() {
+	if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][(AB_CURSOR_HL_MATRIXLOC[1])-1]) {
+		AB_CURSOR_HL_MATRIXLOC = [AB_CURSOR_HL_MATRIXLOC[0], (AB_CURSOR_HL_MATRIXLOC[1])-1];
+		select_ABbutton();
+	}
+}
+
+function highlight_next_ABbutton() {
+	if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][(AB_CURSOR_HL_MATRIXLOC[1])+1]) {
+		AB_CURSOR_HL_MATRIXLOC = [AB_CURSOR_HL_MATRIXLOC[0], (AB_CURSOR_HL_MATRIXLOC[1])+1];
+		select_ABbutton();
+	}
+}
+
+function highlight_prevRow_ABbutton() {
+	if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][(AB_CURSOR_HL_MATRIXLOC[0])-1]) {
+		if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][(AB_CURSOR_HL_MATRIXLOC[0])-1][AB_CURSOR_HL_MATRIXLOC[1]]) {
+			AB_CURSOR_HL_MATRIXLOC = [(AB_CURSOR_HL_MATRIXLOC[0])-1, AB_CURSOR_HL_MATRIXLOC[1]];
+		} else {
+			AB_CURSOR_HL_MATRIXLOC = [(AB_CURSOR_HL_MATRIXLOC[0])-1, 0];
+		}
+		select_ABbutton();
+	}
+}
+
+function highlight_nextRow_ABbutton() {
+	if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][(AB_CURSOR_HL_MATRIXLOC[0])+1]) {
+		if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][(AB_CURSOR_HL_MATRIXLOC[0])+1][AB_CURSOR_HL_MATRIXLOC[1]]) {
+			AB_CURSOR_HL_MATRIXLOC = [(AB_CURSOR_HL_MATRIXLOC[0])+1, AB_CURSOR_HL_MATRIXLOC[1]];
+		} else {
+			AB_CURSOR_HL_MATRIXLOC = [(AB_CURSOR_HL_MATRIXLOC[0])+1, 0];
+		}
+		select_ABbutton();
+	}
+}
+
+function highlight_prevRowMP3_ABbutton() {
+	if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][(AB_CURSOR_HL_MATRIXLOC[1])-5]) {
+		AB_CURSOR_HL_MATRIXLOC = [AB_CURSOR_HL_MATRIXLOC[0], (AB_CURSOR_HL_MATRIXLOC[1])-5];
+		select_ABbutton();
+		checkHLScrollPos({ targetScrollDiv:'cont_BrowseStreaming' });
+	} else {
+		moveIntoPane({ paneTarget:'PANE_AUDIO' });
+		//AB_CURSOR_HL_MATRIXLOC = [(AB_CURSOR_HL_MATRIXLOC[0])-1, 0];
+	}
+}
+
+function highlight_nextRowMP3_ABbutton() {
+	if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][(AB_CURSOR_HL_MATRIXLOC[1])+5]) {
+			AB_CURSOR_HL_MATRIXLOC = [AB_CURSOR_HL_MATRIXLOC[0], (AB_CURSOR_HL_MATRIXLOC[1])+5];
+			select_ABbutton();
+			checkHLScrollPos({ targetScrollDiv:'cont_BrowseStreaming' });
+		} else {
+			//AB_CURSOR_HL_MATRIXLOC = [(AB_CURSOR_HL_MATRIXLOC[0])-1, 0];
+		}
+}
+
+function select_ABbutton() {
+	clearABbuttonHightlights();
+	$('#'+AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][AB_CURSOR_HL_MATRIXLOC[0]][AB_CURSOR_HL_MATRIXLOC[1]]).addClass('BUTTON_AB_HL');
+	AB_CURSOR_HL_SHOWING=true;
+}
+
+function clearABbuttonHightlights() {
+	$('.BUTTON_AB_HL').removeClass('BUTTON_AB_HL');
+	AB_CURSOR_HL_SHOWING=false;
+}
+
+function getIDofCurrentHightlight() {
+	var currentHighlightId = $('.BUTTON_AB_HL').prop('id');
+	console.log('----');
+	console.log(currentHighlightId);
+	console.log('menu focus: '+sessionVars.gesture_control_menu_focus);
+	
+	return currentHighlightId;
+}
+
+function checkHLScrollPos(data) {
+	var currentHighlightId = $('.BUTTON_AB_HL').prop('id');
+	var currentHighlightTop = $('#'+currentHighlightId).position().top;
+	var currentScrollDivContainer = data.targetScrollDiv;
+	var currentScrollablePos = $('#'+currentScrollDivContainer+' div:first-child').scrollTop();
+	//console.log(currentHighlightTop+' Scrollable: '+currentScrollablePos);
+	if (currentHighlightTop < 60) {
+		$('#'+currentScrollDivContainer+' div:first-child').scrollTop(currentScrollablePos - 140);
+	}
+	if (currentHighlightTop > 700) {
+		$('#'+currentScrollDivContainer+' div:first-child').scrollTop(currentScrollablePos + 500);
 	}
 }
 	
@@ -1002,8 +1106,8 @@ function bindSocketEvents(){
 	
 	socket.on('updateInfotainmentUI', function(data) {
 		delete AB_SCREEN_MATRIX.pageContainer_MP3;
-		AB_SCREEN_MATRIX.pageContainer_MP3 = {0:	['AB_pageContainer_MP3_BACK', 'AB_pageContainer_MP3_HOME']};
-		
+		AB_SCREEN_MATRIX.pageContainer_MP3 = {0:[],1:[]};
+		// row 0 is favorites, 1 is the full MP3 directory list
 		MP3_ALBUM_LIST = data;
 		
 		$('#MP3_album_list_container').html('');
@@ -1015,35 +1119,143 @@ function bindSocketEvents(){
 			var splitAlbum = index.split(' - ');
 			var thisAlbumFirstTrack = MP3_ALBUM_LIST[index].mp3List[0];
 			var thisIsFav = value.favorite;
+			var thisIdName = 'AB_MP3_MEDIA_'+thisAlbumNum;
 			var thisDiv =
-				'<div class="media_container button_PLAYFILE" data-playlink="'+thisAlbumFirstTrack.url+'" data-albumtitle="'+index+'" data-trackname="'+thisAlbumFirstTrack.filename+'">'+
+				'<div id="'+thisIdName+'" class="media_container button_PLAYFILE" data-playlink="'+thisAlbumFirstTrack.url+'" data-albumtitle="'+index+'" data-trackname="'+thisAlbumFirstTrack.filename+'">'+
 					'<img class="media_album_cover" src="'+value.folderArtURL+'" data-albumtitle="'+index+'">'+
 					'<div style="width:160px; text-overflow:ellipsis; overflow:hidden;">'+splitAlbum[1]+'</div>'+
 				'</div>';
 			$('#MP3_album_list_container').append(thisDiv).trigger('create');
+			AB_SCREEN_MATRIX.pageContainer_MP3[1].push(thisIdName);
 			if(thisIsFav) {
-				$('.FAVORITES_container').append(thisDiv).trigger('create');
+				$('.FAVORITES_container').append(thisDiv).trigger('create');	
 			}
 			thisAlbumNum++;
 		});
 		// end each(data...
 	});
 	
+	socket.on('gesture_hb_status', function(data) {
+		var currentBorderColor = $('#gestureIcon_container').css('border-left-color');
+		if (data.handsInBox === 0) {
+			//alert('no hands! '+currentBorderColor);
+			$('#gestureIcon_container').css('border','none');
+		} else {
+			//alert('HANDS! '+currentBorderColor);
+			$('#gestureIcon_container').css('border','2px dashed rgba(0,139,20,1)');
+		}
+	});
+	
+	socket.on('gesture_finger_status', function(data) {
+		if ($('#gestureIcon_bg').css('background') !== 'rgba(223,173,0,1.00)') {
+			$('#gestureIcon_bg').css('background','rgba(223,173,0,1.00)');
+		}
+		switch(data.makingFist) {
+			case true:
+				$('#gestureIcon_img').attr('src','images/icon_gesture_fist_engage.png');
+				$('#gestureIcon_bg').show();
+				break;
+			case false:
+				$('#gestureIcon_bg').fadeOut('fast');
+				break;
+		}
+	});
+	
 	socket.on('gesture_command', function(data) {
+		if ($('#gestureIcon_bg').css('background') !== 'rgba(0,163,3,1.00)') {
+			$('#gestureIcon_bg').css('background','rgba(0,163,3,1.00)');
+		}
+		var currentHLID = getIDofCurrentHightlight();
 		switch(data.gesture) {
 			case 'swipe_left':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_left.png');
-				socket.emit('IUI_command',{ type: 'audio_back' });
+				//socket.emit('IUI_command',{ type: 'audio_back' });
+				switch (sessionVars.gesture_control_menu_focus) {
+					case 'footer':
+						highlight_prev_ABbutton();
+						break;
+					case 'NP_container':
+						$('#AB_pageContainer_home_MP3_TBACK').click();
+						break;
+					case 'pageContainer_MP3':
+						highlight_prev_ABbutton();
+						break;
+				}
 				break;
 			case 'swipe_right':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_right.png');
-				socket.emit('IUI_command',{ type: 'audio_fwd' });
+				//socket.emit('IUI_command',{ type: 'audio_fwd' });
+				switch (sessionVars.gesture_control_menu_focus) {
+					case 'footer':
+						highlight_next_ABbutton();
+						break;
+					case 'NP_container':
+						$('#AB_pageContainer_home_MP3_TFWD').click();
+						break;
+					case 'pageContainer_MP3':
+						highlight_next_ABbutton();
+						break;
+				}
 				break;
 			case 'swipe_up':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_up.png');
+				if (sessionVars.gesture_control_menus_on === true) {
+					switch(sessionVars.gesture_control_menu_focus) {
+						case 'footer': 
+							if (currentHLID === 'footer_env_driver_rocker') {
+								$('#footer_env_driver_rocker_up').click();
+							}
+							if (currentHLID === 'footer_env_pass_rocker') {
+								$('#footer_env_pass_rocker_up').click();
+							}
+							if (currentHLID === 'footer_envcontrols_climate_control') {
+								highlight_prevRow_ABbutton();
+								sessionVars.gesture_control_menu_focus = 'NP_container';
+								
+								switch(checkPaneTop({ paneTarget: 'PANE_AUDIO' })) {
+									case 870:
+										$('#PANE_AUDIO').css('top','710px');
+										break;
+								}
+							}
+							if (currentHLID === 'footer_music') {
+								moveIntoPane({ paneTarget:'PANE_AUDIO' });
+							}
+							break;
+						case 'NP_container':
+							// Volume up
+							$('#VOLUME_level_UP').click();
+							break;
+						case 'pageContainer_MP3':
+							highlight_prevRowMP3_ABbutton();
+							break;
+					}
+				}
 				break;
 			case 'swipe_down': 
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_down.png');
+				if (sessionVars.gesture_control_menus_on === true) {
+					switch(sessionVars.gesture_control_menu_focus) {
+						case 'footer': 
+							if (currentHLID === 'footer_env_driver_rocker') {
+								$('#footer_env_driver_rocker_down').click();
+							}
+							if (currentHLID === 'footer_env_pass_rocker') {
+								$('#footer_env_pass_rocker_down').click();
+							}
+							break;
+						case 'NP_container':
+							// Volume down
+							$('#VOLUME_level_DOWN').click();
+							break;
+						case 'pageContainer_MP3':
+							highlight_nextRowMP3_ABbutton();
+							break;
+					}
+					if (currentHLID === 'tab_audio_inner') {
+						moveIntoPane({ paneTarget:'pageContainer_MP3' });
+					}
+				}
 				break;
 			case 'keyTap':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_tap.png');
@@ -1051,16 +1263,50 @@ function bindSocketEvents(){
 			case 'screenTap':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_tap.png');
 				break;
+			case 'fist_long':
+				// general "menu" gesture
+				if (sessionVars.gesture_control_menus_on === false) {
+					highlightFirstABbutton();
+					sessionVars.gesture_control_menus_on = true;
+					sessionVars.gesture_control_menu_focus = 'footer';
+				} else {
+					hideActivePane();
+					// if the menus are already active, close all panes, clear button highlights and focii
+					clearABbuttonHightlights();
+					sessionVars.gesture_control_menus_on = false;
+					sessionVars.gesture_control_menu_focus = '';
+					CURRENT_CLIENT_HASH = 'pageContainer_home';
+				}
+				break;
+			case 'fist_short':
+				// if in the Now Playing div, be the play/pause toggle
+				if (sessionVars.gesture_control_menu_focus === 'NP_container') {
+					$('#AB_pageContainer_home_MP3_PAUSE').click();
+				}
+				else {
+					// otherwise, the general "enter" gesture
+					if (sessionVars.gesture_control_menus_on === true) {
+						var selectedDiv = $('.BUTTON_AB_HL').prop('id');
+						//console.log(selectedDiv);
+						$('#'+selectedDiv).click();
+					}
+				}
+				break;
 		}
-		$('#gestureIcon_container').show();
+		if($('#gestureIcon_bg').is(':animated')) {
+			$('#gestureIcon_bg').stop().animate({opacity:'100'});
+		}
+		else {
+			$('#gestureIcon_bg').show();
+		}
 		var gestureTimeout = setTimeout(function() {
-			$('#gestureIcon_container').fadeOut('slow');
+			$('#gestureIcon_bg').fadeOut(2000);
 		});
 	});
 
 	socket.on('PLAY_CURRENT', function(data) {
 		//console.log(data);
-		if (check_audioPane_height() > 710) {
+		if (checkPaneTop({ paneTarget: 'PANE_AUDIO' }) > 710) {
 			$('#PANE_AUDIO').css('top','710px');
 		}
 		
@@ -1069,7 +1315,7 @@ function bindSocketEvents(){
 		
 		if (data.status.playState === 0) {
 			// If "Now playing" mini bar showing, hide the panel
-			if (check_audioPane_height() === 710) {
+			if (checkPaneTop({ paneTarget: 'PANE_AUDIO' }) === 710) {
 				$('#PANE_AUDIO').css('top','870px');
 				$('#NOW_PLAYING_container').css('margin-bottom','');
 			}
@@ -1312,6 +1558,7 @@ function bindSocketEvents(){
 				break;
 			case 'AB_press':
 				switch(data.keypress) {
+					
 				} // end switch(data.keypress)
 				break; // end case 'AB_press'
 		}
