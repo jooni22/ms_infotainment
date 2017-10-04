@@ -538,6 +538,19 @@ io.sockets.on('connection', function(socket){
 			case 'switch_to_screen':
 				socket.broadcast.emit('IC_command', data);
 				break;
+			case 'motion_control':
+				if (data.switchPosition === 'on') {
+					if (MOTION_CONTROL === false) {
+						start_Leap_controller();
+					}
+				}
+				if (data.switchPosition === 'off') {
+					if (MOTION_CONTROL === true) {
+						stop_Leap_controller();
+					}
+				}
+				//console.log(data);
+				break;
 		}
 	});
 	// end temp GUI command
@@ -843,109 +856,6 @@ function startConfidenceTimer() {
 	confidenceLoopRunning = true;
 }
 
-var last_known_numHands = 0;
-var last_fist = false;
-var isFist;
-const minValue = 0.5;
-
-var controller = leapjs.loop({enableGestures: true}, function(frame){
-	if(frame.hands.length > 0) {
-	  
-	  if (last_known_numHands < 1) {
-		  console.log(LOCAL_DATETIME().timestamp+' Hand detected in box');
-		  sendGestureHitBoxStatus({ handsInBox: frame.hands.length });
-	  }
-	  //var hand = frame.hands[0];
-	  //var position = hand.palmPosition;
-	  //var velocity = hand.palmVelocity;
-	  //var direction = hand.direction;
-	  
-	  var hand = frame.hands[0];
-      isFist = checkFist(hand);
-	  if (isFist !== last_fist) {
-	  	switch (isFist) {
-			case true:
-				console.log(LOCAL_DATETIME().timestamp+' Making fist');
-				sendGestureFingerStatus({ makingFist:isFist });
-				fist_longHoldTimeout = setTimeout(function() {
-					io.sockets.emit('gesture_command', { gesture: 'fist_long' });
-					console.log(LOCAL_DATETIME().timestamp+' Fist: LONG hold');
-					fist_longHoldTimeoutRunning = false;
-				}, 2000);
-				fist_longHoldTimeoutRunning = true;
-				break;
-			case false:
-				console.log(LOCAL_DATETIME().timestamp+' Releasing fist');
-				sendGestureFingerStatus({ makingFist:isFist });
-				if (fist_longHoldTimeoutRunning === true) {
-					clearTimeout(fist_longHoldTimeout);
-					io.sockets.emit('gesture_command', { gesture: 'fist_short' });
-					console.log(LOCAL_DATETIME().timestamp+' Fist: SHORT hold');
-					fist_longHoldTimeoutRunning = false;
-				}
-				break;
-		}
-	  }
-		
-	  if(frame.valid && frame.gestures.length > 0){
-		  frame.gestures.forEach(function(gesture){
-			  if (confidenceLoopRunning === true) {
-				  switch (gesture.type){
-					case "circle":
-						// Flaky?
-						break;
-					case "keyTap":
-						confidenceArrayObject.keyTap++;
-						break;
-					case "screenTap":
-						confidenceArrayObject.screenTap++;
-						break;
-					case "swipe":
-						//Classify swipe as either horizontal or vertical
-						var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
-						//Classify as right-left or up-down
-						if(isHorizontal){
-							if(gesture.direction[0] > 0){
-								confidenceArrayObject.swipe_right++;
-							} else {
-								confidenceArrayObject.swipe_left++;
-							}
-						} else { //vertical
-							if(gesture.direction[1] > 0){
-								confidenceArrayObject.swipe_up++;
-							} else {
-								confidenceArrayObject.swipe_down++;
-							}                  
-						}
-						break;
-				  }
-			  } else {
-				  startConfidenceTimer();
-			  }
-		  });
-	  }
-  } else {
-	  if (last_known_numHands > 0) {
-		  console.log(LOCAL_DATETIME().timestamp+' No hand detected');
-		  sendGestureHitBoxStatus({ handsInBox: frame.hands.length });
-	  }
-  }
-  last_known_numHands = frame.hands.length;
-  last_fist = isFist;
-});
-
-controller.on('connect', function() {
-  console.log("Successfully connected.");
-});
-
-controller.on('streamingStarted', function() {
-  console.log("A Leap device has been connected.");
-});
-
-controller.on('streamingStopped', function() {
-  console.log("A Leap device has been disconnected.");
-});
-
 function getExtendedFingers(hand){
    var f = 0;
    for(var i=0;i<hand.fingers.length;i++){
@@ -975,4 +885,125 @@ function checkFist(hand){
    }else{
        return false;
    }
+}
+
+var controller;
+var controller_init = false;
+var last_known_numHands = 0;
+var last_fist = false;
+var isFist;
+const minValue = 0.5;
+
+function start_Leap_controller() {
+	controller = leapjs.loop({enableGestures: true}, function(frame){
+		if(frame.hands.length > 0) {
+		  
+		  if (last_known_numHands < 1) {
+			  console.log(LOCAL_DATETIME().timestamp+' Hand detected in box');
+			  sendGestureHitBoxStatus({ handsInBox: frame.hands.length });
+		  }
+		  //var hand = frame.hands[0];
+		  //var position = hand.palmPosition;
+		  //var velocity = hand.palmVelocity;
+		  //var direction = hand.direction;
+		  
+		  var hand = frame.hands[0];
+		  isFist = checkFist(hand);
+		  if (isFist !== last_fist) {
+			switch (isFist) {
+				case true:
+					console.log(LOCAL_DATETIME().timestamp+' Making fist');
+					sendGestureFingerStatus({ makingFist:isFist });
+					fist_longHoldTimeout = setTimeout(function() {
+						io.sockets.emit('gesture_command', { gesture: 'fist_long' });
+						console.log(LOCAL_DATETIME().timestamp+' Fist: LONG hold');
+						fist_longHoldTimeoutRunning = false;
+					}, 2000);
+					fist_longHoldTimeoutRunning = true;
+					break;
+				case false:
+					console.log(LOCAL_DATETIME().timestamp+' Releasing fist');
+					sendGestureFingerStatus({ makingFist:isFist });
+					if (fist_longHoldTimeoutRunning === true) {
+						clearTimeout(fist_longHoldTimeout);
+						io.sockets.emit('gesture_command', { gesture: 'fist_short' });
+						console.log(LOCAL_DATETIME().timestamp+' Fist: SHORT hold');
+						fist_longHoldTimeoutRunning = false;
+					}
+					break;
+			}
+		  }
+			
+		  if(frame.valid && frame.gestures.length > 0){
+			  frame.gestures.forEach(function(gesture){
+				  if (confidenceLoopRunning === true) {
+					  switch (gesture.type){
+						case "circle":
+							// Flaky?
+							break;
+						case "keyTap":
+							confidenceArrayObject.keyTap++;
+							break;
+						case "screenTap":
+							confidenceArrayObject.screenTap++;
+							break;
+						case "swipe":
+							//Classify swipe as either horizontal or vertical
+							var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+							//Classify as right-left or up-down
+							if(isHorizontal){
+								if(gesture.direction[0] > 0){
+									confidenceArrayObject.swipe_right++;
+								} else {
+									confidenceArrayObject.swipe_left++;
+								}
+							} else { //vertical
+								if(gesture.direction[1] > 0){
+									confidenceArrayObject.swipe_up++;
+								} else {
+									confidenceArrayObject.swipe_down++;
+								}                  
+							}
+							break;
+					  }
+				  } else {
+					  startConfidenceTimer();
+				  }
+			  });
+		  }
+	  } else {
+		  if (last_known_numHands > 0) {
+			  console.log(LOCAL_DATETIME().timestamp+' No hand detected');
+			  sendGestureHitBoxStatus({ handsInBox: frame.hands.length });
+		  }
+	  }
+	  last_known_numHands = frame.hands.length;
+	  last_fist = isFist;
+	}); // end var controller...
+	
+	if (controller_init === false) {
+		define_Leap_events();
+	}		
+	
+	MOTION_CONTROL = true;
+}
+
+function define_Leap_events() {
+	controller.on('connect', function() {
+	  console.log("Successfully connected.");
+	});
+	
+	controller.on('streamingStarted', function() {
+	  console.log("A Leap device has been connected.");
+	});
+	
+	controller.on('streamingStopped', function() {
+	  console.log("A Leap device has been disconnected.");
+	});
+	controller_init = true;
+}
+
+function stop_Leap_controller() {
+	controller.disconnect();
+	MOTION_CONTROL = false;
 }

@@ -504,6 +504,10 @@ function bindDOMEvents() {
 		$('#MSTR_LINK').click();
 	});
 	
+	$(document.body).on('click', '#slider_gesture_control_onoff div.slider_option', function() {
+		socket.emit('RGUI_command', { type:'motion_control', switchPosition:$(this).data('switchval') });
+	});
+	
 	$(document.body).on('mouseup', '#footer_controls_label', function() {
 		$('#panelContainer_CONTROLS').popup('open');
 	});
@@ -1079,8 +1083,8 @@ function checkHLScrollPos(data) {
 	var currentScrollDivContainer = data.targetScrollDiv;
 	var currentScrollablePos = $('#'+currentScrollDivContainer+' div:first-child').scrollTop();
 	//console.log(currentHighlightTop+' Scrollable: '+currentScrollablePos);
-	if (currentHighlightTop < 60) {
-		$('#'+currentScrollDivContainer+' div:first-child').scrollTop(currentScrollablePos - 140);
+	if (currentHighlightTop < 180) {
+		$('#'+currentScrollDivContainer+' div:first-child').scrollTop(currentScrollablePos - 280);
 	}
 	if (currentHighlightTop > 700) {
 		$('#'+currentScrollDivContainer+' div:first-child').scrollTop(currentScrollablePos + 500);
@@ -1250,6 +1254,7 @@ function bindSocketEvents(){
 							break;
 						case 'pageContainer_MP3':
 							highlight_nextRowMP3_ABbutton();
+							checkHLScrollPos({ targetScrollDiv:'cont_BrowseStreaming' });
 							break;
 					}
 					if (currentHLID === 'tab_audio_inner') {

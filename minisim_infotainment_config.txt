@@ -3,3 +3,5 @@ var BASE_WWWROOT_DIR = 'wwwroot';
 var BASE_MP3_JUKEBOX_STORE = 'E:/IV_mp3';
 
 var OMC_MAP_PHYS_DIR = 'E:/NADS/_minisim_infotainment/wwwroot/maps/';
+
+var MOTION_CONTROL = false;
