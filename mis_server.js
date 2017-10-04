@@ -125,6 +125,19 @@ var RT_VARS_OUTGOING = {
 	AUX_Info_Cursor		: { xpos: -9999, ypos: -9999 }
 };
 
+var FM_STATIONS = [
+	{ albumtitle:'FM 88.1', playlink:"http://stream.kcck.org/jazz883kcck", trackname:"KCCK", displayname:"88.1 KCCK" },
+	{ albumtitle:'FM 89.7', playlink:"http://krui.student-services.uiowa.edu:8000", trackname:"KRUI", displayname:"89.7 KRUI" },
+	{ albumtitle:'FM 90.9 (Studio One)', playlink:"http://studioone-stream.iowapublicradio.org/StudioOne.mp3", trackname:"KUNI (Studio One)", displayname:"90.9 KUNI (Studio One)" },
+	{ albumtitle:'FM 90.9 (News)', playlink:"http://news-stream.iowapublicradio.org/News.mp3", trackname:"KUNI (News)", displayname:"90.9 KUNI (News)" },
+	{ albumtitle:'FM 91.7', playlink:"http://classical-stream.iowapublicradio.org/Classical.mp3", trackname:"KSUI", displayname:"91.7 KSUI" },
+	{ albumtitle:'FM 94.1', playlink:"http://uk1.internet-radio.com:8294/live", trackname:"KRNA", displayname:"94.1 KRNA" },
+	{ albumtitle:'FM 98.1', playlink:"http://173.192.70.138:9170/live", trackname:"KHAK", displayname:"98.1 KHAK" },
+	{ albumtitle:'FM 101.1', playlink:"http://us3.internet-radio.com:8078/live", trackname:"KSKC", displayname:"101.1 KSKC" },
+	{ albumtitle:'FM 104.5', playlink:"http://uk3.internet-radio.com:8223/live", trackname:"KDAT", displayname:"104.5 KDAT" },
+	{ albumtitle:'FM 107.9', playlink:"http://airspectrum.cdnstream1.com:8142/1303_128", trackname:"KFMW", displayname:"107.9 KFMW" }
+];
+
 colors.setTheme({
 	timestamp: 'grey',
 	verbose: 'cyan',
@@ -455,6 +468,53 @@ io.sockets.on('connection', function(socket){
 					}); 
 				}
 				enumerateMP3Changer();
+				break;
+			case 'fm_audio_back':
+				try {
+					var parsedAUDIO_CURRENT_STATUS = JSON.parse(AUDIO_CURRENT_STATUS);				
+					//console.log(parsedAUDIO_CURRENT_STATUS.nowplaying_title);
+					var currentFMstation = parsedAUDIO_CURRENT_STATUS.nowplaying_title;
+					var currentFMkey = arrayObjectIndexOf(FM_STATIONS, currentFMstation, 'albumtitle');
+					
+					if (FM_STATIONS[currentFMkey]) {
+						//console.log('station found: '+FM_STATIONS[currentFMkey] + ' key: '+currentFMkey);
+						var previousFMkey;
+						if (currentFMkey === 0) {
+							previousFMkey = ObjectLength(FM_STATIONS)-1;
+						} else {
+							previousFMkey = currentFMkey - 1;
+						}
+						socket.broadcast.emit('NCWC_control', { type: 'playMP3', 'playlink':FM_STATIONS[previousFMkey].playlink, albumtitle: FM_STATIONS[previousFMkey].albumtitle, trackname: FM_STATIONS[previousFMkey].displayname });
+					} else {
+						console.log(parsedAUDIO_CURRENT_STATUS.nowplaying_title);
+						console.log(FM_STATIONS.currentFMstation);
+					}
+				}
+				catch(e) {} 
+				break;
+			case 'fm_audio_fwd':
+				try {
+					var parsedAUDIO_CURRENT_STATUS = JSON.parse(AUDIO_CURRENT_STATUS);				
+					//console.log(parsedAUDIO_CURRENT_STATUS.nowplaying_title);
+					var currentFMstation = parsedAUDIO_CURRENT_STATUS.nowplaying_title;
+					var currentFMkey = arrayObjectIndexOf(FM_STATIONS, currentFMstation, 'albumtitle');
+					
+					if (FM_STATIONS[currentFMkey]) {
+						//console.log('station found: '+FM_STATIONS[currentFMkey] + ' key: '+currentFMkey);
+						var nextFMkey;
+						if (currentFMkey === ObjectLength(FM_STATIONS)-1) {
+							nextFMkey = 0;
+						} else {
+							nextFMkey = currentFMkey + 1;
+						}
+						socket.broadcast.emit('NCWC_control', { type: 'playMP3', 'playlink':FM_STATIONS[nextFMkey].playlink, albumtitle: FM_STATIONS[nextFMkey].albumtitle, trackname: FM_STATIONS[nextFMkey].displayname });
+					} else {
+						//console.log(parsedAUDIO_CURRENT_STATUS.nowplaying_title);
+						//console.log(FM_STATIONS.currentFMstation);
+						console.log(LOCAL_DATETIME().timestamp+' Unknown FM_STATION: '+FM_STATIONS.currentFMstation);
+					}
+				}
+				catch(e) {} 
 				break;
 		}
 	});

@@ -308,6 +308,19 @@ function bindDOMEvents() {
 		}
 	});
 	
+	// FM FWD / BACK
+	$(document.body).on(smartClick, '.BUTTON_fm_fwd, .BUTTON_fm_back', function() {
+		var thisButtonType = $(this).data('type');
+		switch(thisButtonType) {
+			case 'back':
+				socket.emit('IUI_command',{ type: 'fm_audio_back' });
+				break;
+			case 'fwd':
+				socket.emit('IUI_command',{ type: 'fm_audio_fwd' });
+				break;
+		}
+	});
+	
 	// VOLUME
 	$(document.body).on('mouseup', '.BUTTON_VOLUME_modal_toggle', function() {
 		//console.log('ding');
@@ -1183,6 +1196,7 @@ function updateMapRotation() {
 function updateLocalZoomFactor() {
 	//alert(sessionVars.local_zoom);
 	$('#mapContainerOuter_HomePage_ZOOM').css('transform', 'scale('+sessionVars.local_zoom+')').css('-webkit-transform', 'scale('+sessionVars.local_zoom+')');	
+	$('#mapContainerOuter_navigation_ZOOM').css('transform', 'scale('+sessionVars.local_zoom+')').css('-webkit-transform', 'scale('+sessionVars.local_zoom+')');	
 }
 
 function connect() {

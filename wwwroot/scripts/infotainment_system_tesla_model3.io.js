@@ -506,6 +506,9 @@ function bindDOMEvents() {
 	
 	$(document.body).on('click', '#slider_gesture_control_onoff div.slider_option', function() {
 		socket.emit('RGUI_command', { type:'motion_control', switchPosition:$(this).data('switchval') });
+		if ($(this).data('switchval') === 'off') {
+			$('#gestureIcon_container').css('border','none');
+		}
 	});
 	
 	$(document.body).on('mouseup', '#footer_controls_label', function() {
@@ -626,6 +629,21 @@ function bindDOMEvents() {
 				break;
 			case 'fwd':
 				socket.emit('IUI_command',{ type: 'audio_fwd' });
+				break;
+		}
+	});
+	
+		
+	// FM FWD / BACK
+	$(document.body).on('click', '.BUTTON_radio_fwd, .BUTTON_radio_back', function() {
+		console.log($(this).data('type'));
+		var thisButtonType = $(this).data('type');
+		switch(thisButtonType) {
+			case 'back':
+				socket.emit('IUI_command',{ type: 'fm_audio_back' });
+				break;
+			case 'fwd':
+				socket.emit('IUI_command',{ type: 'fm_audio_fwd' });
 				break;
 		}
 	});
@@ -1952,14 +1970,14 @@ $(function() {
 		mapLng = mapLng+0.00001;
 		moveMapCenterTo(map, mapLat, mapLng);
 	}, 100);
-	*/
 	
+		
 	var positiveYaw = 0;
 	setInterval(function() {
 		positiveYaw += 0.1;
 		$('#mapContainerInner').css('-webkit-transform','rotate(-'+positiveYaw+'deg)').css('transform','rotate(-'+positiveYaw+'deg)');
 	}, 100);
-	
+	*/
 	
 	$.getScript('scripts/dtmf_tones.js', function() {
 	});
