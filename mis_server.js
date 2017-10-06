@@ -806,17 +806,17 @@ function sendRTPacket() {
 	});
 }
 
-UDPserver.bind(RT_PORT_INCOMING, CAB_HOST_IP);
+//UDPserver.bind(RT_PORT_INCOMING, CAB_HOST_IP);
 
 console.log(LOCAL_DATETIME().timestamp+' Infotainment server up @ http://localhost:'+port);
 
-
+/*
 var RT_Update_Interval = setInterval(function() {
 	//console.log(LOCAL_DATETIME().timestamp+' '+JSON.stringify(RT_VARS_OUTGOING));
 	sendRTPacket();
 //}, 1000);
 }, (1/60)*1000);
-
+*/
 
 
 // GESTURE CONTROLS 

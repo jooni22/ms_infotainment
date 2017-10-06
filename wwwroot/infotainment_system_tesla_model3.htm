@@ -1,4 +1,3 @@
-<!-- Template for HTML based graphics in CasparCG Server with Chromium/Berkelium -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +65,7 @@
                                 </div>
                                 
                                 <div class="nav_navigate_button_outer">
-                                	<div class="button gen_button" style="padding:20px; padding-left:16px; padding-right:14px; width:200px; border-radius:38px; display:flex; justify-content:space-between;">
+                                	<div id="nav_navigate_btn" class="button gen_button" data-bid="1015" style="padding:20px; padding-left:16px; padding-right:14px; width:200px; border-radius:38px; display:flex; justify-content:space-between;">
                                         <img src="images/nav_icon_open.png" style="height:26px; margin-top:-2px; margin-left:3px; opacity:0.3;">
                                         <div>Navigate</div>
                                         <img src="images/carat_right.png" style="height:14px; opacity:0.6; margin-top:4px;">
@@ -74,20 +73,20 @@
                                 </div>
                                 
                                 <div class="nav_orient_button_outer">
-                                	<div class="button gen_button" style="width:75px; height:75px; padding:0 !important; border-radius:38px;">
+                                	<div id="nav_map_orient_toggle_btn" class="button gen_button" data-bid="1016" style="width:75px; height:75px; padding:0 !important; border-radius:38px;">
                                         <img src="images/tesla/icon_north_up.png" style="width:60px; margin-top:8px; opacity:1;">
                                     </div>
                                 </div>
                                 
-                                <div class="nav_zoom_controls_outer" style="margin-right:20px;">
+                                <div id="NAV_ZOOM_OUTER" class="nav_zoom_controls_outer" style="margin-right:20px;">
                                 	<div>
-                                        <div class="button IT_zoom gen_button" data-io="in" style="width:75px; height:75px; padding:0 !important; border-radius:38px; border-bottom-left-radius:0; border-bottom-right-radius:0;">
+                                        <div id="btn_nav_zoom_in" class="button IT_zoom gen_button" data-bid="1017" data-io="in" style="width:75px; height:75px; padding:0 !important; border-radius:38px; border-bottom-left-radius:0; border-bottom-right-radius:0;">
                                             <img src="images/44_v8.png" style="height:30px; opacity:0.6; margin:22px 10px;">
                                         </div>
                                     </div>
                                     
                                     <div >
-                                        <div class="button IT_zoom gen_button" data-io="out" style="width:75px; height:75px; padding:0 !important; border-radius:38px; border-top-left-radius:0; border-top-right-radius:0; border-top:none;">
+                                        <div id="btn_nav_zoom_out" class="button IT_zoom gen_button" data-bid="1018" data-io="out" style="width:75px; height:75px; padding:0 !important; border-radius:38px; border-top-left-radius:0; border-top-right-radius:0; border-top:none;">
                                             <img src="images/45_v8.png" style="width:30px; opacity:0.6; margin:36px 10px;">
                                         </div>
                                     </div>
@@ -95,14 +94,14 @@
                                 
                                 <div class="nav_other_controls_outer" style="margin-right:20px;">
                                 	<div>
-                                        <div class="button gen_button" style="width:75px; height:75px; padding:0 !important; border-radius:38px; display:flex; align-items:center; justify-content:center;">
+                                        <div id="nav_map_superchargers_btn" class="button gen_button" data-bid="1019" style="width:75px; height:75px; padding:0 !important; border-radius:38px; display:flex; align-items:center; justify-content:center;">
                                             <!-- <img src="images/globe.png" style="height:40px; opacity:0.6; margin:18px 10px;"> -->
                                             <div style="width:40px; height:40px; border:1px solid rgba(111,111,111,1.00); border-radius:20px;"><i class="fa fa-bolt" aria-hidden="true" style="font-size:2em;"></i></div>
                                         </div>
                                     </div>
                                     
                                     <div style="margin-top:20px">
-                                        <div class="button gen_button IT_traffic_toggle" data-layertoadd="traffic" style="width:75px; height:75px; padding:0 !important; border-radius:38px;">
+                                        <div id="nav_map_traffic_btn" class="button gen_button IT_traffic_toggle" data-bid="1020" data-layertoadd="traffic" style="width:75px; height:75px; padding:0 !important; border-radius:38px;">
                                             <img src="images/traffic_light.png" style="height:40px; opacity:0.6; margin:18px 10px;">
                                         </div>
                                     </div>
@@ -316,28 +315,28 @@
                                         </div>
                                         
                                         <div id="NP_PLAYLIST_CONTROLS" class="np_playcontrols_bigwidth" style="display:-webkit-flex; display:flex; align-items:center; align-content:space-between;">
-                                            <div id="AB_pageContainer_home_MP3_TBACK" class="PLAY_CONTROLS BUTTON_mp3_back" style="flex-grow:1; text-align:center;" data-type="back" data-bid="1002">
+                                            <div id="AB_pageContainer_home_MP3_TBACK" class="PLAY_CONTROLS BUTTON_mp3_back buttonI" data-bid="1201" style="flex-grow:1; text-align:center;" data-type="back">
                                                 <img src="images/track_fwd_v8.png" class="iconImg" style="height:24px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg);">
                                             </div>
-                                            <div id="AB_pageContainer_home_MP3_PAUSE" class="PLAY_CONTROLS BUTTON_mp3_playPause_toggle" style="flex-grow:1; text-align:center;" data-showing="play" data-bid="1003">
+                                            <div id="AB_pageContainer_home_MP3_PAUSE" class="PLAY_CONTROLS BUTTON_mp3_playPause_toggle buttonI" data-bid="1202" style="flex-grow:1; text-align:center;" data-showing="play">
                                             	<img src="images/play.png" class="iconImg" style="height:26px;" >
                                             </div>
-                                            <div id="AB_pageContainer_home_MP3_TFWD" class="PLAY_CONTROLS BUTTON_mp3_fwd" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1004">
+                                            <div id="AB_pageContainer_home_MP3_TFWD" class="PLAY_CONTROLS BUTTON_mp3_fwd buttonI" data-bid="1203" style="flex-grow:1; text-align:center;" data-type="fwd">
                                                 <img src="images/track_fwd_v8.png" class="iconImg" style="height:24px;">
                                             </div>
-                                            <div id="AB_pageContainer_home_MP3_SEARCH" class="PLAY_CONTROLS HC" style="flex-grow:1; text-align:center;" data-type="search" data-bid="1005">
+                                            <div id="AB_pageContainer_home_MP3_SEARCH" class="PLAY_CONTROLS HC buttonI" data-bid="1204" style="flex-grow:1; text-align:center;" data-type="search">
                                             	<i class="fa fa-search" aria-hidden="true"></i>
                                             </div>
-                                            <div id="AB_pageContainer_maintenance_AUDIO_OFF" class="PLAY_CONTROLS HC" style="flex-grow:1; text-align:center;" data-type="eject" data-bid="1006">
+                                            <div id="AB_pageContainer_maintenance_AUDIO_OFF" class="PLAY_CONTROLS HC buttonI" data-bid="1205" style="flex-grow:1; text-align:center;" data-type="eject">
                                             	<i class="fa fa-eject iconImg" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div> <!-- end .AUDIO_playlist_MP3 -->
                                     
-                                    <div class="AUDIO_playlist_group AUDIO_playlist_radio" style="">
+                                    <div id="NP_PLAYLIST_CONTROLS_RADIO" class="AUDIO_playlist_group AUDIO_playlist_radio" style="">
                                         <div style="display:-webkit-flex; display:flex; align-items:center; justify-content:center; width:100%; height:160px;">
                                             <div style="flex-grow:3;"></div>
-                                            <div id="AB_pageContainer_home_MP3_TBACK" class="PLAY_CONTROLS BUTTON_radio_back" style="flex-grow:1; text-align:center;" data-type="back" data-bid="1002">
+                                            <div id="AB_pageContainer_home_radio_TBACK" class="PLAY_CONTROLS BUTTON_radio_back buttonI" data-bid="1210" style="flex-grow:1; text-align:center;" data-type="back">
                                                 <img src="images/track_fwd_v8.png" class="iconImg" style="height:24px; -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg);">
                                             </div>
                                             <div style="flex-grow:1;">
@@ -347,10 +346,10 @@
                                                         <div class="AUDIO_title HC" style="font-size:38px;"></div>
                                                         <div class="AUDIO_albumtitle" style="color:rgba(170,170,170,1.0);overflow:hidden; font-weight:bold; font-size:16px; display:none;"></div>
                                                     </div>
-                                                    <div style="flex-grow:1; text-align:left;"><img src="images/tesla/radio_strength_bg.png" class="invertedImg" style="height:24px; margin:6px 0px 6px 20px;"></div>
+                                                    <div id="NP_PLAYLIST_CONTROLS_RADIO_MRK" style="flex-grow:1; text-align:left;"><img src="images/tesla/radio_strength_bg.png" class="invertedImg" style="height:24px; margin:6px 0px 6px 20px;"></div>
                                                 </div>
                                             </div>
-                                            <div id="AB_pageContainer_home_MP3_TFWD" class="PLAY_CONTROLS BUTTON_radio_fwd" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1004">
+                                            <div id="AB_pageContainer_home_radio_TFWD" class="PLAY_CONTROLS BUTTON_radio_fwd buttonI" data-bid="1211" style="flex-grow:1; text-align:center;" data-type="fwd" data-bid="1004">
                                                 <img src="images/track_fwd_v8.png" class="iconImg" style="height:24px;">
                                             </div>
                                             <div style="flex-grow:3;"></div>
@@ -385,13 +384,13 @@
                                     <div style="flex-grow:0.3;"></div>
                                     
                                     <div id="tab_audio_inner" style="display:flex; align-items:center;">
-                                        <div id="tab_audio_radio" class="sub_container_tab" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseRadio" style="flex-grow:1;">
+                                        <div id="tab_audio_radio" class="sub_container_tab buttonI" data-bid="1300" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseRadio" style="flex-grow:1;">
                                             <div>Radio</div>
                                         </div>
-                                        <div id="tab_audio_streaming" class="sub_container_tab tab_selected" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseStreaming" style="flex-grow:1;">
+                                        <div id="tab_audio_streaming" class="sub_container_tab tab_selected buttonI" data-bid="1301" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseStreaming" style="flex-grow:1;">
                                             <div>Streaming</div>
                                         </div>
-                                        <div id="tab_audio_usb" class="sub_container_tab" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseTuneIn" style="flex-grow:1;">
+                                        <div id="tab_audio_usb" class="sub_container_tab buttonI" data-bid="1302" data-pproto="PROTO_MEDIA" data-tabtarget="cont_BrowseTuneIn" style="flex-grow:1;">
                                             <div>USB</div>
                                         </div>
                                     </div>
@@ -410,16 +409,16 @@
                                     <div style="display:flex; item-align:center; justify-content:space-around; margin-top:10px;">
                                         <div style="width:90%; height:510px; overflow-y:auto;">
                                             <div class="tesla_list">
-                                                <div id="AB_pageContainer_radio_play_T1" class="button_PLAYFILE mediaCell row HC" data-playlink="http://stream.kcck.org/jazz883kcck" data-albumtitle="FM 88.3" data-trackname="KCCK">88.1 KCCK</div>
-                                                <div id="AB_pageContainer_radio_play_T2" class="button_PLAYFILE mediaCell row HC" data-playlink="http://krui.student-services.uiowa.edu:8000" data-albumtitle="FM 89.7" data-trackname="KRUI">89.7 KRUI</div>
-                                            	<div id="AB_pageContainer_radio_play_T3" class="button_PLAYFILE mediaCell row HC" data-playlink="http://studioone-stream.iowapublicradio.org/StudioOne.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (Studio One)">90.9 KUNI (Studio One)</div>
-                                                <div id="AB_pageContainer_radio_play_T4" class="button_PLAYFILE mediaCell row HC" data-playlink="http://news-stream.iowapublicradio.org/News.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (News)">90.9 KUNI (News)</div>
-                                                <div id="AB_pageContainer_radio_play_T5" class="button_PLAYFILE mediaCell row HC" data-playlink="http://classical-stream.iowapublicradio.org/Classical.mp3" data-albumtitle="FM 91.7" data-trackname="KSUI">91.7 KSUI</div>
-                                                <div id="AB_pageContainer_radio_play_T6" class="button_PLAYFILE mediaCell row HC" data-playlink="http://uk1.internet-radio.com:8294/live" data-albumtitle="FM 94.1" data-trackname="KRNA">94.1 KRNA</div>
-                                                <div id="AB_pageContainer_radio_play_T7" class="button_PLAYFILE mediaCell row HC" data-playlink="http://173.192.70.138:9170/live" data-albumtitle="FM 98.1" data-trackname="KHAK">98.1 KHAK</div>
-                                                <div id="AB_pageContainer_radio_play_T8" class="button_PLAYFILE mediaCell row HC" data-playlink="http://us3.internet-radio.com:8078/live" data-albumtitle="FM 101.1" data-trackname="KSKC">101.1 KSKC</div>
-                                                <div id="AB_pageContainer_radio_play_T9" class="button_PLAYFILE mediaCell row HC" data-playlink="http://uk3.internet-radio.com:8223/live" data-albumtitle="FM 104.5" data-trackname="KDAT">104.5 KDAT</div>
-                                                <div id="AB_pageContainer_radio_play_T10" class="button_PLAYFILE mediaCell row HC" data-playlink="http://airspectrum.cdnstream1.com:8142/1303_128" data-albumtitle="FM 107.9" data-trackname="KFMW">107.9 KFMW</div>
+                                                <div id="AB_pageContainer_radio_play_T1" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1310" data-playlink="http://stream.kcck.org/jazz883kcck" data-albumtitle="FM 88.3" data-trackname="KCCK">88.1 KCCK</div>
+                                                <div id="AB_pageContainer_radio_play_T2" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1311" data-playlink="http://krui.student-services.uiowa.edu:8000" data-albumtitle="FM 89.7" data-trackname="KRUI">89.7 KRUI</div>
+                                            	<div id="AB_pageContainer_radio_play_T3" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1312" data-playlink="http://studioone-stream.iowapublicradio.org/StudioOne.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (Studio One)">90.9 KUNI (Studio One)</div>
+                                                <div id="AB_pageContainer_radio_play_T4" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1313" data-playlink="http://news-stream.iowapublicradio.org/News.mp3" data-albumtitle="FM 90.9" data-trackname="KUNI (News)">90.9 KUNI (News)</div>
+                                                <div id="AB_pageContainer_radio_play_T5" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1314" data-playlink="http://classical-stream.iowapublicradio.org/Classical.mp3" data-albumtitle="FM 91.7" data-trackname="KSUI">91.7 KSUI</div>
+                                                <div id="AB_pageContainer_radio_play_T6" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1315" data-playlink="http://uk1.internet-radio.com:8294/live" data-albumtitle="FM 94.1" data-trackname="KRNA">94.1 KRNA</div>
+                                                <div id="AB_pageContainer_radio_play_T7" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1316" data-playlink="http://173.192.70.138:9170/live" data-albumtitle="FM 98.1" data-trackname="KHAK">98.1 KHAK</div>
+                                                <div id="AB_pageContainer_radio_play_T8" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1317" data-playlink="http://us3.internet-radio.com:8078/live" data-albumtitle="FM 101.1" data-trackname="KSKC">101.1 KSKC</div>
+                                                <div id="AB_pageContainer_radio_play_T9" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1318" data-playlink="http://uk3.internet-radio.com:8223/live" data-albumtitle="FM 104.5" data-trackname="KDAT">104.5 KDAT</div>
+                                                <div id="AB_pageContainer_radio_play_T10" class="button_PLAYFILE mediaCell row HC buttonI" data-bid="1319" data-playlink="http://airspectrum.cdnstream1.com:8142/1303_128" data-albumtitle="FM 107.9" data-trackname="KFMW">107.9 KFMW</div>
                                             </div>
                                         </div>
                                     </div>
@@ -462,9 +461,9 @@
                                         <div class="sub_container_header_container">
                                             <div id="TABS_PHONE" style="display:flex; align-items:center; justify-content:center; height:60px;">
                                                 <div style="flex-grow:1;"></div>
-                                                <div class="sub_container_tab" data-pproto="PROTO_PHONE" data-tabtarget="cont_PhoneRecent"><div>Recent</div></div>
-                                                <div class="sub_container_tab tab_selected" data-pproto="PROTO_PHONE" data-tabtarget="cont_PhoneDialer"><div>Dialer</div></div>
-                                                <div class="sub_container_tab" data-pproto="PROTO_PHONE" data-tabtarget="cont_PhoneContacts"><div>Contacts</div></div>
+                                                <div id="tab_phone_recent" class="sub_container_tab buttonI" data-bid="2001" data-pproto="PROTO_PHONE" data-tabtarget="cont_PhoneRecent"><div>Recent</div></div>
+                                                <div id="tab_phone_dialer" class="sub_container_tab tab_selected buttonI" data-bid="2002" data-pproto="PROTO_PHONE" data-tabtarget="cont_PhoneDialer"><div>Dialer</div></div>
+                                                <div id="tab_phone_contacts" class="sub_container_tab buttonI" data-bid="2003" data-pproto="PROTO_PHONE" data-tabtarget="cont_PhoneContacts"><div>Contacts</div></div>
                                                 <div style="flex-grow:1;"></div>
                                             </div>
                                         </div>
@@ -484,56 +483,56 @@
                                                     </div> <!-- end flex row -->
                                                     <div style="background:rgba(115,115,115,0.3); height:3px; width:480px; margin-top:0px; margin-bottom:20px;"></div>
                                                     <div style="display:flex; align-items:center; justify-content:space-around; margin-bottom:16px;">
-                                                        <div class="button gen_button round_button dialpad_button"  data-dpval="1">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2010" data-dpval="1">
                                                             <div>1</div>
                                                             <div>&nbsp;</div>
                                                         </div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="2">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2011" data-dpval="2">
                                                             <div>2</div>
                                                             <div>ABC</div>
                                                         </div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="3">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2012" data-dpval="3">
                                                             <div>3</div>
                                                             <div>DEF</div>
                                                         </div>
                                                     </div> <!-- end flex row -->
                                                     <div style="display:flex; align-items:center; justify-content:space-around; margin-bottom:16px;">
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="4">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2013" data-dpval="4">
                                                             <div>4</div>
                                                             <div>GHI</div>
                                                         </div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="5">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2014" data-dpval="5">
                                                             <div>5</div>
                                                             <div>JKL</div>
                                                         </div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="6">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2015" data-dpval="6">
                                                             <div>6</div>
                                                             <div>MNO</div>
                                                         </div>
                                                     </div> <!-- end flex row -->
                                                     <div style="display:flex; align-items:center; justify-content:space-around; margin-bottom:16px;">
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="7">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2016" data-dpval="7">
                                                             <div>7</div>
                                                             <div>PQRS</div>
                                                         </div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="8">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2017" data-dpval="8">
                                                             <div>8</div>
                                                             <div>TUV</div>
                                                         </div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="9">
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2018" data-dpval="9">
                                                             <div>9</div>
                                                             <div>WXYZ</div>
                                                         </div>
                                                     </div> <!-- end flex row -->
                                                     <div style="display:flex; align-items:center; justify-content:space-around; margin-bottom:20px;">
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="*"><div style="font-size:60px;">*</div></div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="Z"><div>0</div></div>
-                                                        <div class="button gen_button round_button dialpad_button" data-dpval="#"><div>#</div></div>
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2019" data-dpval="*"><div style="font-size:60px;">*</div></div>
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2020" data-dpval="Z"><div>0</div></div>
+                                                        <div class="button gen_button round_button dialpad_button" data-bid="2021" data-dpval="#"><div>#</div></div>
                                                     </div> <!-- end flex row -->
                                                     
                                                     <div style="display:flex; align-items:center; justify-content:space-around;">
                                                         <div></div>
-                                                        <div id="BTN_DP_CALL" class="button gen_button round_button dialpad_button" data-dpval="CALL" style="background:rgba(29,219,0,1.00);">
+                                                        <div id="BTN_DP_CALL" class="button gen_button round_button dialpad_button" data-bid="2022" data-dpval="CALL" style="background:rgba(29,219,0,1.00);">
                                                             <div><i class="fa fa-phone" aria-hidden="true"></i></div>
                                                         </div>
                                                         <div></div>
@@ -546,26 +545,26 @@
                                         	<div style="display:flex; item-align:center; justify-content:space-around;">
                                             	<div style="width:70%; height:740px; overflow-y:auto;">
                                                     <div class="tesla_list">
-                                                        <div class="row HC dial_preset_button">Omar Ahmad</div>
-                                                        <div class="row HC dial_preset_button">Shawn Allen</div>
-                                                        <div class="row HC dial_preset_button">Mary Bender</div>
-                                                        <div class="row HC dial_preset_button">Tim Brown</div>
-                                                        <div class="row HC dial_preset_button">Steve Cable</div>
-                                                        <div class="row HC dial_preset_button">Cher Carney</div>
+                                                        <div id="AB_pageContainer_phone_contact_C1" class="row HC dial_preset_button buttonI" data-bid="2101">Omar Ahmad</div>
+                                                        <div id="AB_pageContainer_phone_contact_C2" class="row HC dial_preset_button buttonI" data-bid="2102">Shawn Allen</div>
+                                                        <div id="AB_pageContainer_phone_contact_C3" class="row HC dial_preset_button buttonI" data-bid="2103">Mary Bender</div>
+                                                        <div id="AB_pageContainer_phone_contact_C4" class="row HC dial_preset_button buttonI" data-bid="2104">Tim Brown</div>
+                                                        <div id="AB_pageContainer_phone_contact_C5" class="row HC dial_preset_button buttonI" data-bid="2105">Steve Cable</div>
+                                                        <div id="AB_pageContainer_phone_contact_C6" class="row HC dial_preset_button buttonI" data-bid="2106">Cher Carney</div>
                                                         
-                                                        <div class="row HC dial_preset_button">Coale Cooper</div>
-                                                        <div class="row HC dial_preset_button">Anna Dizack</div>
-                                                        <div class="row HC dial_preset_button">Gary Gaffney</div>
-                                                        <div class="row HC dial_preset_button">John Gaspar</div>
-                                                        <div class="row HC dial_preset_button">Jeff Gordon</div>
-                                                        <div class="row HC dial_preset_button">Jacob Heiden</div>
+                                                        <div id="AB_pageContainer_phone_contact_C7" class="row HC dial_preset_button buttonI" data-bid="2107">Coale Cooper</div>
+                                                        <div id="AB_pageContainer_phone_contact_C8" class="row HC dial_preset_button buttonI" data-bid="2108">Anna Dizack</div>
+                                                        <div id="AB_pageContainer_phone_contact_C9" class="row HC dial_preset_button buttonI" data-bid="2109">Gary Gaffney</div>
+                                                        <div id="AB_pageContainer_phone_contact_C10" class="row HC dial_preset_button buttonI" data-bid="2110">John Gaspar</div>
+                                                        <div id="AB_pageContainer_phone_contact_C11" class="row HC dial_preset_button buttonI" data-bid="2111">Jeff Gordon</div>
+                                                        <div id="AB_pageContainer_phone_contact_C12" class="row HC dial_preset_button buttonI" data-bid="2112">Jacob Heiden</div>
                                                         
-                                                        <div class="row HC dial_preset_button">David Heitbrink</div>
-                                                        <div class="row HC dial_preset_button">Oscar Hernandez Murcia</div>
-                                                        <div class="row HC dial_preset_button">Vincent Horosewski</div>
-                                                        <div class="row HC dial_preset_button">Corey Kreutz</div>
-                                                        <div class="row HC dial_preset_button">Dawn Marshall</div>
-                                                        <div class="row HC dial_preset_button">Ashley McDonald</div>
+                                                        <div id="AB_pageContainer_phone_contact_C13" class="row HC dial_preset_button buttonI" data-bid="2113">David Heitbrink</div>
+                                                        <div id="AB_pageContainer_phone_contact_C14" class="row HC dial_preset_button buttonI" data-bid="2114">Oscar Hernandez Murcia</div>
+                                                        <div id="AB_pageContainer_phone_contact_C15" class="row HC dial_preset_button buttonI" data-bid="2115">Vincent Horosewski</div>
+                                                        <div id="AB_pageContainer_phone_contact_C16" class="row HC dial_preset_button buttonI" data-bid="2116">Corey Kreutz</div>
+                                                        <div id="AB_pageContainer_phone_contact_C17" class="row HC dial_preset_button buttonI" data-bid="2117">Dawn Marshall</div>
+                                                        <div id="AB_pageContainer_phone_contact_C18" class="row HC dial_preset_button buttonI" data-bid="2118">Ashley McDonald</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -575,27 +574,27 @@
                                         	<div style="display:flex; item-align:center; justify-content:space-around;">
                                             	<div style="width:70%; height:740px; overflow-y:auto;">
                                                     <div class="tesla_list">
-                                                        <div class="row HC dial_preset_button">+1 630-496-5025</div>
-                                                        <div class="row HC dial_preset_button">+1 319-335-5911</div>
-                                                        <div class="row HC dial_preset_button">+1 618-319-8741</div>
-                                                        <div class="row HC dial_preset_button">Mom</div>
-                                                        <div class="row HC dial_preset_button">+1 618-319-7012</div>
-                                                        <div class="row HC dial_preset_button">John Gaspar</div>
+                                                        <div id="AB_pageContainer_phone_recent_C1" class="row HC dial_preset_button buttonI" data-bid="2201">+1 630-496-5025</div>
+                                                        <div id="AB_pageContainer_phone_recent_C2" class="row HC dial_preset_button buttonI" data-bid="2202">+1 319-335-5911</div>
+                                                        <div id="AB_pageContainer_phone_recent_C3" class="row HC dial_preset_button buttonI" data-bid="2203">+1 618-319-8741</div>
+                                                        <div id="AB_pageContainer_phone_recent_C4" class="row HC dial_preset_button buttonI" data-bid="2204">Mom</div>
+                                                        <div id="AB_pageContainer_phone_recent_C5" class="row HC dial_preset_button buttonI" data-bid="2205">+1 618-319-7012</div>
+                                                        <div id="AB_pageContainer_phone_recent_C6" class="row HC dial_preset_button buttonI" data-bid="2206">John Gaspar</div>
                                                         
-                                                        <div class="row HC dial_preset_button">+1 618-319-8741</div>
-                                                        <div class="row HC dial_preset_button">+1 618-319-1196</div>
-                                                        <div class="row HC dial_preset_button">+1 618-319-7012</div>
-                                                        <div class="row HC dial_preset_button">+1 800-724-9122</div>
-                                                        <div class="row HC dial_preset_button">+1 319-335-5911</div>
-                                                        <div class="row HC dial_preset_button">Jacob Heiden</div>
+                                                        <div id="AB_pageContainer_phone_recent_C7" class="row HC dial_preset_button buttonI" data-bid="2207">+1 618-319-8741</div>
+                                                        <div id="AB_pageContainer_phone_recent_C8" class="row HC dial_preset_button buttonI" data-bid="2208">+1 618-319-1196</div>
+                                                        <div id="AB_pageContainer_phone_recent_C9" class="row HC dial_preset_button buttonI" data-bid="2209">+1 618-319-7012</div>
+                                                        <div id="AB_pageContainer_phone_recent_C10" class="row HC dial_preset_button buttonI" data-bid="2210">+1 800-724-9122</div>
+                                                        <div id="AB_pageContainer_phone_recent_C11" class="row HC dial_preset_button buttonI" data-bid="2211">+1 319-335-5911</div>
+                                                        <div id="AB_pageContainer_phone_recent_C12" class="row HC dial_preset_button buttonI" data-bid="2212">Jacob Heiden</div>
                                                         
-                                                        <div class="row HC dial_preset_button">+1 630-496-5025</div>
-                                                        <div class="row HC dial_preset_button">+1 319-335-5911</div>
-                                                        <div class="row HC dial_preset_button">+1 618-319-8741</div>
-                                                        <div class="row HC dial_preset_button">Corey Kreutz</div>
-                                                        <div class="row HC dial_preset_button">+1 630-496-5025</div>
-                                                        <div class="row HC dial_preset_button">+1 319-335-5911</div>
-                                                        <div class="row HC dial_preset_button">+1 618-319-7012</div>
+                                                        <div id="AB_pageContainer_phone_recent_C13" class="row HC dial_preset_button buttonI" data-bid="2213">+1 630-496-5025</div>
+                                                        <div id="AB_pageContainer_phone_recent_C14" class="row HC dial_preset_button buttonI" data-bid="2214">+1 319-335-5911</div>
+                                                        <div id="AB_pageContainer_phone_recent_C15" class="row HC dial_preset_button buttonI" data-bid="2215">+1 618-319-8741</div>
+                                                        <div id="AB_pageContainer_phone_recent_C16" class="row HC dial_preset_button buttonI" data-bid="2216">Corey Kreutz</div>
+                                                        <div id="AB_pageContainer_phone_recent_C17" class="row HC dial_preset_button buttonI" data-bid="2217">+1 630-496-5025</div>
+                                                        <div id="AB_pageContainer_phone_recent_C18" class="row HC dial_preset_button buttonI" data-bid="2218">+1 319-335-5911</div>
+                                                        <div id="AB_pageContainer_phone_recent_C19" class="row HC dial_preset_button buttonI" data-bid="2219">+1 618-319-7012</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -693,8 +692,8 @@
                                                             </div>
                                                             <div style="width:50%; margin-top:20px;">
                                                                 <div id="slider_gesture_control_onoff" class="tesla_slider_control_horiz HC">
-                                                                    <div class="slider_option selected" data-switchval="off">OFF</div>
-                                                                    <div class="slider_option" data-switchval="on">ON</div>
+                                                                    <div id="btn_toggle_gc_off" class="slider_option selected buttonI" data-bid="4101" data-switchval="off">OFF</div>
+                                                                    <div id="btn_toggle_gc_on" class="slider_option buttonI" data-bid="4101" data-switchval="on">ON</div>
                                                                 </div> <!-- end .tesla_slider_control_horiz  -->
                                                             </div>
                                                         </div> <!-- end #CAR_SYSTEM_PANEL_SAFETY -->
@@ -720,7 +719,7 @@
                                                                 </div>
                                                             </div>
                                                             
-                                                            <div class="CM_row selected CM_option" data-targetdiv="CAR_SYSTEM_PANEL_QUICKCONTROLS">
+                                                            <div id="carsys_righttab_qc" class="CM_row selected CM_option buttonI" data-bid="4001" data-targetdiv="CAR_SYSTEM_PANEL_QUICKCONTROLS">
                                                             	<div class="CM_row_inner">
                                                                 	<div class="CM_icon_column">
                                                                     	<i class="fa fa-toggle-on" aria-hidden="true"></i>
@@ -728,7 +727,7 @@
                                                                     <div>Quick Controls</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_LIGHTS">
+                                                            <div id="carsys_righttab_lights" class="CM_row CM_option buttonI" data-bid="4002" data-targetdiv="CAR_SYSTEM_PANEL_LIGHTS">
                                                             	<div class="CM_row_inner">
                                                                 	<div class="CM_icon_column">
                                                                     	<i class="fa fa-lightbulb-o" aria-hidden="true"></i>
@@ -736,7 +735,7 @@
                                                                     <div>Lights</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_LOCKS">
+                                                            <div id="carsys_righttab_locks" class="CM_row CM_option buttonI" data-bid="4003" data-targetdiv="CAR_SYSTEM_PANEL_LOCKS">
                                                             	<div class="CM_row_inner">
                                                                 	<div class="CM_icon_column">
                                                                 		<i class="fa fa-lock" aria-hidden="true"></i>
@@ -744,7 +743,7 @@
                                                                     <div>Locks</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_DISPLAY">
+                                                            <div id="carsys_righttab_display" class="CM_row CM_option buttonI" data-bid="4004" data-targetdiv="CAR_SYSTEM_PANEL_DISPLAY">
                                                             	<div class="CM_row_inner">
                                                                 	<div class="CM_icon_column">
                                                                 		<i class="fa fa-television" aria-hidden="true"></i>
@@ -752,7 +751,7 @@
                                                                     <div>Display</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_DRIVING">
+                                                            <div id="carsys_righttab_driving" class="CM_row CM_option buttonI" data-bid="4005" data-targetdiv="CAR_SYSTEM_PANEL_DRIVING">
                                                             	<div class="CM_row_inner">
                                                                 	<div class="CM_icon_column">
                                                                 		<i class="fa fa-car" aria-hidden="true"></i>
@@ -760,7 +759,7 @@
                                                                     <div>Driving</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_SAFETY">
+                                                            <div id="carsys_righttab_security" class="CM_row CM_option buttonI" data-bid="4006" data-targetdiv="CAR_SYSTEM_PANEL_SAFETY">
                                                             	<div class="CM_row_inner">
                                                                 	<div class="CM_icon_column">
                                                                 		<i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -768,7 +767,7 @@
                                                                     <div>Safety &amp; Security</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="CM_row CM_option" data-targetdiv="CAR_SYSTEM_PANEL_SERVICE">
+                                                            <div id="carsys_righttab_service" class="CM_row CM_option buttonI" data-bid="4007" data-targetdiv="CAR_SYSTEM_PANEL_SERVICE">
                                                             	<div class="CM_row_inner">
                                                                 	<div class="CM_icon_column">
                                                                 		<i class="fa fa-wrench" aria-hidden="true"></i>
@@ -780,7 +779,7 @@
                                                         </div> <!-- end .pane_contextMenu -->
                                                         
                                                         <div style="position:absolute; bottom:0; padding:30px 20px; width:276px;">
-                                                        	<div class="button gen_button rounded_button">
+                                                        	<div id="BTN_GLOVEBOX" class="button gen_button rounded_button" data-bid="4008">
                                                                 <div style="width:100%; display:flex; align-items:center; justify-content:space-between;">
                                                                 	<div><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
                                                                     <div>GLOVEBOX</div>
@@ -855,7 +854,7 @@
                 	<div style="display:flex; align-content:center; justify-content:space-around;">
                     
                     <!-- <div id="footer_controls_label" class="footerButton gen_button"> -->
-                    <div id="footer_car_system" class="footerButton gen_button">
+                    <div id="footer_car_system" class="footerButton gen_button buttonI" data-bid="1001">
                     	<img src="images/testa_model3_icon.png" class="invertedImg" style="height:30px;">
                         <!-- 
                         <i class="fa fa-car" aria-hidden="true" style="font-size:30px;"></i>
@@ -864,73 +863,71 @@
                     </div>
                     
                     <!-- DEFROST / HEATER (Front) -->
-                    <div id="footer_env_front_window" class="footerButton gen_button" data-bstate="off">
+                    <div id="footer_env_front_window" class="footerButton gen_button buttonI" data-bid="1002" data-bstate="off">
                     	<img src="images/tesla_envcontrols_defrost_front.png" style="width:44px; margin-bottom:-10px;">
                     </div>
                     
                     <!-- HEATER (Rear) -->
-                    <div id="footer_env_rear_window" class="footerButton gen_button" data-bstate="off">
+                    <div id="footer_env_rear_window" class="footerButton gen_button buttonI" data-bid="1003" data-bstate="off">
                     	<img src="images/tesla_envcontrols_defrost_rear.png" style="width:44px; margin-bottom:-10px;">
                     </div>
                     
                     <!-- SEAT WARMER (Driver) -->
-                    <div id="footer_seatwarmer_driver" class="footerButton gen_button">
+                    <div id="footer_seatwarmer_driver" class="footerButton gen_button buttonI" data-bid="1004">
                     	<img src="images/tesla_icon_seatwarmer_v8.png" style="height:40px;">
                     </div>
                     
                     <!-- TEMP CONTROL (Driver) -->
                     <div id="footer_env_driver_rocker" class="footerButton" style="justify-content:space-between;">
-                    	<div id="footer_env_driver_rocker_up" class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="driver">
+                    	<div id="footer_env_driver_rocker_up" class="gen_button seat_temp_control buttonI" data-bid="1005" data-tempdir="up" data-targetseat="driver">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                         <div id="footer_env_driver_temp_btn" style="margin:-20px 0 -20px 0;">
                         	<span id="footer_temp_driver_val" style="font-size:44px;">74</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
-                        <div id="footer_env_driver_rocker_down" class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="driver">
+                        <div id="footer_env_driver_rocker_down" class="gen_button seat_temp_control buttonI" data-bid="1006" data-tempdir="down" data-targetseat="driver">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                     </div>
                     
                     <!-- CLIMATE -->
-                    <div id="footer_envcontrols_climate_control" class="footerButton">
-
-                        <img src="images/fan.png" class="invertedImg" style="height:33px;">
+                    <div id="footer_envcontrols_climate_control" class="footerButton buttonI" data-bid="1007">
+						<img src="images/fan.png" class="invertedImg" style="height:33px;">
                         <div class="txtShadow_toU_hvy" style="font-size:14px; margin-top:8px;">MANUAL</div>
-
-                    </div>
+					</div>
                     
                     <!-- TEMP CONTROL (Passenger) -->
                     <div id="footer_env_pass_rocker" class="footerButton" style="justify-content:space-between;">
-                        <div id="footer_env_pass_rocker_up" class="gen_button seat_temp_control" data-tempdir="up" data-targetseat="passenger">
+                        <div id="footer_env_pass_rocker_up" class="gen_button seat_temp_control buttonI" data-bid="1008" data-tempdir="up" data-targetseat="passenger">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform-origin:center; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                         <div id="footer_env_pass_temp_btn" style="margin:-20px 0 -20px 0;">
                         	<span id="footer_temp_passenger_val" style="font-size:44px;">75</span><span style="position:absolute; font-size:26px; margin-top:6px;">&deg;</span>
                         </div>
-                        <div id="footer_env_pass_rocker_down" class="gen_button seat_temp_control" data-tempdir="down" data-targetseat="passenger">
+                        <div id="footer_env_pass_rocker_down" class="gen_button seat_temp_control buttonI" data-bid="1009" data-tempdir="down" data-targetseat="passenger">
                         	<img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                         </div>
                     </div>
                     
                     <!-- SEAT WARMER (Passenger) -->
-                    <div id="footer_seatwarmer_passenger" class="footerButton gen_button">
+                    <div id="footer_seatwarmer_passenger" class="footerButton gen_button buttonI" data-bid="1010">
                     	<img src="images/tesla_icon_seatwarmer_v8.png" style="height:40px; -webkit-transform: scaleX(-1); transform: scaleX(-1);">
                     </div>
                     
                     
                     <!-- MUSIC -->
-                    <div id="footer_music" class="footerButton gen_button">
+                    <div id="footer_music" class="footerButton gen_button buttonI" data-bid="1011">
                     	<i class="fa fa-music" aria-hidden="true" style="font-size:38px;"></i>
                     </div>
                     
                     <!-- PHONE -->
-                    <div id="footer_phone" class="footerButton gen_button" style="margin-right:-20px;">
+                    <div id="footer_phone" class="footerButton gen_button buttonI" data-bid="1012" style="margin-right:-20px;">
                     	<i class="fa fa-mobile" aria-hidden="true" style="font-size:48px;"></i>
                     </div>
                     
                     <!-- VOLUME -->
                     <div id="footer_vol_rocker" class="footerButton" style="justify-content:space-between;">
-                            <div id="VOLUME_level_UP" class="gen_button">
+                            <div id="VOLUME_level_UP" class="gen_button buttonI" data-bid="1013">
                                 <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; transform:rotate(180deg); -webkit-transform:rotate(180deg); padding:20px; margin:0px 0px -10px 0px;">
                             </div>
                             <div style="position:relative;">
@@ -941,7 +938,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="VOLUME_level_DOWN" class="gen_button">
+                            <div id="VOLUME_level_DOWN" class="gen_button buttonI" data-bid="1014">
                                 <img src="images/carat_down.png" class="invertedImg op_50" style="width:26px; height:8px; padding:20px; margin:0px 0px -10px 0px;">
                             </div>
                     </div> 

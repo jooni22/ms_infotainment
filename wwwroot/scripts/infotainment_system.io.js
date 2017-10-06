@@ -248,13 +248,14 @@ function bindDOMEvents() {
 		var thisAlbumTitle = $(this).data('albumtitle');
 		socket.emit('IUI_command', { type: 'select_mp3_album', albumtitle: thisAlbumTitle });
 		var track = 1;
+		var thisButtonID = 1901;
 		console.log(MP3_ALBUM_LIST);
 		//console.log('hi'+MP3_ALBUM_LIST[thisAlbumTitle].mp3List);
 		$.each(MP3_ALBUM_LIST[thisAlbumTitle].mp3List, function(index, value) {
 			//console.log(index+' '+value);
 			var thisDivId = 'AB_pageContainer_MP3_play_T'+track;
 			var thisDiv =
-				'<div id="'+thisDivId+'" class="entune_list_row button_PLAYFILE" style="width:374px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" data-playlink="'+value.url+'" data-albumtitle="'+thisAlbumTitle+'" data-trackname="'+value.filename+'">'+
+				'<div id="'+thisDivId+'" class="entune_list_row button_PLAYFILE buttonI" data-bid="'+thisButtonID+'" data-playlink="'+value.url+'" data-albumtitle="'+thisAlbumTitle+'" data-trackname="'+value.filename+'">'+
 				value.filename.substr(0,value.filename.length-4)+
 				'</div>';
 				//console.log(thisDiv);
@@ -265,6 +266,7 @@ function bindDOMEvents() {
 				AB_SCREEN_MATRIX.pageContainer_MP3_play[track] = [''+thisDivId];
 			}
 			track++;
+			thisButtonID++;
 		}); 
 		var timelineHTML =
 			'<div style="display: -webkit-flex; display: flex;">'+
@@ -562,9 +564,10 @@ function bindSocketEvents(){
 		var gridIndex = 'a';
 		var row = 1;
 		var thisAlbumNum = 1;
+		var thisButtonID = 1701;
 		$.each(data, function(index, value) {
 			var thisDiv =
-				'<div id="AB_pageContainer_MP3_A'+thisAlbumNum+'" class="ui-block-'+gridIndex+' just_LINK mp3_album_LINK" data-anchorlink="#pageContainer_MP3_play" data-albumtitle="'+index+'" title="'+index+'">'+
+				'<div id="AB_pageContainer_MP3_A'+thisAlbumNum+'" class="ui-block-'+gridIndex+' just_LINK mp3_album_LINK buttonI" data-bid="'+thisButtonID+'" data-anchorlink="#pageContainer_MP3_play" data-albumtitle="'+index+'" title="'+index+'">'+
 					'<img class="album_cover" src="'+value.folderArtURL+'">'+
 				'</div>';
 			
@@ -584,6 +587,7 @@ function bindSocketEvents(){
 				case 'd' : gridIndex= 'a'; row++; break;
 			}
 			thisAlbumNum++;
+			thisButtonID++;
 		}); 
 		//console.log('refresh list: '+JSON.stringify(MP3_ALBUM_LIST));
 		// end each(data...

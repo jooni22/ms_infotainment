@@ -24,16 +24,67 @@ var AB_SCREEN_MATRIX = {
 	 '-1':  ['NP_container'],	
 		0:	['footer_car_system', 'footer_env_front_window', 'footer_env_rear_window', 'footer_seatwarmer_driver', 'footer_env_driver_rocker',
 			 'footer_envcontrols_climate_control', 
-			 'footer_env_pass_rocker', 'footer_seatwarmer_passenger', 'footer_music', 'footer_phone'
+			 'footer_env_pass_rocker', 'footer_seatwarmer_passenger', 'footer_music', 'footer_phone', 'NAV_ZOOM_OUTER'
 			]
 	},
 	PANE_AUDIO	: {
 		0:	['tab_audio_inner']
 	},
-	pageContainer_apps	: {
-		0:	['AB_pageContainer_apps_BACK', 'AB_pageContainer_apps_HOME'],
-		1:	['AB_pageContainer_apps_NAV', 'AB_pageContainer_apps_AUDIO', 'AB_pageContainer_apps_SETUP'],
-		2:	['AB_pageContainer_apps_MAINTENANCE']
+	PANE_PHONE	: {
+		0:	['TABS_PHONE']
+	},
+	cont_BrowseRadio	: {
+		0:	['AB_pageContainer_radio_play_T1'],
+		1:	['AB_pageContainer_radio_play_T2'],
+		2:	['AB_pageContainer_radio_play_T3'],
+		3:	['AB_pageContainer_radio_play_T4'],
+		4:	['AB_pageContainer_radio_play_T5'],
+		5:	['AB_pageContainer_radio_play_T6'],
+		6:	['AB_pageContainer_radio_play_T7'],
+		7:	['AB_pageContainer_radio_play_T8'],
+		8:	['AB_pageContainer_radio_play_T9'],
+		9:	['AB_pageContainer_radio_play_T10']
+	},
+	cont_PhoneRecent	: {
+		0:	['AB_pageContainer_phone_recent_C1'],
+		1:	['AB_pageContainer_phone_recent_C2'],
+		2:	['AB_pageContainer_phone_recent_C3'],
+		3:	['AB_pageContainer_phone_recent_C4'],
+		4:	['AB_pageContainer_phone_recent_C5'],
+		5:	['AB_pageContainer_phone_recent_C6'],
+		6:	['AB_pageContainer_phone_recent_C7'],
+		7:	['AB_pageContainer_phone_recent_C8'],
+		8:	['AB_pageContainer_phone_recent_C9'],
+		9:	['AB_pageContainer_phone_recent_C10'],
+		10:	['AB_pageContainer_phone_recent_C11'],
+		11:	['AB_pageContainer_phone_recent_C12'],
+		12:	['AB_pageContainer_phone_recent_C13'],
+		13:	['AB_pageContainer_phone_recent_C14'],
+		14:	['AB_pageContainer_phone_recent_C15'],
+		15:	['AB_pageContainer_phone_recent_C16'],
+		16:	['AB_pageContainer_phone_recent_C17'],
+		17:	['AB_pageContainer_phone_recent_C18'],
+		18:	['AB_pageContainer_phone_recent_C19']
+	},
+	cont_PhoneContacts	: {
+		0:	['AB_pageContainer_phone_contact_C1'],
+		1:	['AB_pageContainer_phone_contact_C2'],
+		2:	['AB_pageContainer_phone_contact_C3'],
+		3:	['AB_pageContainer_phone_contact_C4'],
+		4:	['AB_pageContainer_phone_contact_C5'],
+		5:	['AB_pageContainer_phone_contact_C6'],
+		6:	['AB_pageContainer_phone_contact_C7'],
+		7:	['AB_pageContainer_phone_contact_C8'],
+		8:	['AB_pageContainer_phone_contact_C9'],
+		9:	['AB_pageContainer_phone_contact_C10'],
+		10:	['AB_pageContainer_phone_contact_C11'],
+		11:	['AB_pageContainer_phone_contact_C12'],
+		12:	['AB_pageContainer_phone_contact_C13'],
+		13:	['AB_pageContainer_phone_contact_C14'],
+		14:	['AB_pageContainer_phone_contact_C15'],
+		15:	['AB_pageContainer_phone_contact_C16'],
+		16:	['AB_pageContainer_phone_contact_C17'],
+		17:	['AB_pageContainer_phone_contact_C18']
 	},
 	pageContainer_select_audio_src	: {
 		0:	['AB_pageContainer_select_audio_src_BACK', 'AB_pageContainer_select_audio_src_HOME'],
@@ -47,16 +98,15 @@ var AB_SCREEN_MATRIX = {
 		1:	['', 'AB_pageContainer_MP3_play_TR_BACK', 'AB_pageContainer_MP3_play_PAUSE', 'AB_pageContainer_MP3_play_TR_FWD', 'AB_pageContainer_MP3_play_VOLTOG']
 	},
 	pageContainer_radio_play	: {
-		0:	['AB_pageContainer_radio_play_BACK', 'AB_pageContainer_radio_play_HOME'],
-		1:	['AB_pageContainer_radio_play_T1', 'AB_pageContainer_radio_play_PAUSE', 'AB_pageContainer_radio_play_VOLTOG'],
-		2:	['AB_pageContainer_radio_play_T2'],
-		3:	['AB_pageContainer_radio_play_T3'],
-		4:	['AB_pageContainer_radio_play_T4'],
-		5:	['AB_pageContainer_radio_play_T5'],
-		6:	['AB_pageContainer_radio_play_T6'],
-		7:	['AB_pageContainer_radio_play_T7'],
-		8:	['AB_pageContainer_radio_play_T8'],
-		9:	['AB_pageContainer_radio_play_T9']
+		0:	['AB_pageContainer_radio_play_T1'],
+		1:	['AB_pageContainer_radio_play_T2'],
+		2:	['AB_pageContainer_radio_play_T3'],
+		3:	['AB_pageContainer_radio_play_T4'],
+		4:	['AB_pageContainer_radio_play_T5'],
+		5:	['AB_pageContainer_radio_play_T6'],
+		6:	['AB_pageContainer_radio_play_T7'],
+		7:	['AB_pageContainer_radio_play_T8'],
+		8:	['AB_pageContainer_radio_play_T9']
 	},
 	pageContainer_setup	: {
 		0:	['AB_pageContainer_setup_BACK', 'AB_pageContainer_setup_HOME'],
@@ -500,6 +550,17 @@ function bindDOMEvents() {
 		socket.emit('IUI_info', outData);
 	});
 	
+	$(document.body).on('mouseup', '.buttonI', function() {
+		var outData = { 
+			type		: 'buttonUpdate',
+			buttonId	: -9999
+		};
+		if ($(this).data('bid')) {
+			outData.buttonId = $(this).data('bid');
+		}
+		socket.emit('IUI_info', outData);
+	});
+	
 	$(document.body).on('mouseup', '.just_LINK', function() {
 		var anchorLink = $(this).data('anchorlink');
 		$('#MSTR_LINK').attr('href',anchorLink);
@@ -549,7 +610,7 @@ function bindDOMEvents() {
 		socket.emit('IUI_command', { type: 'select_mp3_album', albumtitle: thisAlbumTitle });
 		var track = 1;
 		
-		console.log('ding');
+		//console.log('ding');
 		console.log(thisAlbumTitle);
 		console.log(MP3_ALBUM_LIST);
 		
@@ -638,7 +699,7 @@ function bindDOMEvents() {
 		
 	// FM FWD / BACK
 	$(document.body).on('click', '.BUTTON_radio_fwd, .BUTTON_radio_back', function() {
-		console.log($(this).data('type'));
+		//console.log($(this).data('type'));
 		var thisButtonType = $(this).data('type');
 		switch(thisButtonType) {
 			case 'back':
@@ -767,7 +828,7 @@ function bindDOMEvents() {
 	});
 	
 	$(document.body).on('click', '#footer_seatwarmer_passenger', function() {
-		$('#osk').addClass('showing');
+		//$('#osk').addClass('showing');
 	});
 	
 	$(document.body).on('mousedown touchstart', '.gen_button', function() {
@@ -819,7 +880,7 @@ function bindDOMEvents() {
 	
 	// DAY / NIGHT ILLUMINATION
 	$(document.body).on('click', '#footer_seatwarmer_driver', function() {
-		switch(sessionVars.DayNight_mode) {
+		/*switch(sessionVars.DayNight_mode) {
 			case 'day':
 				sessionVars.DayNight_mode = 'night';
 				$('#LEFT_PANE').css('box-shadow','0px 0px 20px rgba(100,100,100,1)');
@@ -833,6 +894,7 @@ function bindDOMEvents() {
 		// refreshHEREmap(map);
 		$('.DARK_TOG').toggleClass('dark');
 		$('#PROTO_NAV_MAPCONT').toggleClass('mapNight');
+		*/
 	});
 	
 	$(document.body).on('click', '#NP_mp3_favtarget', function() {
@@ -1018,6 +1080,15 @@ function highlightFirstABbutton() {
 			case 'pageContainer_home':
 				AB_CURSOR_HL_MATRIXLOC = [0,5];
 				break;
+			case 'cont_PhoneRecent':
+				AB_CURSOR_HL_MATRIXLOC = [0,0];
+				break;
+			case 'cont_PhoneContacts':
+				AB_CURSOR_HL_MATRIXLOC = [0,0];
+				break;
+			case 'cont_BrowseRadio':
+				AB_CURSOR_HL_MATRIXLOC = [0,0];
+				break;
 			default:
 				if (AB_SCREEN_MATRIX[CURRENT_CLIENT_HASH][1]) {
 					AB_CURSOR_HL_MATRIXLOC = [1,0];
@@ -1155,13 +1226,14 @@ function bindSocketEvents(){
 		var MP3_LIST_COVER_HTML = '';
 		var row = 1;
 		var thisAlbumNum = 1;
+		var buttonID = 1400;
 		$.each(data, function(index, value) {
 			var splitAlbum = index.split(' - ');
 			var thisAlbumFirstTrack = MP3_ALBUM_LIST[index].mp3List[0];
 			var thisIsFav = value.favorite;
 			var thisIdName = 'AB_MP3_MEDIA_'+thisAlbumNum;
 			var thisDiv =
-				'<div id="'+thisIdName+'" class="media_container button_PLAYFILE" data-playlink="'+thisAlbumFirstTrack.url+'" data-albumtitle="'+index+'" data-trackname="'+thisAlbumFirstTrack.filename+'">'+
+				'<div id="'+thisIdName+'" class="media_container button_PLAYFILE buttonI" data-bid="'+buttonID+'" data-playlink="'+thisAlbumFirstTrack.url+'" data-albumtitle="'+index+'" data-trackname="'+thisAlbumFirstTrack.filename+'">'+
 					'<img class="media_album_cover" src="'+value.folderArtURL+'" data-albumtitle="'+index+'">'+
 					'<div style="width:160px; text-overflow:ellipsis; overflow:hidden;">'+splitAlbum[1]+'</div>'+
 				'</div>';
@@ -1171,6 +1243,7 @@ function bindSocketEvents(){
 				$('.FAVORITES_container').append(thisDiv).trigger('create');	
 			}
 			thisAlbumNum++;
+			buttonID++;
 		});
 		// end each(data...
 	});
@@ -1215,12 +1288,48 @@ function bindSocketEvents(){
 						highlight_prev_ABbutton();
 						break;
 					case 'NP_container':
-						$('#AB_pageContainer_home_MP3_TBACK').click();
+						if ($('#NP_PLAYLIST_CONTROLS_RADIO_MRK').is(':visible')) {
+							$('#AB_pageContainer_home_radio_TBACK').click();
+						} else {
+							$('#AB_pageContainer_home_MP3_TBACK').click();
+						}
 						break;
 					case 'pageContainer_MP3':
 						highlight_prev_ABbutton();
 						break;
+					case 'PANE_AUDIO':
+						var currentTab = $('#TABS_AUDIO div.tab_selected').data('tabtarget');
+						if ($('#TABS_AUDIO div.tab_selected').prev().data('tabtarget')) {
+							var targetContainer = $('#TABS_AUDIO div.tab_selected').prev().data('tabtarget');
+							var paneProto = $('#TABS_AUDIO div.tab_selected').prev().data('pproto');
+							$('#'+paneProto+' .sub_container_tab').removeClass('tab_selected');
+							$('#'+paneProto+' .container_media').hide();
+							//$(this).addClass('tab_selected');
+							$('#TABS_AUDIO div[data-tabtarget="'+targetContainer+'"]').addClass('tab_selected');
+							$('#'+targetContainer).show();
+						}
+						else {
+							//alert('nothing to left');
+						}
+						break;
+					case 'PANE_PHONE':
+						var currentTab = $('#TABS_PHONE div.tab_selected').data('tabtarget');
+						if ($('#TABS_PHONE div.tab_selected').prev().data('tabtarget')) {
+							//alert($('#TABS_PHONE div.tab_selected').prev().data('tabtarget'));
+							var targetContainer = $('#TABS_PHONE div.tab_selected').prev().data('tabtarget');
+							var paneProto = $('#TABS_PHONE div.tab_selected').prev().data('pproto');
+							$('#'+paneProto+' .sub_container_tab').removeClass('tab_selected');
+							$('#'+paneProto+' .container_media').hide();
+							//$(this).addClass('tab_selected');
+							$('#TABS_PHONE div[data-tabtarget="'+targetContainer+'"]').addClass('tab_selected');
+							$('#'+targetContainer).show();
+						}
+						else {
+							//alert('nothing to left');
+						}
+						break;
 				}
+				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9004});
 				break;
 			case 'swipe_right':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_right.png');
@@ -1230,12 +1339,48 @@ function bindSocketEvents(){
 						highlight_next_ABbutton();
 						break;
 					case 'NP_container':
-						$('#AB_pageContainer_home_MP3_TFWD').click();
+						if ($('#NP_PLAYLIST_CONTROLS_RADIO_MRK').is(':visible')) {
+							$('#AB_pageContainer_home_radio_TFWD').click();
+						} else {
+							$('#AB_pageContainer_home_MP3_TFWD').click();
+						}
 						break;
 					case 'pageContainer_MP3':
 						highlight_next_ABbutton();
 						break;
+					case 'PANE_AUDIO':
+						var currentTab = $('#TABS_AUDIO div.tab_selected').data('tabtarget');
+						if ($('#TABS_AUDIO div.tab_selected').next().data('tabtarget')) {
+							var targetContainer = $('#TABS_AUDIO div.tab_selected').next().data('tabtarget');
+							var paneProto = $('#TABS_AUDIO div.tab_selected').next().data('pproto');
+							$('#'+paneProto+' .sub_container_tab').removeClass('tab_selected');
+							$('#'+paneProto+' .container_media').hide();
+							//$(this).addClass('tab_selected');
+							$('#TABS_AUDIO div[data-tabtarget="'+targetContainer+'"]').addClass('tab_selected');
+							$('#'+targetContainer).show();
+						}
+						else {
+							//alert('nothing to right');
+						}
+						break;
+					case 'PANE_PHONE':
+						var currentTab = $('#TABS_PHONE div.tab_selected').data('tabtarget');
+						if ($('#TABS_PHONE div.tab_selected').next().data('tabtarget')) {
+							//alert($('#TABS_PHONE div.tab_selected').next().data('tabtarget'));
+							var targetContainer = $('#TABS_PHONE div.tab_selected').next().data('tabtarget');
+							var paneProto = $('#TABS_PHONE div.tab_selected').next().data('pproto');
+							$('#'+paneProto+' .sub_container_tab').removeClass('tab_selected');
+							$('#'+paneProto+' .container_media').hide();
+							//$(this).addClass('tab_selected');
+							$('#TABS_PHONE div[data-tabtarget="'+targetContainer+'"]').addClass('tab_selected');
+							$('#'+targetContainer).show();
+						}
+						else {
+							//alert('nothing to right');
+						}
+						break;
 				}
+				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9003});
 				break;
 			case 'swipe_up':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_up.png');
@@ -1261,6 +1406,12 @@ function bindSocketEvents(){
 							if (currentHLID === 'footer_music') {
 								moveIntoPane({ paneTarget:'PANE_AUDIO' });
 							}
+							if (currentHLID === 'footer_phone') {
+								moveIntoPane({ paneTarget:'PANE_PHONE' });
+							}
+							if (currentHLID === 'NAV_ZOOM_OUTER') {
+								$('#btn_nav_zoom_out').click();
+							}
 							break;
 						case 'NP_container':
 							// Volume up
@@ -1269,8 +1420,18 @@ function bindSocketEvents(){
 						case 'pageContainer_MP3':
 							highlight_prevRowMP3_ABbutton();
 							break;
+						case 'cont_PhoneRecent':
+							highlight_prevRow_ABbutton();
+							break;
+						case 'cont_PhoneContacts':
+							highlight_prevRow_ABbutton();
+							break;
+						case 'cont_BrowseRadio':
+							highlight_prevRow_ABbutton();
+							break;
 					}
 				}
+				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9005});
 				break;
 			case 'swipe_down': 
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_down.png');
@@ -1283,6 +1444,9 @@ function bindSocketEvents(){
 							if (currentHLID === 'footer_env_pass_rocker') {
 								$('#footer_env_pass_rocker_down').click();
 							}
+							if (currentHLID === 'NAV_ZOOM_OUTER') {
+								$('#btn_nav_zoom_in').click();
+							}
 							break;
 						case 'NP_container':
 							// Volume down
@@ -1292,9 +1456,27 @@ function bindSocketEvents(){
 							highlight_nextRowMP3_ABbutton();
 							checkHLScrollPos({ targetScrollDiv:'cont_BrowseStreaming' });
 							break;
-					}
-					if (currentHLID === 'tab_audio_inner') {
-						moveIntoPane({ paneTarget:'pageContainer_MP3' });
+						case 'PANE_AUDIO':
+							var targetContainer = $('#TABS_AUDIO div.tab_selected').data('tabtarget');
+							if (targetContainer === 'cont_BrowseStreaming') { 
+								moveIntoPane({ paneTarget:'pageContainer_MP3' });
+							} else {
+								moveIntoPane({ paneTarget:targetContainer });
+							}
+							break;
+						case 'PANE_PHONE':
+							var targetContainer = $('#TABS_PHONE div.tab_selected').data('tabtarget');
+							moveIntoPane({ paneTarget:targetContainer });
+							break;
+						case 'cont_PhoneRecent':
+							highlight_nextRow_ABbutton();
+							break;
+						case 'cont_PhoneContacts':
+							highlight_nextRow_ABbutton();
+							break;
+						case 'cont_BrowseRadio':
+							highlight_nextRow_ABbutton();
+							break;
 					}
 				}
 				break;
@@ -1318,6 +1500,7 @@ function bindSocketEvents(){
 					sessionVars.gesture_control_menu_focus = '';
 					CURRENT_CLIENT_HASH = 'pageContainer_home';
 				}
+				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9001});
 				break;
 			case 'fist_short':
 				// if in the Now Playing div, be the play/pause toggle
@@ -1332,6 +1515,7 @@ function bindSocketEvents(){
 						$('#'+selectedDiv).click();
 					}
 				}
+				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9002});
 				break;
 		}
 		if($('#gestureIcon_bg').is(':animated')) {
@@ -1462,9 +1646,11 @@ function bindSocketEvents(){
 					
 					if (MP3_ALBUM_LIST[NP_MP3_ALBUM_TITLE]) {
 						//console.log(MP3_ALBUM_LIST[NP_MP3_ALBUM_TITLE].mp3List);
+						var thisButtonId = 1231;
 						MP3_ALBUM_LIST[NP_MP3_ALBUM_TITLE].mp3List.forEach(function(element, index, array) {
 							var newPlaylistEntry = '<div id="NP_'+makeSafeForCSS(element.filename)+'"'+
-								' class="row button_PLAYFILE"'+
+								' class="row button_PLAYFILE buttonI"'+
+								' data-bid="'+thisButtonId+'"'+
 								' data-playlink="'+element.url+'" data-albumtitle="'+NP_MP3_ALBUM_TITLE+'" data-trackname="'+element.filename+'"'+
 								' style="justify-content:space-between; white-space:nowrap;">'+
 									'<div class="HC">'+
@@ -1475,6 +1661,7 @@ function bindSocketEvents(){
 									'</div>'+
 								'</div>';
 							$('#NP_PLAYLIST_CONTENTS').append(newPlaylistEntry).trigger('create');
+							thisButtonId++;
 						});
 						$('#NP_PLAYLIST_CONTENTS').animate({ scrollTop: 0 }, "fast");
 					} // end if MP3_ALBUM_LIST[NP_MP3_ALBUM_TITLE] exists
