@@ -362,26 +362,166 @@
         <div role="main" class="ui-content">
             <div class="ui-grid-c" style="font-size:1.2em; font-weight:400; margin-top:0px;">
                 <div class="ui-block-a">
-                	<div id="AB_pageContainer_select_phone_favorites" class="buttonDisabled buttonThin">
+                	<div id="AB_pageContainer_select_phone_favorites" class="buttonDisabled buttonThin buttonCallTab">
                     	<div style="text-align:center;">Favorites</div>
                     </div>
                 </div>
                 <div class="ui-block-b">
-                	<div id="AB_pageContainer_select_phone_callhistory" class="button buttonThin">
+                	<div id="AB_pageContainer_select_phone_callhistory" class="button buttonThin button_MISC buttonCallTab" data-targetdiv="CALL_HISTORY_container">
                     	<div style="text-align:center;">Call History</div>
                     </div>
                 </div>
                 <div class="ui-block-c">
-                	<div id="AB_pageContainer_select_phone_contacts" class="button buttonThin">
+                	<div id="AB_pageContainer_select_phone_contacts" class="button buttonThin button_MISC buttonCallTab" data-targetdiv="CALL_CONTACTS_container">
                     	<div style="text-align:center;">Contacts</div>
                     </div>
                 </div>
                 <div class="ui-block-d">
-                	<div id="AB_pageContainer_select_phone_dialpad" class="button buttonThin">
+                	<div id="AB_pageContainer_select_phone_dialpad" class="button buttonThin button_MISC buttonCallTab" data-targetdiv="CALL_DIALPAD_container">
                     	<div style="text-align:center;">Dialpad</div>
                     </div>
                 </div>
 		    </div><!-- /grid-c -->
+            
+            <div class="ui-grid-a">
+            	<div class="ui-block-a">
+               		<div style="height:366px; overflow: hidden; position: relative; margin-top:4px;">
+                    	<div style="position:absolute; top:0; bottom:0; left:0; width:417px; overflow-y:scroll;">
+                        	
+                            <div id="CALL_DIALPAD_container" class="call_list_container">
+                            	<div class="ui-grid-b">
+                                	<div class="ui-block-a">
+                                    	<div id="AB_pageContainer_phone_dialpad_1" class="button dialpad_button button_MISC">
+                                        	<div>1</div>
+                                            <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-b">
+                                    	<div id="AB_pageContainer_phone_dialpad_2" class="button dialpad_button button_MISC">
+                                        	<div>2</div>
+                                            <div>ABC&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-c">
+                                    	<div id="AB_pageContainer_phone_dialpad_3" class="button dialpad_button button_MISC">
+                                        	<div>3</div>
+                                            <div>DEF&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ui-block-a">
+                                    	<div id="AB_pageContainer_phone_dialpad_4" class="button dialpad_button button_MISC">
+                                        	<div>4</div>
+                                            <div>GHI&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-b">
+                                    	<div id="AB_pageContainer_phone_dialpad_5" class="button dialpad_button button_MISC">
+                                        	<div>5</div>
+                                            <div>JKL&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-c">
+                                    	<div id="AB_pageContainer_phone_dialpad_6" class="button dialpad_button button_MISC">
+                                        	<div>6</div>
+                                            <div>MNO&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ui-block-a">
+                                    	<div id="AB_pageContainer_phone_dialpad_7" class="button dialpad_button button_MISC">
+                                        	<div>7</div>
+                                            <div>PQRS</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-b">
+                                    	<div id="AB_pageContainer_phone_dialpad_8" class="button dialpad_button button_MISC">
+                                        	<div>8</div>
+                                            <div>TUV&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-c">
+                                    	<div id="AB_pageContainer_phone_dialpad_9" class="button dialpad_button button_MISC">
+                                        	<div>9</div>
+                                            <div>WXYZ</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ui-block-a">
+                                    	<div id="AB_pageContainer_phone_dialpad_star" class="button dialpad_button button_MISC">
+                                        	<div>* +</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-b">
+                                    	<div id="AB_pageContainer_phone_dialpad_0" class="button dialpad_button button_MISC">
+                                        	<div>0</div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-block-c">
+                                    	<div id="AB_pageContainer_phone_dialpad_octothorpe" class="button dialpad_button button_MISC">
+                                        	<div>#</div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end .ui-grid-b -->
+                            </div> <!-- end #CALL_DIALPAD_container -->
+                            
+                            <div id="CALL_HISTORY_container" class="call_list_container" style="display:none;">
+                                <div id="AB_pageContainer_call_history1" class="buttonI entune_list_row dial_preset_button">+1 630-496-5025</div>
+                                <div id="AB_pageContainer_call_history2" class="buttonI entune_list_row dial_preset_button">+1 319-335-5911</div>
+                                <div id="AB_pageContainer_call_history3" class="buttonI entune_list_row dial_preset_button">+1 618-319-8741</div>
+                                <div id="AB_pageContainer_call_history4" class="buttonI entune_list_row dial_preset_button">Mom</div>
+                                <div id="AB_pageContainer_call_history5" class="buttonI entune_list_row dial_preset_button">+1 618-319-7012</div>
+                                <div id="AB_pageContainer_call_history6" class="buttonI entune_list_row dial_preset_button">John Gaspar</div>
+                                <div id="AB_pageContainer_call_history7" class="buttonI entune_list_row dial_preset_button">+1 618-319-8741</div>
+                                <div id="AB_pageContainer_call_history8" class="buttonI entune_list_row dial_preset_button">+1 618-319-1196</div>
+                                <div id="AB_pageContainer_call_history9" class="buttonI entune_list_row dial_preset_button">+1 618-319-7012</div>
+                                <div id="AB_pageContainer_call_history10" class="buttonI entune_list_row dial_preset_button">+1 800-724-9122</div>
+                                <div id="AB_pageContainer_call_history11" class="buttonI entune_list_row dial_preset_button">+1 319-335-5911</div>
+                                <div id="AB_pageContainer_call_history12" class="buttonI entune_list_row dial_preset_button">Jacob Heiden</div>
+                                <div id="AB_pageContainer_call_history13" class="buttonI entune_list_row dial_preset_button">+1 630-496-5925</div>
+                                <div id="AB_pageContainer_call_history14" class="buttonI entune_list_row dial_preset_button">+1 319-335-5911</div>
+                                <div id="AB_pageContainer_call_history15" class="buttonI entune_list_row dial_preset_button">+1 618-319-7012</div>
+                        	</div>
+                            
+                            <div id="CALL_CONTACTS_container" class="call_list_container" style="display:none;">
+                                <div id="AB_pageContainer_call_contact1" class="buttonI entune_list_row dial_preset_button">Omar Ahmad</div>
+                                <div id="AB_pageContainer_call_contact2" class="buttonI entune_list_row dial_preset_button">Shawn Allen</div>
+                                <div id="AB_pageContainer_call_contact3" class="buttonI entune_list_row dial_preset_button">Mary Bender</div>
+                                <div id="AB_pageContainer_call_contact4" class="buttonI entune_list_row dial_preset_button">Tim Brown</div>
+                                <div id="AB_pageContainer_call_contact5" class="buttonI entune_list_row dial_preset_button">Steve Cable</div>
+                                <div id="AB_pageContainer_call_contact6" class="buttonI entune_list_row dial_preset_button">Cher Carney</div>
+                                <div id="AB_pageContainer_call_contact7" class="buttonI entune_list_row dial_preset_button">Coale Cooper</div>
+                                <div id="AB_pageContainer_call_contact8" class="buttonI entune_list_row dial_preset_button">Anna Dizack</div>
+                                <div id="AB_pageContainer_call_contact9" class="buttonI entune_list_row dial_preset_button">Gary Gaffney</div>
+                                <div id="AB_pageContainer_call_contact10" class="buttonI entune_list_row dial_preset_button">John Gaspar</div>
+                                <div id="AB_pageContainer_call_contact11" class="buttonI entune_list_row dial_preset_button">Jeff Gordon</div>
+                                <div id="AB_pageContainer_call_contact12" class="buttonI entune_list_row dial_preset_button">Jacob Heiden</div>
+                                <div id="AB_pageContainer_call_contact13" class="buttonI entune_list_row dial_preset_button">Oscar Hernandex Murcia</div>
+                                <div id="AB_pageContainer_call_contact14" class="buttonI entune_list_row dial_preset_button">Vincent Horosewski</div>
+                                <div id="AB_pageContainer_call_contact15" class="buttonI entune_list_row dial_preset_button">Corey Kreutz</div>
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div style="position:absolute; background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.7) 20%, rgba(0,0,0,0)); width:400px;">
+                        <div class="entune_grouping" style="width:354px; height:300px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                        	
+                            <div style="text-align:center;">
+                                <div id="call_callinprogress_info_container" style="margin-bottom:2em; display:none;">
+                                	<div style="color:#8C8C8C; text-shadow:none;">Calling</div>
+                                	<div id="call_container_NUMBERNAME">Mary Bender</div>
+                                </div>
+                            </div>
+                            
+                            <div id="AB_pageContainer_phone_HANGUP" class="buttonDisabled" style="width:120px; height:80px; display:flex; align-items:center; justify-content:center;">
+                            	<img src="images/phone.png" style="height:60px; margin-top:8px; filter:invert(100%); -webkit-filter:invert(1); -ms-transform: rotate(114deg); -webkit-transform: rotate(114deg); transform: rotate(114deg);">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end .ui-block-b -->
+            </div> <!-- end .ui-grid-a -->
+            
         </div>
     </div> <!-- end #pageContainer_select_phone -->
     

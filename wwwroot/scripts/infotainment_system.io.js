@@ -226,6 +226,17 @@ function bindDOMEvents() {
 		socket.emit('IUI_info', outData);
 	});
 	
+	$(document.body).on('mouseup', '.buttonI', function() {
+		var outData = { 
+			type		: 'buttonUpdate',
+			buttonId	: -9999
+		};
+		if ($(this).data('bid')) {
+			outData.buttonId = $(this).data('bid');
+		}
+		socket.emit('IUI_info', outData);
+	});
+	
 	$(document.body).on('mouseup', '.just_LINK', function() {
 		var anchorLink = $(this).data('anchorlink');
 		$('#MSTR_LINK').attr('href',anchorLink);
@@ -454,6 +465,37 @@ function bindDOMEvents() {
 		socket.emit('IUI_command',{ type: 'audio_off' });
 	});
 	
+	// Phone menu tab buttons
+	$(document.body).on('click', '.buttonCallTab', function() {
+		if ($(this).data('targetdiv')) {
+			$('.call_list_container').hide();
+			$('#'+$(this).data('targetdiv')).show();
+		}
+	});
+	
+	// Phone list options
+	$(document.body).on('click', '.dial_preset_button', function() {
+		$(this).addClass('buttonDOWN');
+		
+		var thingToDial = $(this).html();
+		$('#call_container_NUMBERNAME').html(thingToDial);
+		$('#call_callinprogress_info_container').show();
+		socket.emit('IUI_command', { type:'phone_call_noanswer' });
+		
+		var playfileTimeout = setTimeout(function() {
+			$('.entune_list_row').removeClass('buttonDOWN');
+		}, 100);
+		//alert(playlink);
+	});
+	
+	$(document.body).on('click', '#AB_pageContainer_phone_HANGUP', function() {
+		if (!$(this).hasClass('buttonDisabled')) {
+			hideCallingBox();
+			$('#AB_pageContainer_phone_HANGUP').removeClass('button').removeClass('button_MISC').addClass('buttonDisabled');
+			socket.emit('IUI_command', { type:'phone_call_hangup' });
+		}
+	});
+	
 	// Generic UI button up/down response
 	$('.button_MISC').on('mousedown touchstart',function() {
 		$(this).addClass('buttonDOWN');
@@ -577,11 +619,13 @@ function bindSocketEvents(){
 				delete AB_SCREEN_MATRIX.pageContainer_home[1];
 				AB_SCREEN_MATRIX.pageContainer_home[1] = [ 'AB_pageContainer_home_FM_PAUSE', 'AB_pageContainer_home_FM_VOLTOG' ];
 			} else {
-				thisFolderArtURL = MP3_ALBUM_LIST[data.nowplaying_title].folderArtURL;
-				$('#AUDIO_MAIN_MP3LINK').data('albumtitle',data.nowplaying_title);
-				$('#AUDIO_playlist_container .AUDIO_playlist_MP3').show();
-				delete AB_SCREEN_MATRIX.pageContainer_home[1];
-				AB_SCREEN_MATRIX.pageContainer_home[1] = [ 'AB_pageContainer_home_MP3_TBACK', 'AB_pageContainer_home_MP3_PAUSE', 'AB_pageContainer_home_MP3_TFWD', 'AB_pageContainer_home_MP3_VOLTOG' ];
+				if (MP3_ALBUM_LIST[data.nowplaying_title]) {
+					thisFolderArtURL = MP3_ALBUM_LIST[data.nowplaying_title].folderArtURL;
+					$('#AUDIO_MAIN_MP3LINK').data('albumtitle',data.nowplaying_title);
+					$('#AUDIO_playlist_container .AUDIO_playlist_MP3').show();
+					delete AB_SCREEN_MATRIX.pageContainer_home[1];
+					AB_SCREEN_MATRIX.pageContainer_home[1] = [ 'AB_pageContainer_home_MP3_TBACK', 'AB_pageContainer_home_MP3_PAUSE', 'AB_pageContainer_home_MP3_TFWD', 'AB_pageContainer_home_MP3_VOLTOG' ];
+				}
 			}
 			$('.CURRENTLY_PLAYING_TIME').html(moment.duration(data.currenttime, 'seconds').format("m:ss",{ trim: false }));
 			$('.CURRENTLY_PLAYING_DURATION').html(moment.duration(data.duration, 'seconds').format("m:ss",{ trim: false }));
@@ -963,10 +1007,25 @@ function bindSocketEvents(){
 					*/
 				} // end switch(data.keypress)
 				break; // end case 'AB_press'
+			case 'callStatus':
+				switch(data.statusName) {
+					case 'offhook':
+						$('#AB_pageContainer_phone_HANGUP').removeClass('buttonDisabled').addClass('button').addClass('button_MISC');
+						break;
+					case 'onhook':
+						$('#AB_pageContainer_phone_HANGUP').removeClass('button').removeClass('button_MISC').addClass('buttonDisabled');
+						hideCallingBox();
+						break;
+				}
+				break;
 		}
 	});
 	
 	socket.emit('mp3_jukebox_enumerate',{});
+}
+
+function hideCallingBox() {
+	$('#call_callinprogress_info_container').hide();
 }
 
 function updateMapAspect(){}

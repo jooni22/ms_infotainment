@@ -100,6 +100,11 @@ img {
 	margin:3px;
 }
 
+.buttonCallTab {
+	font-size:32px;
+	line-height:45px;
+}
+
 .buttonDOWN { 
     background: #FFF !important;
 	color:#000;
@@ -217,6 +222,23 @@ img {
 	width:0;
 }
 
+.dialpad_button {
+	height:85px; 
+	display:flex;
+	align-items:center;
+	justify-content:space-around;
+	margin:0px 5px 5px 0px;
+}
+
+.dialpad_button div:first-child {
+	font-size:38px;
+}
+
+.dialpad_button div:nth-child(2) {
+	font-size:30px;
+	font-weight:400;
+}
+
 .entune_grouping {
 	font-weight:400;
 	border:1px solid rgba(200,200,200,0.3); 
@@ -248,6 +270,9 @@ img {
 	background:rgba(7,35,55,0.5); 
 	padding:10px;
 	font-weight:400;
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
+	overflow:hidden;
 }
 
 .entune_list_row:nth-of-type(odd) {

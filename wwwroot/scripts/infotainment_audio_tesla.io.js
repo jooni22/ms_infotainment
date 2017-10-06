@@ -108,8 +108,10 @@ function bindDOMEvents() {
 						clearInterval(rampUpInterval);
 					}
 				},50);
-			}, 10000); // wait ten seconds after alert audio finishes playing, then ramp up the volume to it's original level
+			}, 1000); // wait one second after alert audio finishes playing, then ramp up the volume to it's original level
+			
 		} // end if (ORIG_AUDIO_PLAYER_A_VOL > CURRENT_STATUS.state.volume)
+		socket.emit('AUDIO_ALT_END', {});
 	});
 }
 
@@ -142,7 +144,7 @@ function bindSocketEvents(){
 	});
 
 	socket.on('NCWC_control', function(data) {
-		console.log(data);
+		//console.log(data);
 		switch(data.type) {
 			case 'playALERT':
 				ORIG_AUDIO_PLAYER_A_VOL = parseFloat(CURRENT_STATUS.state.volume);
@@ -151,6 +153,21 @@ function bindSocketEvents(){
 				}
 				updateAudioVolume();
 				changeAudioSource_ALERT({ source:data.playlink });
+				break;
+			case 'stopALERT':
+				$('#audio-player-b audio').get(0).pause();
+				if (CURRENT_STATUS.state.volume < ORIG_AUDIO_PLAYER_A_VOL) {
+					var rampUpInterval = setInterval(function() {
+						// ratchet up volume
+						if (CURRENT_STATUS.state.volume < ORIG_AUDIO_PLAYER_A_VOL) {
+							CURRENT_STATUS.state.volume = CURRENT_STATUS.state.volume+0.01;
+							updateAudioVolume();
+						} else {
+							clearInterval(rampUpInterval);
+						}
+					},50);
+					
+				} // end if (ORIG_AUDIO_PLAYER_A_VOL > CURRENT_STATUS.state.volume)
 				break;
 			case 'playMP3':
 				changeAudioSource({ source:data.playlink });
@@ -218,7 +235,7 @@ function bindSocketEvents(){
 
 function initializeAudioVolume() {
 	document.getElementById('audio-player-a-OBJ').volume = 0.1;
-	document.getElementById('audio-player-b-OBJ').volume = 0.8;
+	document.getElementById('audio-player-b-OBJ').volume = 0.4;
 }
 
 function updateAudioVolume() {

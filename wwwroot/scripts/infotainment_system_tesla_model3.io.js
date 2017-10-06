@@ -449,6 +449,7 @@ function bindDOMEvents() {
 					$('#PHONE_TOCALL_NUM').addClass('greenGlowBox');
 					$('#BTN_DP_CALL').css('background','rgba(245,0,0,1.00)');
 					$('#BTN_DP_CALL').data('dpval','HANGUP');
+					socket.emit('IUI_command', { type:'phone_call_noanswer' });
 					break;
 				case 'HANGUP':
 					// clear "number to call" field
@@ -456,6 +457,7 @@ function bindDOMEvents() {
 					$('#PHONE_TOCALL_NUM').removeClass('greenGlowBox');
 					$('#BTN_DP_CALL').css('background','rgba(29,219,0,1.00)');
 					$('#BTN_DP_CALL').data('dpval','CALL');
+					socket.emit('IUI_command', { type:'phone_call_hangup' });
 					break;
 				case 'BSP':
 					$('#PHONE_TOCALL_NUM').html(''+currentDialNum.substring(0,(ObjectLength(currentDialNum))-1));
@@ -970,6 +972,22 @@ function bindDOMEvents() {
 	// AUDIO OFF (UI button)
 	$(document.body).on('click', '#AB_pageContainer_maintenance_AUDIO_OFF', function() {
 		socket.emit('IUI_command',{ type: 'audio_off' });
+	});
+	
+	// Phone list options
+	$(document.body).on('click', '.dial_preset_button', function() {
+		var thingToDial = $(this).html();
+		$('#PHONE_TOCALL_NUM').html(thingToDial);
+		$('#PHONE_TOCALL_NUM').addClass('greenGlowBox');
+		$('#BTN_DP_CALL').css('background','rgba(245,0,0,1.00)');
+		$('#BTN_DP_CALL').data('dpval','HANGUP');
+		
+		socket.emit('IUI_command', { type:'phone_call_noanswer' });
+		
+		$('#TABS_PHONE div.tab_selected').removeClass('tab_selected');
+		$('#PROTO_PHONE .container_media').hide();
+		$('#TABS_PHONE div[data-tabtarget="cont_PhoneDialer"]').addClass('tab_selected');
+		$('#cont_PhoneDialer').show();
 	});
 	
 	// Generic UI button up/down response
@@ -1584,6 +1602,20 @@ function bindSocketEvents(){
 					
 				} // end switch(data.keypress)
 				break; // end case 'AB_press'
+			case 'callStatus':
+				switch(data.statusName) {
+					case 'offhook':
+						$('#AB_pageContainer_phone_HANGUP').removeClass('buttonDisabled').addClass('button').addClass('button_MISC');
+						break;
+					case 'onhook':
+						// clear "number to call" field
+						$('#PHONE_TOCALL_NUM').html('');
+						$('#PHONE_TOCALL_NUM').removeClass('greenGlowBox');
+						$('#BTN_DP_CALL').css('background','rgba(29,219,0,1.00)');
+						$('#BTN_DP_CALL').data('dpval','CALL');
+						break;
+				}
+				break;
 		}
 	});
 	
@@ -1737,8 +1769,8 @@ function updateOSDmaps() {
 		getMapHW();
 		//updateOSDmapRoutes();
 	}).attr("src", sessionVars['MAP_IMG']);	
-	var mapImgSplit = sessionVars['MAP_IMG'].split('.png');
-	$('.mapGPSunderlay').attr('src', mapImgSplit[0]+'_underlay_a.png');		
+	var mapImgSplit = sessionVars['MAP_IMG'].split('.svg');
+	$('.mapGPSunderlay').attr('src', mapImgSplit[0]+'_underlay_a.svg');		
 }
 
 function updateOSDmapRoutes() {

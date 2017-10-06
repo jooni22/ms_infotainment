@@ -51,9 +51,9 @@ var AUDIO_CURRENT_STATUS = {};
 var MAP_SERVER_STATUS = {};
 
 //var CAB_HOST_IP = '90.0.0.80';
-var CAB_HOST_IP = 'localhost';
+var CAB_HOST_IP = '128.255.250.145';
 var RT_PORT_INCOMING = 8889;
-//var RT_HOST_IP = '90.0.0.2';
+var RT_HOST_IP = '128.255.250.145';
 var RT_PORT_OUTGOING = 8887;
 var CAB_IGNITION_MODES = {
 	1	:	{ desc: 'Off' },
@@ -398,7 +398,7 @@ io.sockets.on('connection', function(socket){
 								} else {
 									// this is the first track, return to beginning
 									socket.broadcast.emit('NCWC_control', { type:'reset_and_play' });
-									console.log('beginning');
+									//console.log('beginning');
 								}
 							} else {
 								// not found
@@ -516,6 +516,12 @@ io.sockets.on('connection', function(socket){
 				}
 				catch(e) {} 
 				break;
+			case 'phone_call_noanswer':
+				socket.broadcast.emit('NCWC_control', { type:'playALERT', playlink:BASE_WWWROOT_URL+'/mp3/phone_ringing_x8.mp3' });
+				socket.emit('IC_command', { type:'callStatus', statusName:'offhook' });
+				break;
+			case 'phone_call_hangup':
+				socket.broadcast.emit('NCWC_control', { type:'stopALERT' });
 		}
 	});
 	
@@ -582,6 +588,10 @@ io.sockets.on('connection', function(socket){
 				// No match
 			}
 		});
+	});
+	
+	socket.on('AUDIO_ALT_END', function(data) {
+		socket.broadcast.emit('IC_command', { type:'callStatus', statusName:'onhook' });
 	});
 	
 	// Researcher GUI command
@@ -744,10 +754,27 @@ function runEngineRolloverSequence() {
 	}, 5000); // 5s of wait before Home screen
 }
 
+var THIS_RT_PACKET = {
+	SimFrame				: 0,
+	VDS_Chassis_CG_Position	: [],
+	VDS_Chassis_CG_Orient	: []
+};
+
 function handleRouteTablePacket(message,remote) {
 	// console.log(getDateTime()+' ALERT:');
 	var packetLength 	= message.length;
+		
+	THIS_RT_PACKET.SimFrame = message.readInt32LE(0); // 4 bytes
+	THIS_RT_PACKET.VDS_Chassis_CG_Position[0] = message.readDoubleLE(4); // 8 bytes
+	THIS_RT_PACKET.VDS_Chassis_CG_Position[1] = message.readDoubleLE(12);
+	THIS_RT_PACKET.VDS_Chassis_CG_Position[2] = message.readDoubleLE(20);
+	THIS_RT_PACKET.VDS_Chassis_CG_Orient[0]	= message.readFloatLE(28); // 4 bytes
+	THIS_RT_PACKET.VDS_Chassis_CG_Orient[1]	= message.readFloatLE(32);
+	THIS_RT_PACKET.VDS_Chassis_CG_Orient[2]	= message.readFloatLE(36);
 	
+	console.log(THIS_RT_PACKET);
+	
+	/*
 	var THIS_RT_PACKET = {
 		SimFrame 					: message.readInt32LE(0), // 4 bytes
 		SCC_Info_Screen_pageDivId 	: message.readInt16LE(4), // 2 bytes
@@ -797,6 +824,7 @@ function handleRouteTablePacket(message,remote) {
 	RT_VARS_INCOMING.SCC_Info_Screen_pageDivId = THIS_RT_PACKET.SCC_Info_Screen_pageDivId;
 	RT_VARS_INCOMING.SCC_Info_Screen_state = THIS_RT_PACKET.SCC_Info_Screen_state;
 	RT_VARS_INCOMING.VDS_Veh_Eng_RPM = THIS_RT_PACKET.VDS_Veh_Eng_RPM;
+	*/
 }
 
 // Route table listener
@@ -809,6 +837,7 @@ UDPserver.on('listening', function () {
 });
 
 UDPserver.on('message', function (message, remote) {
+	//console.log(message);
 	handleRouteTablePacket(message,remote);
 });
 
@@ -826,7 +855,7 @@ function sendRTPacket() {
 	});
 }
 
-//UDPserver.bind(RT_PORT_INCOMING, CAB_HOST_IP);
+UDPserver.bind(RT_PORT_INCOMING, CAB_HOST_IP);
 
 console.log(LOCAL_DATETIME().timestamp+' Infotainment server up @ http://localhost:'+port);
 
