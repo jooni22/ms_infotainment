@@ -51,10 +51,10 @@ var AUDIO_CURRENT_STATUS = {};
 var MAP_SERVER_STATUS = {};
 
 //var CAB_HOST_IP = '90.0.0.80';
-var CAB_HOST_IP = '128.255.250.145';
+var CAB_HOST_IP = '192.168.16.10';
 var RT_PORT_INCOMING = 8889;
-var RT_HOST_IP = '128.255.250.145';
-var RT_PORT_OUTGOING = 8887;
+var RT_HOST_IP = '192.168.16.10';
+var RT_PORT_OUTGOING = 8881;
 var CAB_IGNITION_MODES = {
 	1	:	{ desc: 'Off' },
 	2	:	{ desc: 'Accessory' },
@@ -558,6 +558,7 @@ io.sockets.on('connection', function(socket){
 			case 'buttonUpdate':
 				var thisBID = data.buttonId;
 				RT_VARS_OUTGOING.AUX_Info_Button = thisBID;
+				//console.log(RT_VARS_OUTGOING.AUX_Info_Button);
 				var resetTimer = setTimeout(function() {
 					RT_VARS_OUTGOING.AUX_Info_Button = 0;
 				}, (3/60)*1000);
@@ -754,77 +755,27 @@ function runEngineRolloverSequence() {
 	}, 5000); // 5s of wait before Home screen
 }
 
-var THIS_RT_PACKET = {
-	SimFrame				: 0,
-	VDS_Chassis_CG_Position	: [],
-	VDS_Chassis_CG_Orient	: []
-};
-
 function handleRouteTablePacket(message,remote) {
 	// console.log(getDateTime()+' ALERT:');
+	var THIS_RT_PACKET = {
+		SimFrame				: 0,
+		VDS_Chassis_CG_Orient	: [],
+		VDS_Chassis_CG_Position	: [],
+		VDS_Veh_Speed			: 0
+	};
 	var packetLength 	= message.length;
 		
-	THIS_RT_PACKET.SimFrame = message.readInt32LE(0); // 4 bytes
-	THIS_RT_PACKET.VDS_Chassis_CG_Position[0] = message.readDoubleLE(4); // 8 bytes
-	THIS_RT_PACKET.VDS_Chassis_CG_Position[1] = message.readDoubleLE(12);
-	THIS_RT_PACKET.VDS_Chassis_CG_Position[2] = message.readDoubleLE(20);
-	THIS_RT_PACKET.VDS_Chassis_CG_Orient[0]	= message.readFloatLE(28); // 4 bytes
-	THIS_RT_PACKET.VDS_Chassis_CG_Orient[1]	= message.readFloatLE(32);
-	THIS_RT_PACKET.VDS_Chassis_CG_Orient[2]	= message.readFloatLE(36);
-	
-	console.log(THIS_RT_PACKET);
-	
-	/*
-	var THIS_RT_PACKET = {
-		SimFrame 					: message.readInt32LE(0), // 4 bytes
-		SCC_Info_Screen_pageDivId 	: message.readInt16LE(4), // 2 bytes
-		SCC_Info_Screen_state 		: message.readInt16LE(6),
-		VDS_Veh_Eng_RPM				: message.readFloatLE(8) // 4 bytes
-	};
-	
-	if ((THIS_RT_PACKET.SCC_Info_Screen_pageDivId !== RT_VARS_INCOMING.SCC_Info_Screen_pageDivId) ||
-		(THIS_RT_PACKET.SCC_Info_Screen_state !== RT_VARS_INCOMING.SCC_Info_Screen_state)) {
-			console.log(LOCAL_DATETIME().timestamp+' RT input change: ' + THIS_RT_PACKET.SCC_Info_Screen_pageDivId + ":" + THIS_RT_PACKET.SCC_Info_Screen_state);
-			if (THIS_RT_PACKET.SCC_Info_Screen_pageDivId !== RT_VARS_INCOMING.SCC_Info_Screen_pageDivId) {
-				if (INF_SCREEN_INDEX[THIS_RT_PACKET.SCC_Info_Screen_pageDivId]) {
-					var thisAnchorLink = '#'+INF_SCREEN_INDEX[THIS_RT_PACKET.SCC_Info_Screen_pageDivId].pageDivId;
-					io.sockets.emit('IC_command', { type:'switch_to_screen', anchorlink: thisAnchorLink });
-				} else {
-					console.log(LOCAL_DATETIME().timestamp+' Unknown RT page (#): '+THIS_RT_PACKET.SCC_Info_Screen_pageDivId);
-				}
-			} // end screen change IF
-			
-			if (THIS_RT_PACKET.SCC_Info_Screen_state !== RT_VARS_INCOMING.SCC_Info_Screen_state) {
-				if (THIS_RT_PACKET.SCC_Info_Screen_state === 1) {
-					io.sockets.emit('IC_command', { type:'revert_screen_to_default', screenid: INF_SCREEN_INDEX[THIS_RT_PACKET.SCC_Info_Screen_pageDivId].pageDivId });
-					console.log(LOCAL_DATETIME().timestamp+' Reverting '+INF_SCREEN_INDEX[THIS_RT_PACKET.SCC_Info_Screen_pageDivId].pageDivId+' to its default state');
-				} // end if (THIS_RT_PACKET.SCC_Info_Screen_state === 1)
-			} // end state change IF
-	}
-	
-	// Engine RPM check
-	if (THIS_RT_PACKET.VDS_Veh_Eng_RPM > 0) {
-		// engine is on
-		if (CAB_IGNITION_CURRENT_STATE !== 3) { // if the current known state is not 3 (running), set it to 3
-			CAB_IGNITION_CURRENT_STATE = 3;
-			runEngineRolloverSequence();
-			//sendMultiInfoDisplay_routed_data(CAB_IGNITION_CURRENT_STATE);
-		}
-	} else {
-		// engine is off
-		if (CAB_IGNITION_CURRENT_STATE !== 1) { // if the current known state is not 1 (off), set it to 1
-			CAB_IGNITION_CURRENT_STATE = 1;
-			io.sockets.emit('NCWC_control', { type: 'stop' });
-			io.sockets.emit('IC_command', { type:'switch_to_screen', anchorlink: '#pageContainer_screen_blackout' });
-			//sendMultiInfoDisplay_routed_data(CAB_IGNITION_CURRENT_STATE);
-		}
-	}
-	
-	RT_VARS_INCOMING.SimFrame =	THIS_RT_PACKET.SimFrame;
-	RT_VARS_INCOMING.SCC_Info_Screen_pageDivId = THIS_RT_PACKET.SCC_Info_Screen_pageDivId;
-	RT_VARS_INCOMING.SCC_Info_Screen_state = THIS_RT_PACKET.SCC_Info_Screen_state;
-	RT_VARS_INCOMING.VDS_Veh_Eng_RPM = THIS_RT_PACKET.VDS_Veh_Eng_RPM;
-	*/
+	THIS_RT_PACKET.SimFrame = message.readInt32LE(0);
+	THIS_RT_PACKET.VDS_Chassis_CG_Orient[0] = message.readFloatLE(4);
+	THIS_RT_PACKET.VDS_Chassis_CG_Orient[1] = message.readFloatLE(8);
+	THIS_RT_PACKET.VDS_Chassis_CG_Orient[2] = message.readFloatLE(12);
+	THIS_RT_PACKET.VDS_Chassis_CG_Position[0] = message.readDoubleLE(16);
+	THIS_RT_PACKET.VDS_Chassis_CG_Position[1] = message.readDoubleLE(24);
+	THIS_RT_PACKET.VDS_Chassis_CG_Position[2] = message.readDoubleLE(32);
+	THIS_RT_PACKET.VDS_Veh_Speed = message.readFloatLE(40);
+		
+	//console.log(THIS_RT_PACKET);
+	io.sockets.emit('minisim_info', THIS_RT_PACKET);
 }
 
 // Route table listener
@@ -859,13 +810,13 @@ UDPserver.bind(RT_PORT_INCOMING, CAB_HOST_IP);
 
 console.log(LOCAL_DATETIME().timestamp+' Infotainment server up @ http://localhost:'+port);
 
-/*
+
 var RT_Update_Interval = setInterval(function() {
 	//console.log(LOCAL_DATETIME().timestamp+' '+JSON.stringify(RT_VARS_OUTGOING));
 	sendRTPacket();
 //}, 1000);
 }, (1/60)*1000);
-*/
+
 
 
 // GESTURE CONTROLS 

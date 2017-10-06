@@ -1344,6 +1344,40 @@ function bindSocketEvents(){
 			$('#gestureIcon_bg').fadeOut(2000);
 		});
 	});
+	
+	socket.on('minisim_info', function(data) {
+		var topLeft_X = 0,
+			topLeft_Y = -89430,
+			bottomRight_X = 660,
+			bottomRight_Y = 90090;
+			
+		var totalLRIwidth = 0,
+			totalLRIheight = 0;
+		
+		totalLRIwidth = diff(topLeft_X,bottomRight_X);
+		totalLRIheight = diff(topLeft_Y,bottomRight_Y);
+		var CG_translated_X = diff(parseFloat(data.VDS_Chassis_CG_Position[1]),topLeft_X);
+		var CG_translated_Y = diff(parseFloat(data.VDS_Chassis_CG_Position[0]),topLeft_Y);
+		
+		var LRI_translated_width = 1000;
+		var LRI_translated_height = 272000;
+	
+		var LRI_CG_percent_X = (CG_translated_X/totalLRIwidth)*100;
+		var LRI_CG_percent_Y = (CG_translated_Y/totalLRIheight)*100;
+		
+		var translated_CG_dot_X = parseInt((LRI_CG_percent_X/100)*LRI_translated_width);
+		var translated_CG_dot_Y = parseInt((LRI_CG_percent_Y/100)*LRI_translated_height);
+		
+		$('#NAV_MAP_IMG').css('top','-'+(translated_CG_dot_Y - 25)+ 'px').css('left','-'+(translated_CG_dot_X - 25)+ 'px');
+		
+		var positiveYaw = 7200+parseFloat(data.VDS_Chassis_CG_Orient[2]) % 360;
+		//$('#mapContainerOuter_HomePage').css('-webkit-transform','rotate(-'+positiveYaw+'deg)').css('transform','rotate(-'+positiveYaw+'deg)');	
+		//$('#cabCG_car_dot').css('-webkit-transform','rotate('+positiveYaw+'deg)').css('transform','rotate('+positiveYaw+'deg)');
+		//console.log(positiveYaw);
+		$('#mapContainerInner').css('-webkit-transform','rotate(-'+positiveYaw+'deg)').css('transform','rotate(-'+positiveYaw+'deg)');
+		
+		$('#sim_VehSpeed').html(Math.round(data.VDS_Veh_Speed));
+	});
 
 	socket.on('PLAY_CURRENT', function(data) {
 		//console.log(data);

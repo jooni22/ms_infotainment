@@ -1,6 +1,6 @@
-var BASE_WWWROOT_URL = 'http://128.255.250.145';
+var BASE_WWWROOT_URL = 'http://192.168.16.10';
 var BASE_WWWROOT_DIR = 'wwwroot';
-var BASE_MP3_JUKEBOX_STORE = 'E:/IV_mp3';
+var BASE_MP3_JUKEBOX_STORE = 'C:/minisim_infotainment_mp3';
 
 var OMC_MAP_PHYS_DIR = 'E:/NADS/_minisim_infotainment/wwwroot/maps/';
 

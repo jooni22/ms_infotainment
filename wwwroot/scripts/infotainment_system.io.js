@@ -79,8 +79,8 @@ var sessionVars = {
 	'LRI_bottomRight_Y'			: '',
 	'local_zoom'				: 1
 };
-var dotMarkerOffset_X = -30;
-var dotMarkerOffset_Y = -30;
+var dotMarkerOffset_X = -66;
+var dotMarkerOffset_Y = -66;
 
 function diff(a,b) {
 	return Math.abs(a-b);
@@ -723,6 +723,37 @@ function bindSocketEvents(){
 				updateLocalConnectionStatus(data);
 				break;
 		}
+	});
+	
+	socket.on('minisim_info', function(data) {
+		var topLeft_X = 0,
+			topLeft_Y = -89430,
+			bottomRight_X = 660,
+			bottomRight_Y = 90090;
+			
+		var totalLRIwidth = 0,
+			totalLRIheight = 0,
+			LRI_offset_x = 0,
+			LRI_offset_y = 0;
+		
+		totalLRIwidth = diff(topLeft_X,bottomRight_X);
+		totalLRIheight = diff(topLeft_Y,bottomRight_Y);
+		var CG_translated_X = diff(parseFloat(data.VDS_Chassis_CG_Position[1]),topLeft_X);
+		var CG_translated_Y = diff(parseFloat(data.VDS_Chassis_CG_Position[0]),topLeft_Y);
+		
+		var LRI_translated_width = 1000;
+		var LRI_translated_height = 272000;
+	
+		var LRI_CG_percent_X = (CG_translated_X/totalLRIwidth);
+		var LRI_CG_percent_Y = (CG_translated_Y/totalLRIheight);
+		
+		var translated_CG_dot_X = parseInt((LRI_CG_percent_X)*LRI_translated_width);
+		var translated_CG_dot_Y = parseInt((LRI_CG_percent_Y)*LRI_translated_height);
+		
+		//$('#PixPer_dot_x').html(sessionVars['translated_CG_dot_X']);
+		//$('#PixPer_dot_y').html(sessionVars['translated_CG_dot_Y']);
+		$('#HOME_MAP_IMG').css('top','-'+(translated_CG_dot_Y + dotMarkerOffset_Y) + 'px').css('left','-'+(translated_CG_dot_X + dotMarkerOffset_X) + 'px');
+		$('#NAV_MAP_IMG').css('top','-'+(translated_CG_dot_Y + dotMarkerOffset_Y) + 'px').css('left','-'+(translated_CG_dot_X + dotMarkerOffset_X) + 'px');
 	});
 	
 	socket.on('IC_command', function(data) {
