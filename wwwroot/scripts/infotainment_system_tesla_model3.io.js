@@ -550,7 +550,7 @@ function bindDOMEvents() {
 		socket.emit('IUI_info', outData);
 	});
 	
-	$(document.body).on('mouseup', '.buttonI', function() {
+	$(document.body).on('click', '.buttonI', function() {
 		var outData = { 
 			type		: 'buttonUpdate',
 			buttonId	: -9999
@@ -1329,7 +1329,10 @@ function bindSocketEvents(){
 						}
 						break;
 				}
-				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9004});
+				//socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9004});
+				var resetTimer = setTimeout(function() {
+					socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9004});
+				}, (3/60)*1000);
 				break;
 			case 'swipe_right':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_right.png');
@@ -1380,7 +1383,10 @@ function bindSocketEvents(){
 						}
 						break;
 				}
-				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9003});
+				//socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9003});
+				var resetTimer = setTimeout(function() {
+					socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9003});
+				}, (3/60)*1000);
 				break;
 			case 'swipe_up':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_up.png');
@@ -1431,7 +1437,10 @@ function bindSocketEvents(){
 							break;
 					}
 				}
-				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9005});
+				//socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9005});
+				var resetTimer = setTimeout(function() {
+					socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9005});
+				}, (3/60)*1000);
 				break;
 			case 'swipe_down': 
 				$('#gestureIcon_img').attr('src','images/icon_gesture_swipe_down.png');
@@ -1479,6 +1488,9 @@ function bindSocketEvents(){
 							break;
 					}
 				}
+				var resetTimer = setTimeout(function() {
+					socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9006});
+				}, (3/60)*1000);
 				break;
 			case 'keyTap':
 				$('#gestureIcon_img').attr('src','images/icon_gesture_tap.png');
@@ -1515,7 +1527,10 @@ function bindSocketEvents(){
 						$('#'+selectedDiv).click();
 					}
 				}
-				socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9002});
+				//socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9002});
+				var resetTimer = setTimeout(function() {
+					socket.emit('IUI_info', { type:'buttonUpdate', buttonId:9002});
+				}, (3/60)*1000);
 				break;
 		}
 		if($('#gestureIcon_bg').is(':animated')) {
